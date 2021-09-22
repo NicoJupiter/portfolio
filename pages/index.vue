@@ -8,6 +8,10 @@
 export default {}
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+  .homepage {
+    @include main-title;
 
+    font-size: 10rem;
+  }
 </style>
