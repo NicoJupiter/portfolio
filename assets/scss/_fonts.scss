@@ -1,0 +1,35 @@
+@font-face {
+  font-family: "Lato";
+  src: url("#{$F-path}/Lato/Lato-Regular.ttf");
+  font-weight: $FW-normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Lato";
+  src: url("#{$F-path}/Lato/Lato-Light.ttf");
+  font-weight: $FW-light;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Lato";
+  src: url("#{$F-path}/Lato/Lato-Thin.ttf");
+  font-weight: $FW-thin;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Lato";
+  src: url("#{$F-path}/Lato/Lato-Bold.ttf");
+  font-weight: $FW-bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Oswald";
+  src: url("#{$F-path}/Oswald/Oswald-VariableFont_wght.ttf");
+  font-weight: $FW-normal;
+  font-style: normal;
+}
+
