@@ -42,5 +42,6 @@ export default {
     /*env: {
       baseUrl: process.env.BASE_URL || "https://portfolio-55714-default-rtdb.firebaseio.com"
     }*/
-  }
+  },
+  loading: '~/components/Loaders/TransitionLoader.vue'
 }

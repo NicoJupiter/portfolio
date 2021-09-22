@@ -5,7 +5,8 @@ import axios from "axios";
 const createStore = () => {
   return new Vuex.Store({
     state: {
-      loadedProjects: []
+      loadedProjects: [],
+      isInitialLoaded: false
     },
     mutations: {
       setProjects(state, projects) {
@@ -19,20 +20,26 @@ const createStore = () => {
           project => project.id === editProject.id
         )
         state.loadedProjects[projectIndex] = editProject
+      },
+      setInitialLoaded(state, isInitialLoaded) {
+        state.isInitialLoaded = isInitialLoaded
       }
     },
     actions: {
       //method from nuxt who executed only one time
       nuxtServerInit(vuexContext, context) {
-       return Axios.get('https://portfolio-55714-default-rtdb.firebaseio.com/projects.json')
+      return Axios.get('https://portfolio-55714-default-rtdb.firebaseio.com/projects.json')
          .then(res => {
            const postProjects = []
            for (const key in res.data) {
              postProjects.push({ ...res.data[key], id: key})
            }
            vuexContext.commit('setProjects', postProjects)
+           //vuexContext.commit('setInitialLoaded', true)
+
          })
          .catch(e => context.error(e))
+
       },
       setProjects(context, projects) {
         context.commit('setProjects', projects)
@@ -52,11 +59,17 @@ const createStore = () => {
             vuexContext.commit('editProject', editedProject)
           })
           .catch(e => console.log(e))
+      },
+      setInitialLoaded(vuexContext, isInitialLoaded) {
+        vuexContext.commit('setInitialLoaded', isInitialLoaded)
       }
     },
     getters: {
       loadedProjects(state) {
         return state.loadedProjects
+      },
+      isInitialLoaded(state) {
+        return state.isInitialLoaded
       }
     }
   })

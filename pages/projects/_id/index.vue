@@ -1,16 +1,12 @@
 <template>
   <div class="project">
-    <ClassicPage v-if="loadedProject.loadedProjectType === 1" :page-content="loadedProject"/>
-    <NoTextPage v-if="loadedProject.loadedProjectType === 2" :page-content="loadedProject"/>
-  </div>
+
+   </div>
 </template>
 
 <script>
-import ClassicPage from "@/components/PageType/ClassicPage";
-import NoTextPage from "@/components/PageType/NoTextPage";
 import axios from 'axios'
 export default {
-  components: {NoTextPage, ClassicPage},
   data() {
     return {
       loadedProject: null
