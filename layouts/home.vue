@@ -12,6 +12,7 @@ import {gsap} from 'gsap'
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 export default {
   name: "home",
+
   mounted() {
     gsap.to(this.$refs.logo, {
       opacity: 0,

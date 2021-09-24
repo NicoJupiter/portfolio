@@ -17,12 +17,15 @@
     </div>
     <div class="homepage__2">
       <div class="homepageProject">
-        <div class="homepageProject__image">
+        <ProjectTitle direction="left" />
+        <ProjectTitle direction="right" />
 
+        <!--<div class="homepageProject__image">
+          <img class="homepageProject__image--img" src="~/assets/img/malegaze.jpg" alt="">
         </div>
         <div class="homepageProject__title">
           Male gaze
-        </div>
+        </div>-->
       </div>
     </div>
   </div>
@@ -32,8 +35,9 @@
 import {gsap, Power2} from 'gsap'
 import SplitText from '@/assets/js/SplitText'
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import ProjectTitle from "@/components/Homepage/ProjectTitle";
 export default {
-
+  components: {ProjectTitle},
   data() {
     return {
       height: 0
@@ -43,6 +47,7 @@ export default {
     gsap.registerPlugin(SplitText, ScrollTrigger)
 
     ScrollTrigger.addEventListener("refreshInit", this.setHeight);
+
     let splitName = new SplitText(this.$refs.nameTitle, {type: "chars"})
     let splitSubName = new SplitText(this.$refs.subNameTitle, {type: "chars"})
     let splitWebTitle = new SplitText(this.$refs.webTitle, {type: "chars"})
@@ -123,7 +128,6 @@ export default {
       height: 100vh;
       position: relative;
       overflow: hidden;
-      padding: 5rem;
       box-sizing: border-box;
       background-color: $C-black;
     }
@@ -161,6 +165,37 @@ export default {
     &__dash {
       margin: 2rem 0;
       font-size: 8rem;
+    }
+  }
+
+  .homepageProject {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+
+    &__projectTitle {
+      & > div:not(:last-child) {
+        margin-bottom: 5rem;
+      }
+    }
+    &__image {
+      width: 75rem;
+      height: 48rem;
+      background-color: pink;
+      z-index: 5;
+      &--img {
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+      }
+    }
+    &__title {
+      @include main-title;
+      color: $C-white;
+      margin-top: 5rem;
+      text-transform: uppercase;
+      font-size: 7rem;
     }
   }
 </style>
