@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <MainLoader/>
+  <div class="app">
+    <!--<MainLoader/>-->
     <nuxt/>
   </div>
 </template>
@@ -11,4 +11,10 @@ export default {
   components: {MainLoader}
 }
 </script>
+
+<style scoped lang="scss">
+  .app {
+    overflow: hidden;
+  }
+</style>
 
