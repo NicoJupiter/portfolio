@@ -31,5 +31,6 @@ export default {
   background-color: black;
   position: absolute;
   top: 0;
+  overflow: hidden;
 }
 </style>
