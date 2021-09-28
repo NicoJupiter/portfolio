@@ -15,17 +15,17 @@
         </div>
       </div>
     </div>
-    <div class="homepage__2">
-      <div class="homepageProject">
-        <ProjectTitle direction="left" />
-        <ProjectTitle direction="right" />
-
-        <!--<div class="homepageProject__image">
-          <img class="homepageProject__image--img" src="~/assets/img/malegaze.jpg" alt="">
+    <div class="homepage__2" ref="section2">
+      <div class="projectGrid">
+        <div class="projectGrid__row">
+          <div class="projectCard projectCard--small projectCard--centered"></div>
+          <div class="projectCard projectCard--small"></div>
+          <div class="projectCard projectCard--medium projectCard--bottom"></div>
         </div>
-        <div class="homepageProject__title">
-          Male gaze
-        </div>-->
+        <div class="projectGrid__row">
+          <div class="projectCard projectCard--medium"></div>
+          <div class="projectCard projectCard--small projectCard--centered"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -76,6 +76,7 @@ export default {
       }
     });
 
+
   },
   methods: {
     textApparition(tl, splitWord, timing) {
@@ -115,22 +116,23 @@ export default {
     position: absolute;
     overflow: hidden;
     width: 100%;
-    &__1 {
-      width: 100%;
-      height: 100vh;
-      position: relative;
-      overflow: hidden;
-      padding: 5rem;
-      box-sizing: border-box;
-    }
+    &__1,
     &__2 {
       width: 100%;
-      height: 100vh;
       position: relative;
       overflow: hidden;
       box-sizing: border-box;
-      background-color: $C-black;
     }
+    &__1 {
+      padding: 5rem;
+      height: 100vh;
+    }
+
+    &__2 {
+      //min-height: 100vh;
+      position: relative;
+    }
+
   }
 
   .homepageTitle {
@@ -168,34 +170,35 @@ export default {
     }
   }
 
-  .homepageProject {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  .projectGrid {
     height: 100%;
-
-    &__projectTitle {
-      & > div:not(:last-child) {
-        margin-bottom: 5rem;
-      }
-    }
-    &__image {
-      width: 75rem;
-      height: 48rem;
-      background-color: pink;
-      z-index: 5;
-      &--img {
-        width: 100%;
-        height: 100%;
-        background-size: cover;
-      }
-    }
-    &__title {
-      @include main-title;
-      color: $C-white;
-      margin-top: 5rem;
-      text-transform: uppercase;
-      font-size: 7rem;
+    padding: 0 10rem;
+    box-sizing: border-box;
+    &__row {
+      height: 50rem;
+     // background-color: pink;
+      display: flex;
+      justify-content: space-between;
     }
   }
+
+  .projectCard {
+    background-color: gray;
+    &--small {
+      width: 25rem;
+      height: 25rem;
+    }
+    &--medium {
+      width: 37.5rem;
+      height: 40rem;
+    }
+    &--centered {
+      align-self: center;
+    }
+    &--bottom {
+      align-self: end;
+    }
+  }
+
+
 </style>

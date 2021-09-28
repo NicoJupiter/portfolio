@@ -26,14 +26,18 @@ export default {
   },
   mounted() {
     this.cloneProjectTitle()
-    this.titleAppear()
+    if (this.$props.direction === 'right') {
+      this.$refs.rowProject.style.left = '-' + this.$data.xTranslateMax + 'px'
+    }
+    this.textAnimation()
+    //this.titleAppear()
   },
   methods: {
     cloneProjectTitle() {
 
      this.$data.xTranslateMax = this.$refs.itemProject.getBoundingClientRect().width;
 
-      let sizeScreen = window.innerWidth + ( this.$data.xTranslateMax * 2);
+      let sizeScreen = window.innerWidth + ( this.$data.xTranslateMax * 3);
       let currentRowSize =  0;
 
       console.log(this.$data.xTranslateMax)
@@ -51,22 +55,27 @@ export default {
       if(this.$props.direction === "left") {
         gsap.fromTo(this.$refs.rowProject, {
           x: 2500,
+          scrollTrigger: {
+            trigger: this.$refs.wrapperProject.parentNode,
+            start: "top center",
+            markers: true,
+          }
         }, {
           x: 0,
           ease: "slow(0.7, 0.7, false)",
           duration: 2,
           onComplete:() => {
             this.textAnimation()
-          },
-          scrollTrigger: {
-            trigger: this.$refs.wrapperProject.parentNode,
-            start: "top center",
-            markers: true,
           }
         })
       } else {
         gsap.fromTo(this.$refs.rowProject, {
           x: -2500,
+          scrollTrigger: {
+            trigger: this.$refs.wrapperProject.parentNode,
+            start: "top center",
+            markers: true,
+          }
         }, {
           x: -this.$data.xTranslateMax,
           ease: "slow(0.7, 0.7, false)",
@@ -74,11 +83,6 @@ export default {
           onComplete:() => {
             this.textAnimation()
           },
-          scrollTrigger: {
-            trigger: this.$refs.wrapperProject.parentNode,
-            start: "top center",
-            markers: true,
-          }
         })
       }
 
@@ -103,7 +107,7 @@ export default {
 <style scoped lang="scss">
   .projectTitleWrapper {
     position: relative;
-    height: 12rem;
+    height: 20rem;
   }
   .projectTitle {
     position: absolute;
@@ -112,7 +116,7 @@ export default {
     display: flex;
     &__item {
       @include main-title;
-      color: rgba($C-primary, 0.6);
+      color: rgba($C-primary, 0.3);
       text-transform: uppercase;
       font-size: 7rem;
     }
