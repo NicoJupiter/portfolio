@@ -3,6 +3,12 @@
     <div class="logo">
       <img src="~/assets/svg/logo.svg" alt="" ref="logo">
     </div>
+    <!--<div class="projectTitles" ref="projectTitles">
+      <ProjectTitle direction="left" />
+      <ProjectTitle direction="right" />
+      <ProjectTitle direction="left" />
+      <ProjectTitle direction="right" />
+    </div>-->
     <nuxt/>
   </div>
 </template>
@@ -10,8 +16,10 @@
 <script>
 import {gsap} from 'gsap'
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import ProjectTitle from "@/components/Homepage/ProjectTitle";
 export default {
   name: "home",
+  components: {ProjectTitle},
   mounted() {
     gsap.to(this.$refs.logo, {
       opacity: 0,
@@ -22,6 +30,7 @@ export default {
         toggleActions: 'play none none reverse'
       }
     })
+
   }
 }
 </script>
@@ -43,5 +52,24 @@ export default {
     position: fixed;
     z-index: 5;
   }
+
+  /*.projectTitles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    z-index: 5;
+    opacity: 0;
+
+    &__projectTitle {
+      & > div:not(:last-child) {
+        margin-bottom: 5rem;
+      }
+    }
+  }*/
 
 </style>

@@ -15,16 +15,8 @@
         </div>
       </div>
     </div>
-    <div class="homepage__2">
-      <div class="homepageProject">
-        <div class="homepageProject__image">
-
-        </div>
-        <div class="homepageProject__title">
-          Male gaze
-        </div>
-      </div>
-    </div>
+    <ProjectItem/>
+    <ProjectItem/>
   </div>
 </template>
 
@@ -32,8 +24,10 @@
 import {gsap, Power2} from 'gsap'
 import SplitText from '@/assets/js/SplitText'
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import ProjectTitle from "@/components/Homepage/ProjectTitle";
+import ProjectItem from "@/components/Homepage/ProjectItem";
 export default {
-
+  components: {ProjectItem, ProjectTitle},
   data() {
     return {
       height: 0
@@ -43,6 +37,7 @@ export default {
     gsap.registerPlugin(SplitText, ScrollTrigger)
 
     ScrollTrigger.addEventListener("refreshInit", this.setHeight);
+
     let splitName = new SplitText(this.$refs.nameTitle, {type: "chars"})
     let splitSubName = new SplitText(this.$refs.subNameTitle, {type: "chars"})
     let splitWebTitle = new SplitText(this.$refs.webTitle, {type: "chars"})
@@ -70,6 +65,7 @@ export default {
         invalidateOnRefresh: true,
       }
     });
+
 
   },
   methods: {
@@ -110,23 +106,19 @@ export default {
     position: absolute;
     overflow: hidden;
     width: 100%;
-    &__1 {
-      width: 100%;
-      height: 100vh;
-      position: relative;
-      overflow: hidden;
-      padding: 5rem;
-      box-sizing: border-box;
-    }
+    &__1,
     &__2 {
       width: 100%;
-      height: 100vh;
       position: relative;
       overflow: hidden;
-      padding: 5rem;
       box-sizing: border-box;
-      background-color: $C-black;
     }
+    &__1 {
+      padding: 5rem;
+      height: 100vh;
+    }
+
+
   }
 
   .homepageTitle {
@@ -163,4 +155,5 @@ export default {
       font-size: 8rem;
     }
   }
+
 </style>
