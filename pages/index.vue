@@ -15,19 +15,8 @@
         </div>
       </div>
     </div>
-    <div class="homepage__2" ref="section2">
-      <div class="projectGrid">
-        <div class="projectGrid__row">
-          <div class="projectCard projectCard--small projectCard--centered"></div>
-          <div class="projectCard projectCard--small"></div>
-          <div class="projectCard projectCard--medium projectCard--bottom"></div>
-        </div>
-        <div class="projectGrid__row">
-          <div class="projectCard projectCard--medium"></div>
-          <div class="projectCard projectCard--small projectCard--centered"></div>
-        </div>
-      </div>
-    </div>
+    <ProjectItem/>
+    <ProjectItem/>
   </div>
 </template>
 
@@ -36,8 +25,9 @@ import {gsap, Power2} from 'gsap'
 import SplitText from '@/assets/js/SplitText'
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import ProjectTitle from "@/components/Homepage/ProjectTitle";
+import ProjectItem from "@/components/Homepage/ProjectItem";
 export default {
-  components: {ProjectTitle},
+  components: {ProjectItem, ProjectTitle},
   data() {
     return {
       height: 0
@@ -128,10 +118,6 @@ export default {
       height: 100vh;
     }
 
-    &__2 {
-      //min-height: 100vh;
-      position: relative;
-    }
 
   }
 
@@ -169,36 +155,5 @@ export default {
       font-size: 8rem;
     }
   }
-
-  .projectGrid {
-    height: 100%;
-    padding: 0 10rem;
-    box-sizing: border-box;
-    &__row {
-      height: 50rem;
-     // background-color: pink;
-      display: flex;
-      justify-content: space-between;
-    }
-  }
-
-  .projectCard {
-    background-color: gray;
-    &--small {
-      width: 25rem;
-      height: 25rem;
-    }
-    &--medium {
-      width: 37.5rem;
-      height: 40rem;
-    }
-    &--centered {
-      align-self: center;
-    }
-    &--bottom {
-      align-self: end;
-    }
-  }
-
 
 </style>

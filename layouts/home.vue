@@ -3,12 +3,12 @@
     <div class="logo">
       <img src="~/assets/svg/logo.svg" alt="" ref="logo">
     </div>
-    <div class="projectTitles" ref="projectTitles">
+    <!--<div class="projectTitles" ref="projectTitles">
       <ProjectTitle direction="left" />
       <ProjectTitle direction="right" />
       <ProjectTitle direction="left" />
       <ProjectTitle direction="right" />
-    </div>
+    </div>-->
     <nuxt/>
   </div>
 </template>
@@ -31,15 +31,6 @@ export default {
       }
     })
 
-    gsap.to(this.$refs.projectTitles, {
-      opacity: 1,
-      duration: .25,
-      scrollTrigger: {
-        trigger: this.$refs.app,
-        start: '100% top',
-        toggleActions: 'play none none reverse'
-      }
-    })
   }
 }
 </script>
@@ -62,7 +53,7 @@ export default {
     z-index: 5;
   }
 
-  .projectTitles {
+  /*.projectTitles {
     position: fixed;
     top: 0;
     left: 0;
@@ -79,6 +70,6 @@ export default {
         margin-bottom: 5rem;
       }
     }
-  }
+  }*/
 
 </style>
