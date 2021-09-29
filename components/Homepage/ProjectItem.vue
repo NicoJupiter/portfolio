@@ -8,7 +8,7 @@
         <!--<div class="project__image--techno">Techno - Oui - Non</div>-->
       </div>
       <div class="project__title" ref="title">Male gaze</div>
-      <!--<div class="project__link"></div>-->
+      <div class="project__link"></div>
       <div class="project__line" ref="bottomLine"></div>
     </div>
   </div>
@@ -32,14 +32,14 @@ export default {
     }, {
       scaleX: 1,
       transformOrigin:'left center',
-      duration: 1.5
+      duration: .7
     })
     tl.fromTo(this.$refs.bottomLine, {
       scaleX: 0
     }, {
       scaleX: 1,
       transformOrigin:'right center',
-      duration: 1.5
+      duration: .7
     }, 0)
 
     tl.fromTo(splitNumber.chars, {
