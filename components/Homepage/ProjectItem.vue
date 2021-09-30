@@ -8,7 +8,9 @@
         <!--<div class="project__image--techno">Techno - Oui - Non</div>-->
       </div>
       <div class="project__title" ref="title">Male gaze</div>
-      <div class="project__link"></div>
+      <div class="project__circle">
+        <CircleLink :label="'Découvrir'" ref="circleComponent"/>
+      </div>
       <div class="project__line" ref="bottomLine"></div>
     </div>
   </div>
@@ -18,11 +20,16 @@
 import gsap, {Power2} from 'gsap'
 import SplitText from '@/assets/js/SplitText'
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger"
+import DrawSVG from '@/assets/js/DrawSVGPlugin.min'
+import CircleLink from "@/components/CircleLink";
 export default {
   name: "ProjectItem",
+  components: {CircleLink},
   mounted() {
-    gsap.registerPlugin(SplitText, ScrollTrigger)
+    gsap.registerPlugin(SplitText, ScrollTrigger, DrawSVG)
     let tl = gsap.timeline()
+    let circleRefs = this.$refs.circleComponent.$refs
+
 
     let splitNumber = new SplitText(this.$refs.number, {type: "chars"})
     let splitTitle = new SplitText(this.$refs.title, {type: "chars"})
@@ -46,14 +53,14 @@ export default {
       y: -120,
     }, {
       y: 0,
-      stagger: 0.05
+      stagger: 0.1
     }, 0.7)
 
     tl.fromTo(splitTitle.chars, {
       y: 120,
     }, {
       y: 0,
-      stagger: 0.1
+      stagger: 0.05
     }, 0.7)
 
 
@@ -71,6 +78,20 @@ export default {
       scale: 1,
       duration: .8
     }, 0.7)
+
+    tl.fromTo(circleRefs.circle, {
+      drawSVG: '0% 0%'
+    }, {
+      drawSVG:'0% 100%',
+      duration: .7
+    })
+    tl.fromTo(circleRefs.circleLabel, {
+      opacity: 0
+    }, {
+      opacity: 1,
+      duration: .25
+    })
+
 
     ScrollTrigger.create({
       trigger: this.$refs.container,
@@ -128,15 +149,11 @@ export default {
       margin-bottom: 1rem;
       overflow: hidden;
     }
-    &__link {
+    &__circle {
       position: absolute;
       top: 50%;
       left: 75%;
       transform: translateY(-50%);
-      width: 15rem;
-      height: 15rem;
-      border-radius: 100%;
-      border: 1px solid $C-primary;
     }
     &__line {
       width: 100%;
@@ -144,5 +161,6 @@ export default {
       background-color: $C-white;
 
     }
+
   }
 </style>

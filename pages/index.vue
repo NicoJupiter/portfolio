@@ -17,6 +17,9 @@
     </div>
     <ProjectItem/>
     <ProjectItem/>
+    <div class="homepage__2">
+
+    </div>
   </div>
 </template>
 
@@ -75,7 +78,6 @@ export default {
       }, {
         y: 0,
         stagger: 0.05,
-        ease: Power2.easeInOut
       }, timing)
     },
     textVanish(el) {
@@ -112,12 +114,9 @@ export default {
       position: relative;
       overflow: hidden;
       box-sizing: border-box;
-    }
-    &__1 {
       padding: 5rem;
       height: 100vh;
     }
-
 
   }
 
