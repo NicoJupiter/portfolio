@@ -107,7 +107,7 @@ export default {
 <style scoped lang="scss">
   .projectContainer {
     height: 100%;
-    padding: 0 10rem;
+    padding: 0 20rem;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -129,13 +129,20 @@ export default {
     }
 
     &__image {
-      width: 75rem;
-      height: 40rem;
-      margin: 1rem 0;
+      width: 50rem;
+      height: 30rem;
       overflow: hidden;
+      margin-left: 10rem;
+      &:after {
+        content: "";
+        display: block;
+        padding-bottom: 100%;
+      }
       img {
         width: 100%;
         height: 100%;
+        background-size: cover;
+        background-position: center;
       }
     }
 

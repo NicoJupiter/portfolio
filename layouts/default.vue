@@ -14,7 +14,7 @@ export default {
 
 <style scoped lang="scss">
   .app {
-    overflow: hidden;
+
   }
 </style>
 

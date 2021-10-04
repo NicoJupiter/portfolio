@@ -1,6 +1,6 @@
 <template>
   <div class="app" ref="app">
-    <div class="logo">
+    <!--<div class="logo">
       <img src="~/assets/svg/logo.svg" alt="" ref="logo">
     </div>
     <div class="projectTitlesUp" ref="projectTitlesUp">
@@ -14,7 +14,7 @@
       <div class="contactWrapper__mail">
         nicolas24.j@gmail.com
       </div>
-    </div>
+    </div>-->
     <nuxt/>
   </div>
 </template>
@@ -28,7 +28,7 @@ export default {
   name: "home",
   components: {CircleLink, ProjectTitle},
   mounted() {
-   /* gsap.to(this.$refs.logo, {
+    /*gsap.to(this.$refs.logo, {
       opacity: 0,
       duration: .25,
       scrollTrigger: {
@@ -45,8 +45,7 @@ export default {
         trigger: this.$refs.app,
         start: '75% top',
         end: '280% top',
-        toggleActions: 'play none none reverse',
-        markers: true
+        toggleActions: 'play none none reverse'
       }
     })
 
@@ -77,6 +76,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
   /*.app {
     overflow: hidden;
     position: fixed;
@@ -92,7 +92,6 @@ export default {
     @include absCenter;
     position: fixed;
     z-index: 5;
-    opacity: 0;
   }
 
   .projectTitlesUp {
