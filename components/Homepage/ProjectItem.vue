@@ -8,7 +8,9 @@
         <!--<div class="project__image--techno">Techno - Oui - Non</div>-->
       </div>
       <div class="project__title" ref="title">Male gaze</div>
-      <div class="project__link"></div>
+      <div class="project__circle">
+        <CircleLink :label="'Découvrir'" ref="circleComponent"/>
+      </div>
       <div class="project__line" ref="bottomLine"></div>
     </div>
   </div>
@@ -18,11 +20,16 @@
 import gsap, {Power2} from 'gsap'
 import SplitText from '@/assets/js/SplitText'
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger"
+import DrawSVG from '@/assets/js/DrawSVGPlugin.min'
+import CircleLink from "@/components/CircleLink";
 export default {
   name: "ProjectItem",
+  components: {CircleLink},
   mounted() {
-    gsap.registerPlugin(SplitText, ScrollTrigger)
+    gsap.registerPlugin(SplitText, ScrollTrigger, DrawSVG)
     let tl = gsap.timeline()
+    let circleRefs = this.$refs.circleComponent.$refs
+
 
     let splitNumber = new SplitText(this.$refs.number, {type: "chars"})
     let splitTitle = new SplitText(this.$refs.title, {type: "chars"})
@@ -31,30 +38,30 @@ export default {
       scaleX: 0
     }, {
       scaleX: 1,
-      transformOrigin:'left center',
-      duration: .7
+      transformOrigin:'center',
+      duration: .5
     })
     tl.fromTo(this.$refs.bottomLine, {
       scaleX: 0
     }, {
       scaleX: 1,
-      transformOrigin:'right center',
-      duration: .7
+      transformOrigin:'center',
+      duration: .5
     }, 0)
 
     tl.fromTo(splitNumber.chars, {
       y: -120,
     }, {
       y: 0,
-      stagger: 0.05
-    }, 0.7)
+      stagger: 0.1
+    }, 0.5)
 
     tl.fromTo(splitTitle.chars, {
       y: 120,
     }, {
       y: 0,
-      stagger: 0.1
-    }, 0.7)
+      stagger: 0.05
+    }, 0.5)
 
 
     tl.fromTo(this.$refs.imageContainer, {
@@ -63,21 +70,34 @@ export default {
       scaleY: 1,
       transformOrigin:'bottom',
       duration: .5
-    }, 0.7)
+    }, 0.5)
 
     tl.fromTo(this.$refs.image, {
       scale: 1.4
     }, {
       scale: 1,
       duration: .8
-    }, 0.7)
+    }, 0.5)
+
+    tl.fromTo(circleRefs.circle, {
+      drawSVG: '0% 0%'
+    }, {
+      drawSVG:'0% 100%',
+      duration: .7
+    }, 0.6)
+    tl.fromTo(circleRefs.circleLabel, {
+      opacity: 0
+    }, {
+      opacity: 1,
+      duration: .25
+    })
+
 
     ScrollTrigger.create({
       trigger: this.$refs.container,
-      start: '30% center',
-      end: 'center top',
+      start: 'top bottom',
       animation: tl,
-      toggleActions: 'play reverse play reverse'
+      toggleActions: 'restart restart restart reset'
     })
 
   }
@@ -86,8 +106,8 @@ export default {
 
 <style scoped lang="scss">
   .projectContainer {
-    height: 100vh;
-    padding: 0 10rem;
+    height: 100%;
+    padding: 0 20rem;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -109,13 +129,20 @@ export default {
     }
 
     &__image {
-      width: 75rem;
-      height: 40rem;
-      margin: 1rem 0;
+      width: 50rem;
+      height: 30rem;
       overflow: hidden;
+      margin-left: 10rem;
+      &:after {
+        content: "";
+        display: block;
+        padding-bottom: 100%;
+      }
       img {
         width: 100%;
         height: 100%;
+        background-size: cover;
+        background-position: center;
       }
     }
 
@@ -128,15 +155,11 @@ export default {
       margin-bottom: 1rem;
       overflow: hidden;
     }
-    &__link {
+    &__circle {
       position: absolute;
       top: 50%;
       left: 75%;
       transform: translateY(-50%);
-      width: 15rem;
-      height: 15rem;
-      border-radius: 100%;
-      border: 1px solid $C-primary;
     }
     &__line {
       width: 100%;
@@ -144,5 +167,6 @@ export default {
       background-color: $C-white;
 
     }
+
   }
 </style>
