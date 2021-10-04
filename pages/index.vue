@@ -1,24 +1,44 @@
 <template>
   <div class="homepage" ref="homepage">
-    <div class="homepage__1">
-      <div class="homepageTitle">
-        <div class="homepageTitle__top">
-          <div class="homepageTitle__top__name" ref="nameTitle">Jupiter</div>
-          <div class="homepageTitle__top__name" ref="subNameTitle">Nicolas</div>
-        </div>
-        <!--<div class="homepageTitle__center">
-          <img src="~/assets/svg/logo.svg" alt="" ref="logo">
-        </div>-->
-        <div class="homepageTitle__bottom">
-          <div class="homepageTitle__top__name" ref="webTitle">Web</div>
-          <div class="homepageTitle__top__name" ref="devTitle">Developer</div>
+    <div v-for="i in 1">
+      <div class="homepage__section" ref="sections">
+        <div class="homepageTitle">
+          <div class="homepageTitle__top">
+            <div class="homepageTitle__top__name" ref="nameTitle">Jupiter</div>
+            <div class="homepageTitle__top__name" ref="subNameTitle">Nicolas</div>
+          </div>
+          <div class="homepageTitle__bottom">
+            <div class="homepageTitle__top__name" ref="webTitle">Web</div>
+            <div class="homepageTitle__top__name" ref="devTitle">Developer</div>
+          </div>
         </div>
       </div>
+      <div class="homepage__section" ref="sections">
+        <ProjectItem/>
+      </div>
+      <div class="homepage__section" ref="sections">
+        <ProjectItem/>
+      </div>
+      <!--<div class="homepage__1">
+    <div class="homepageTitle">
+      <div class="homepageTitle__top">
+        <div class="homepageTitle__top__name" ref="nameTitle">Jupiter</div>
+        <div class="homepageTitle__top__name" ref="subNameTitle">Nicolas</div>
+      </div>
+      <div class="homepageTitle__bottom">
+        <div class="homepageTitle__top__name" ref="webTitle">Web</div>
+        <div class="homepageTitle__top__name" ref="devTitle">Developer</div>
+      </div>
     </div>
-    <ProjectItem/>
-    <ProjectItem/>
-    <div class="homepage__2">
+  </div>
+  <ProjectItem/>
+  <ProjectItem/>
+  <div class="homepage__2">
 
+  </div>-->
+      <!--<div class="homepage__section" ref="sections"></div>
+      <div class="homepage__section" ref="sections"></div>
+      <div class="homepage__section" ref="sections"></div>-->
     </div>
   </div>
 </template>
@@ -26,6 +46,7 @@
 <script>
 import {gsap, Power2} from 'gsap'
 import SplitText from '@/assets/js/SplitText'
+import ScrollTo from '@/assets/js/ScrollToPlugin.min'
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import ProjectTitle from "@/components/Homepage/ProjectTitle";
 import ProjectItem from "@/components/Homepage/ProjectItem";
@@ -33,13 +54,27 @@ export default {
   components: {ProjectItem, ProjectTitle},
   data() {
     return {
-      height: 0
+      height: 0,
+      scrollTween: null
     }
   },
   mounted() {
-    gsap.registerPlugin(SplitText, ScrollTrigger)
+    gsap.registerPlugin(SplitText, ScrollTrigger, ScrollTo)
 
-    ScrollTrigger.addEventListener("refreshInit", this.setHeight);
+    this.$refs.sections.forEach((el, i) => {
+      ScrollTrigger.create({
+        trigger: el,
+        start: "top bottom",
+        onToggle: self => self.isActive && !this.$data.scrollTween && this.goToSection(i)
+      });
+    });
+    /*ScrollTrigger.create({
+      trigger: this.$refs.sections,
+      start: "top bottom",
+      end: "+=200%",
+      onToggle: self => self.isActive && !this.$data.scrollTween && this.goToSection(1)
+    });*/
+    /*ScrollTrigger.addEventListener("refreshInit", this.setHeight);
 
     let splitName = new SplitText(this.$refs.nameTitle, {type: "chars"})
     let splitSubName = new SplitText(this.$refs.subNameTitle, {type: "chars"})
@@ -67,7 +102,7 @@ export default {
         scrub: 1,
         invalidateOnRefresh: true,
       }
-    });
+    });*/
 
 
   },
@@ -96,6 +131,18 @@ export default {
       height = this.$refs.homepage.clientHeight;
       document.body.style.height = height + "px";
     },
+    goToSection(i) {
+      this.$data.scrollTween  = gsap.to(window, {
+        scrollTo: {
+          y: i * document.documentElement.clientHeight,
+          autoKill: false
+        },
+        duration: 1,
+        onComplete: () => this.$data.scrollTween = null,
+        overwrite: true
+      });
+    }
+
   },
   layout: 'home',
 }
@@ -104,9 +151,8 @@ export default {
 <style scoped lang="scss">
 
   .homepage {
-    background-color: $C-black;
-    position: absolute;
-    overflow: hidden;
+    //position: absolute;
+    //overflow: hidden;
     width: 100%;
     &__1,
     &__2 {
@@ -116,6 +162,12 @@ export default {
       box-sizing: border-box;
       padding: 5rem;
       height: 100vh;
+    }
+
+    &__section {
+      height: 100vh;
+      position: relative;
+      background-color: $C-black;
     }
 
   }

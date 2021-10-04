@@ -38,15 +38,15 @@ export default {
       scaleX: 0
     }, {
       scaleX: 1,
-      transformOrigin:'left center',
-      duration: .7
+      transformOrigin:'center',
+      duration: .5
     })
     tl.fromTo(this.$refs.bottomLine, {
       scaleX: 0
     }, {
       scaleX: 1,
-      transformOrigin:'right center',
-      duration: .7
+      transformOrigin:'center',
+      duration: .5
     }, 0)
 
     tl.fromTo(splitNumber.chars, {
@@ -54,14 +54,14 @@ export default {
     }, {
       y: 0,
       stagger: 0.1
-    }, 0.7)
+    }, 0.5)
 
     tl.fromTo(splitTitle.chars, {
       y: 120,
     }, {
       y: 0,
       stagger: 0.05
-    }, 0.7)
+    }, 0.5)
 
 
     tl.fromTo(this.$refs.imageContainer, {
@@ -70,21 +70,21 @@ export default {
       scaleY: 1,
       transformOrigin:'bottom',
       duration: .5
-    }, 0.7)
+    }, 0.5)
 
     tl.fromTo(this.$refs.image, {
       scale: 1.4
     }, {
       scale: 1,
       duration: .8
-    }, 0.7)
+    }, 0.5)
 
     tl.fromTo(circleRefs.circle, {
       drawSVG: '0% 0%'
     }, {
       drawSVG:'0% 100%',
       duration: .7
-    })
+    }, 0.6)
     tl.fromTo(circleRefs.circleLabel, {
       opacity: 0
     }, {
@@ -95,10 +95,9 @@ export default {
 
     ScrollTrigger.create({
       trigger: this.$refs.container,
-      start: '30% center',
-      end: 'center top',
+      start: 'top bottom',
       animation: tl,
-      toggleActions: 'play reverse play reverse'
+      toggleActions: 'restart restart restart reset'
     })
 
   }
@@ -107,7 +106,7 @@ export default {
 
 <style scoped lang="scss">
   .projectContainer {
-    height: 100vh;
+    height: 100%;
     padding: 0 10rem;
     box-sizing: border-box;
     display: flex;

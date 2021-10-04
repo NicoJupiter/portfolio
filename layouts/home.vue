@@ -28,7 +28,7 @@ export default {
   name: "home",
   components: {CircleLink, ProjectTitle},
   mounted() {
-    gsap.to(this.$refs.logo, {
+   /* gsap.to(this.$refs.logo, {
       opacity: 0,
       duration: .25,
       scrollTrigger: {
@@ -69,7 +69,7 @@ export default {
         start: '300% top',
         toggleActions: 'play none none reverse'
       }
-    })
+    })*/
 
 
   }
@@ -77,7 +77,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .app {
+  /*.app {
     overflow: hidden;
     position: fixed;
     height: 100%;
@@ -86,12 +86,13 @@ export default {
     left: 0;
     right: 0;
     bottom: 0;
-  }
+  }*/
 
   .logo {
     @include absCenter;
     position: fixed;
     z-index: 5;
+    opacity: 0;
   }
 
   .projectTitlesUp {
