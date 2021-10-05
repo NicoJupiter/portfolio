@@ -42,7 +42,8 @@ export default {
   data() {
     return {
       height: 0,
-      scrollTween: null
+      scrollTween: null,
+
     }
   },
   mounted() {
@@ -146,10 +147,8 @@ export default {
         onComplete: () => this.$data.scrollTween = null,
         overwrite: true
       });
-    }
-
-  },
-  layout: 'home',
+    },
+  }
 }
 </script>
 
