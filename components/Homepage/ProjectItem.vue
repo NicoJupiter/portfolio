@@ -25,81 +25,107 @@ import CircleLink from "@/components/CircleLink";
 export default {
   name: "ProjectItem",
   components: {CircleLink},
+  data() {
+    return {
+      itemListeners: []
+    }
+  },
   mounted() {
     gsap.registerPlugin(SplitText, ScrollTrigger, DrawSVG)
-    let tl = gsap.timeline()
-    let circleRefs = this.$refs.circleComponent.$refs
+    this.$data.itemListeners.push(
+      this.$refs.imageContainer,
+      this.$refs.title,
+    )
+    this.initAnimation()
+    this.initEventListener()
+
+  },
+  methods: {
+    initEventListener() {
+      this.$data.itemListeners.forEach(item => {
+        item.addEventListener('mouseenter', e => {
+          this.$nuxt.$emit('hover-item')
+        })
+        item.addEventListener('mouseleave', e => {
+          this.$nuxt.$emit('leave-item')
+        })
+      })
+    },
+    initAnimation() {
+      let tl = gsap.timeline()
+      let circleRefs = this.$refs.circleComponent.$refs
 
 
-    let splitNumber = new SplitText(this.$refs.number, {type: "chars"})
-    let splitTitle = new SplitText(this.$refs.title, {type: "chars"})
+      let splitNumber = new SplitText(this.$refs.number, {type: "chars"})
+      let splitTitle = new SplitText(this.$refs.title, {type: "chars"})
 
-    tl.fromTo(this.$refs.topLine, {
-      scaleX: 0
-    }, {
-      scaleX: 1,
-      transformOrigin:'center',
-      duration: .5
-    })
-    tl.fromTo(this.$refs.bottomLine, {
-      scaleX: 0
-    }, {
-      scaleX: 1,
-      transformOrigin:'center',
-      duration: .5
-    }, 0)
+      tl.fromTo(this.$refs.topLine, {
+        scaleX: 0
+      }, {
+        scaleX: 1,
+        transformOrigin:'center',
+        duration: .5
+      })
+      tl.fromTo(this.$refs.bottomLine, {
+        scaleX: 0
+      }, {
+        scaleX: 1,
+        transformOrigin:'center',
+        duration: .5
+      }, 0)
 
-    tl.fromTo(splitNumber.chars, {
-      y: -120,
-    }, {
-      y: 0,
-      stagger: 0.1
-    }, 0.5)
+      tl.fromTo(splitNumber.chars, {
+        y: -120,
+      }, {
+        y: 0,
+        stagger: 0.1
+      }, 0.5)
 
-    tl.fromTo(splitTitle.chars, {
-      y: 120,
-    }, {
-      y: 0,
-      stagger: 0.05
-    }, 0.5)
-
-
-    tl.fromTo(this.$refs.imageContainer, {
-      scaleY: 0,
-    }, {
-      scaleY: 1,
-      transformOrigin:'bottom',
-      duration: .5
-    }, 0.5)
-
-    tl.fromTo(this.$refs.image, {
-      scale: 1.4
-    }, {
-      scale: 1,
-      duration: .8
-    }, 0.5)
-
-    tl.fromTo(circleRefs.circle, {
-      drawSVG: '0% 0%'
-    }, {
-      drawSVG:'0% 100%',
-      duration: .7
-    }, 0.6)
-    tl.fromTo(circleRefs.circleLabel, {
-      opacity: 0
-    }, {
-      opacity: 1,
-      duration: .25
-    })
+      tl.fromTo(splitTitle.chars, {
+        y: 120,
+      }, {
+        y: 0,
+        stagger: 0.05
+      }, 0.5)
 
 
-    ScrollTrigger.create({
-      trigger: this.$refs.container,
-      start: 'top bottom',
-      animation: tl,
-      toggleActions: 'restart restart restart reset'
-    })
+      tl.fromTo(this.$refs.imageContainer, {
+        scaleY: 0,
+      }, {
+        scaleY: 1,
+        transformOrigin:'bottom',
+        duration: .5
+      }, 0.5)
 
+      tl.fromTo(this.$refs.image, {
+        scale: 1.4
+      }, {
+        scale: 1,
+        duration: .8
+      }, 0.5)
+
+      tl.fromTo(circleRefs.circle, {
+        drawSVG: '0% 0%'
+      }, {
+        drawSVG:'0% 100%',
+        duration: .7
+      }, 0.6)
+      tl.fromTo(circleRefs.circleLabel, {
+        opacity: 0
+      }, {
+        opacity: 1,
+        duration: .25
+      })
+
+
+      ScrollTrigger.create({
+        trigger: this.$refs.container,
+        start: 'top bottom',
+        animation: tl,
+        toggleActions: 'restart restart restart reset'
+      })
+
+    },
   }
 }
 </script>

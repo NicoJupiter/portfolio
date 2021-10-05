@@ -1,5 +1,6 @@
 <template>
   <div class="app">
+    <CursorPointer/>
     <!--<MainLoader/>-->
     <nuxt/>
   </div>
@@ -7,14 +8,10 @@
 
 <script>
 import MainLoader from "@/components/Loaders/MainLoader";
+import gsap from 'gsap'
+import CursorPointer from "@/components/CursorPointer";
 export default {
-  components: {MainLoader}
+  components: {CursorPointer, MainLoader},
+
 }
 </script>
-
-<style scoped lang="scss">
-  .app {
-
-  }
-</style>
-

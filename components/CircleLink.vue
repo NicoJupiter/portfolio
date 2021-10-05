@@ -1,5 +1,5 @@
 <template>
-  <div class="circleLink">
+  <div class="circleLink" ref="circle">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
       <circle r="400" fill="none" cx="500" cy="500" stroke="white" stroke-width="10" ref="circle"/>
     </svg>
@@ -17,6 +17,14 @@ export default {
       required: true
     }
   },
+  mounted() {
+    this.$refs.circle.addEventListener('mouseenter', e => {
+      this.$nuxt.$emit('hover-item')
+    })
+    this.$refs.circle.addEventListener('mouseleave', e => {
+      this.$nuxt.$emit('leave-item')
+    })
+  }
 }
 </script>
 
