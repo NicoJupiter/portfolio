@@ -45,10 +45,23 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/style-resources',
+
   ],
+
+  module: {
+    loaders: [
+      {
+        test: /\.glsl$/,
+        loader: 'webpack-glsl'
+      }
+    ]
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    transpile: [
+      'three'
+    ]
     /*env: {
       baseUrl: process.env.BASE_URL || "https://portfolio-55714-default-rtdb.firebaseio.com"
     }*/

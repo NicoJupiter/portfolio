@@ -14,10 +14,13 @@
     "gsap": "^3.7.1",
     "node-sass": "^6.0.1",
     "nuxt": "^2.15.7",
-    "sass-loader": "^10.1.1"
+    "sass-loader": "^10.1.1",
+    "three": "^0.133.1"
   },
   "devDependencies": {
     "@nuxtjs/style-resources": "^1.2.1",
-    "file-loader": "^6.2.0"
+    "@types/dat.gui": "^0.7.7",
+    "file-loader": "^6.2.0",
+    "webpack-glsl-loader": "^1.0.1"
   }
 }

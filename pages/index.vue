@@ -1,5 +1,6 @@
 <template>
   <div class="homepage" ref="homepage">
+    <DistortionImage/>
     <div class="logo">
       <img src="~/assets/svg/logo.svg" alt="" ref="logo">
     </div>
@@ -37,8 +38,9 @@ import ScrollTo from '@/assets/js/ScrollToPlugin.min'
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import ProjectTitle from "@/components/Homepage/ProjectTitle";
 import ProjectItem from "@/components/Homepage/ProjectItem";
+import DistortionImage from "@/components/Homepage/DistortionImage";
 export default {
-  components: {ProjectItem, ProjectTitle},
+  components: {DistortionImage, ProjectItem, ProjectTitle},
   data() {
     return {
       height: 0,
@@ -158,6 +160,7 @@ export default {
     @include absCenter;
     position: fixed;
     z-index: 5;
+    display: none;
   }
 
 
@@ -186,7 +189,8 @@ export default {
     &__section {
       height: 100vh;
       position: relative;
-      background-color: $C-black;
+      background-color: transparent;
+
       &--1 {
         padding: 5rem;
       }
