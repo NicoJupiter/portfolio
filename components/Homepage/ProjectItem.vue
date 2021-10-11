@@ -25,9 +25,12 @@ import CircleLink from "@/components/CircleLink";
 export default {
   name: "ProjectItem",
   components: {CircleLink},
+  props: {
+  },
   data() {
     return {
-      itemListeners: []
+      itemListeners: [],
+      tl: null
     }
   },
   mounted() {
@@ -38,7 +41,12 @@ export default {
     )
     this.initAnimation()
     this.initEventListener()
-
+    this.$nuxt.$on('homepage::scrollStart',() =>  {
+      this.$data.tl.play()
+    })
+    this.$nuxt.$on('homepage::scrollEnd',() =>  {
+      this.$data.tl.restart()
+    })
   },
   methods: {
     initEventListener() {
@@ -52,21 +60,21 @@ export default {
       })
     },
     initAnimation() {
-      let tl = gsap.timeline()
+      this.$data.tl = gsap.timeline({paused: true})
       let circleRefs = this.$refs.circleComponent.$refs
 
 
       let splitNumber = new SplitText(this.$refs.number, {type: "chars"})
       let splitTitle = new SplitText(this.$refs.title, {type: "chars"})
 
-      tl.fromTo(this.$refs.topLine, {
+      this.$data.tl.fromTo(this.$refs.topLine, {
         scaleX: 0
       }, {
         scaleX: 1,
         transformOrigin:'center',
         duration: .5
       })
-      tl.fromTo(this.$refs.bottomLine, {
+      this.$data.tl.fromTo(this.$refs.bottomLine, {
         scaleX: 0
       }, {
         scaleX: 1,
@@ -74,14 +82,14 @@ export default {
         duration: .5
       }, 0)
 
-      tl.fromTo(splitNumber.chars, {
+      this.$data.tl.fromTo(splitNumber.chars, {
         y: -120,
       }, {
         y: 0,
         stagger: 0.1
       }, 0.5)
 
-      tl.fromTo(splitTitle.chars, {
+      this.$data.tl.fromTo(splitTitle.chars, {
         y: 120,
       }, {
         y: 0,
@@ -89,7 +97,7 @@ export default {
       }, 0.5)
 
 
-      tl.fromTo(this.$refs.imageContainer, {
+      this.$data.tl.fromTo(this.$refs.imageContainer, {
         scaleY: 0,
       }, {
         scaleY: 1,
@@ -97,20 +105,20 @@ export default {
         duration: .5
       }, 0.5)
 
-      tl.fromTo(this.$refs.image, {
+      this.$data.tl.fromTo(this.$refs.image, {
         scale: 1.4
       }, {
         scale: 1,
         duration: .8
       }, 0.5)
 
-      tl.fromTo(circleRefs.circle, {
+      this.$data.tl.fromTo(circleRefs.circle, {
         drawSVG: '0% 0%'
       }, {
         drawSVG:'0% 100%',
         duration: .7
       }, 0.6)
-      tl.fromTo(circleRefs.circleLabel, {
+      this.$data.tl.fromTo(circleRefs.circleLabel, {
         opacity: 0
       }, {
         opacity: 1,
@@ -120,9 +128,10 @@ export default {
 
       ScrollTrigger.create({
         trigger: this.$refs.container,
-        start: 'top bottom',
-        animation: tl,
-        toggleActions: 'restart restart restart reset'
+        start: 'center bottom',
+        end: "center top",
+        animation: this.$data.tl,
+        toggleActions: 'play reverse play reverse'
       })
 
     },
