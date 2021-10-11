@@ -13,7 +13,7 @@ import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 
-import img3 from '@/assets/img/test.PNG'
+import img3 from '@/assets/img/test3.jpg'
 
 export default {
   name: "DistortionImage",

@@ -131,11 +131,17 @@ export default {
 <style scoped lang="scss">
   .projectTitleWrapper {
     position: relative;
+    @include breakpoint(lt-md){
+      display: none;
+    }
   }
   .projectTitle {
     display: flex;
     &__item {
       @include main-title;
+      @include breakpoint(lt-lg) {
+        font-size: 5rem;
+      }
       color: rgba($C-primary, 0.3);
       text-transform: uppercase;
       font-size: 7rem;
