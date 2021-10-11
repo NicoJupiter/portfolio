@@ -1,5 +1,8 @@
 <template>
   <div class="homepage" ref="homepage">
+    <div class="homepage__nav">
+      <NavSections/>
+    </div>
     <DistortionImage/>
     <div class="homepage__logo">
       <img src="~/assets/svg/logo.svg" alt="" ref="logo">
@@ -35,8 +38,9 @@ import ProjectTitle from "@/components/Homepage/ProjectTitle";
 import ProjectItem from "@/components/Homepage/ProjectItem";
 import DistortionImage from "@/components/Homepage/DistortionImage";
 import TopTitle from "@/components/Homepage/TopTitle";
+import NavSections from "@/components/Homepage/NavSections";
 export default {
-  components: {TopTitle, DistortionImage, ProjectItem, ProjectTitle},
+  components: {NavSections, TopTitle, DistortionImage, ProjectItem, ProjectTitle},
   data() {
     return {
       height: 0,
@@ -190,6 +194,14 @@ export default {
     }
     &__interSection {
       height: 25vh;
+    }
+
+    &__nav {
+      position: fixed;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 5;
     }
 
   }
