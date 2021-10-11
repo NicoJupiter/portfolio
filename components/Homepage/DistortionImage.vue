@@ -7,6 +7,7 @@
 <script>
 import * as THREE from 'three'
 import { CustomPass } from '@/assets/js/CustomPass'
+import gsap from 'gsap'
 
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
@@ -31,9 +32,12 @@ export default {
       height: 0,
       textures: [],
       imgUrls: [img3, img3],
+      progressValues: [2, 5],
+      scaleValues: [1.5, 3],
+      indexValues: 0,
       settings : {
-        progress: 0,
-        scale: 0
+        progress: 2,
+        scale: 1
       }
     }
   },
@@ -64,6 +68,16 @@ export default {
       )
       this.$data.camera.position.set(0, 0, 2)
       this.$data.textures = this.$data.imgUrls.map(url => new THREE.TextureLoader().load(url))
+
+      this.$nuxt.$on('homepage::updateDistortion', (i) => {
+        gsap.to(this.$data.settings, {
+          progress: this.$data.progressValues[i],
+          scale: this.$data.scaleValues[i],
+          duration: 2,
+        })
+        /*this.$data.settings.progress = 5.0
+        this.$data.settings.scale = 3.0*/
+      })
     },
     initPost() {
 
@@ -140,8 +154,8 @@ export default {
       this.$data.time += 0.01
 
       this.$data.effect.uniforms[ 'time' ].value = this.$data.time;
-      //this.$data.effect.uniforms[ 'progress' ].value = this.$data.settings.progress;
-      //this.$data.effect.uniforms[ 'scale' ].value = this.$data.settings.scale;
+      this.$data.effect.uniforms[ 'progress' ].value = this.$data.settings.progress;
+      this.$data.effect.uniforms[ 'scale' ].value = this.$data.settings.scale;
 
       //this.material.uniforms.time.value = this.$data.time
       requestAnimationFrame(this.render.bind(this))
