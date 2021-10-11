@@ -21,12 +21,18 @@
           </div>
         </div>
       </div>
+      <div v-for="i in 2">
+
+        <div class="homepage__interSection"></div>
+        <div class="homepage__section" ref="sections">
+          <ProjectItem/>
+        </div>
+      </div>
+
+      <!--
       <div class="homepage__section" ref="sections">
         <ProjectItem/>
-      </div>
-      <div class="homepage__section" ref="sections">
-        <ProjectItem/>
-      </div>
+      </div>-->
     </div>
   </div>
 </template>
@@ -44,20 +50,14 @@ export default {
   data() {
     return {
       height: 0,
-      scrollTween: null,
-
+      scrollTween: false,
+      currentSection: null,
+      sectionsScroll: []
     }
   },
   mounted() {
+    window.scrollTo(0, 0);
     gsap.registerPlugin(SplitText, ScrollTrigger, ScrollTo)
-
-    this.$refs.sections.forEach((el, i) => {
-      ScrollTrigger.create({
-        trigger: el,
-        start: "top bottom",
-        onToggle: self => self.isActive && !this.$data.scrollTween && this.goToSection(i)
-      });
-    });
 
     gsap.to(this.$refs.logo, {
       opacity: 0,
@@ -98,6 +98,7 @@ export default {
     this.textVanish(this.$refs.webTitle)
     this.textVanish(this.$refs.devTitle)
 
+    //smooth scroll
     /*ScrollTrigger.addEventListener("refreshInit", this.setHeight);
 
     gsap.to(this.$refs.homepage, {
@@ -112,6 +113,15 @@ export default {
       }
     });*/
 
+    //section scroll
+    /*this.$refs.sections.forEach((el, i) => {
+    let st = ScrollTrigger.create({
+      trigger: el,
+      start: "top bottom",
+      onToggle: self => self.isActive && !this.$data.scrollTween && this.goToSection(i)
+    });
+    this.$data.sectionsScroll.push(st)
+  });*/
 
   },
   methods: {
@@ -134,22 +144,27 @@ export default {
         }
       })
     },
-    /*setHeight() {
-      let height
-      height = this.$refs.homepage.clientHeight;
-      document.body.style.height = height + "px";
-    },*/
     goToSection(i) {
+      this.$data.scrollTween = true
       this.$data.scrollTween  = gsap.to(window, {
         scrollTo: {
           y: i * document.documentElement.clientHeight,
           autoKill: false
         },
         duration: 1,
-        onComplete: () => this.$data.scrollTween = null,
+        onStart: () => {
+          this.$nuxt.$emit('homepage::scrollEnd')
+        },
+        onComplete: () => {
+          this.$data.scrollTween = false
+          this.$nuxt.$emit('homepage::scrollStart')
+        },
         overwrite: true
       });
     },
+  },
+  beforeDestroy() {
+
   }
 }
 </script>
@@ -160,7 +175,6 @@ export default {
     @include absCenter;
     position: fixed;
     z-index: 5;
-    display: none;
   }
 
 
@@ -185,15 +199,19 @@ export default {
   }
 
   .homepage {
-
+    overflow: hidden;
+    background-color: transparent;
     &__section {
       height: 100vh;
       position: relative;
-      background-color: transparent;
 
       &--1 {
         padding: 5rem;
       }
+    }
+
+    &__interSection {
+      height: 25vh;
     }
 
   }
