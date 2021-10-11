@@ -8,11 +8,13 @@ const CustomPass = {
 
     'tDiffuse': { value: null },
     'time': { value: 0 },
-    'progress': { value: 5 },
+    'progress': { value: 1 },
+    //'progress': { value: 5 },
     'tSize': { value: new Vector2( 256, 256 ) },
     'center': { value: new Vector2( 0.5, 0.5 ) },
     'angle': { value: 1.57 },
-    'scale': { value: 3.0 }
+    //'scale': { value: 3.0 }
+    'scale': { value: 0.0 }
 
   },
 

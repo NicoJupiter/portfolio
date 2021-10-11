@@ -21,10 +21,9 @@
           </div>
         </div>
       </div>
-      <div v-for="i in 2">
-
-        <div class="homepage__interSection"></div>
-        <div class="homepage__section" ref="sections">
+      <div class="homepage__section" ref="sections">
+        <div v-for="i in 2">
+          <div class="homepage__interSection"></div>
           <ProjectItem/>
         </div>
       </div>
@@ -67,19 +66,35 @@ export default {
       scrollTrigger: {
         trigger: this.$refs.homepage,
         start: '5% top',
-        toggleActions: 'play none none reverse'
+        toggleActions: 'play none none reverse',
       }
     })
 
     gsap.to(this.$refs.projectTitlesUp, {
       opacity: 1,
       duration: .25,
+      onStart: () => {
+        //this.$nuxt.$emit('homepage::updateDistortion')
+      },
       scrollTrigger: {
         trigger: this.$refs.homepage,
         start: '25% top',
-        toggleActions: 'play none none reverse'
+        toggleActions: 'play none none reverse',
       }
     })
+
+    this.$refs.sections.forEach((el, i) => {
+      ScrollTrigger.create({
+        trigger: el,
+        start: "top top",
+        onEnter: () => {
+          this.$nuxt.$emit('homepage::updateDistortion', i)
+        },
+        onEnterBack: () => {
+          this.$nuxt.$emit('homepage::updateDistortion', i)
+        }
+      });
+    });
 
 
     let splitName = new SplitText(this.$refs.nameTitle, {type: "chars"})
@@ -202,10 +217,10 @@ export default {
     overflow: hidden;
     background-color: transparent;
     &__section {
-      height: 100vh;
       position: relative;
 
       &--1 {
+        height: 100vh;
         padding: 5rem;
       }
     }
