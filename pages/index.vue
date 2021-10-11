@@ -1,7 +1,7 @@
 <template>
   <div class="homepage" ref="homepage">
     <DistortionImage/>
-    <div class="logo">
+    <div class="homepage__logo">
       <img src="~/assets/svg/logo.svg" alt="" ref="logo">
     </div>
     <div class="projectTitlesUp" ref="projectTitlesUp">
@@ -10,16 +10,7 @@
 
     <div v-for="i in 1">
       <div class="homepage__section homepage__section--1" ref="sections">
-        <div class="homepageTitle">
-          <div class="homepageTitle__top">
-            <div class="homepageTitle__top__name" ref="nameTitle">Jupiter</div>
-            <div class="homepageTitle__top__name" ref="subNameTitle">Nicolas</div>
-          </div>
-          <div class="homepageTitle__bottom">
-            <div class="homepageTitle__top__name" ref="webTitle">Web</div>
-            <div class="homepageTitle__top__name" ref="devTitle">Developer</div>
-          </div>
-        </div>
+       <TopTitle/>
       </div>
       <div class="homepage__section" ref="sections">
         <div v-for="i in 2">
@@ -37,15 +28,15 @@
 </template>
 
 <script>
-import {gsap, Power2} from 'gsap'
-import SplitText from '@/assets/js/SplitText'
+import {gsap} from 'gsap'
 import ScrollTo from '@/assets/js/ScrollToPlugin.min'
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import ProjectTitle from "@/components/Homepage/ProjectTitle";
 import ProjectItem from "@/components/Homepage/ProjectItem";
 import DistortionImage from "@/components/Homepage/DistortionImage";
+import TopTitle from "@/components/Homepage/TopTitle";
 export default {
-  components: {DistortionImage, ProjectItem, ProjectTitle},
+  components: {TopTitle, DistortionImage, ProjectItem, ProjectTitle},
   data() {
     return {
       height: 0,
@@ -56,7 +47,7 @@ export default {
   },
   mounted() {
     window.scrollTo(0, 0);
-    gsap.registerPlugin(SplitText, ScrollTrigger, ScrollTo)
+    gsap.registerPlugin(ScrollTrigger, ScrollTo)
 
     gsap.to(this.$refs.logo, {
       opacity: 0,
@@ -96,23 +87,6 @@ export default {
       });
     });
 
-
-    let splitName = new SplitText(this.$refs.nameTitle, {type: "chars"})
-    let splitSubName = new SplitText(this.$refs.subNameTitle, {type: "chars"})
-    let splitWebTitle = new SplitText(this.$refs.webTitle, {type: "chars"})
-    let splitDevTitle = new SplitText(this.$refs.devTitle, {type: "chars"})
-    let tl = gsap.timeline()
-
-    this.textApparition(tl, splitName, 0)
-    this.textApparition(tl, splitSubName, 0.2)
-    this.textApparition(tl, splitWebTitle, 0)
-    this.textApparition(tl, splitDevTitle, 0.2)
-
-    this.textVanish(this.$refs.nameTitle)
-    this.textVanish(this.$refs.subNameTitle)
-    this.textVanish(this.$refs.webTitle)
-    this.textVanish(this.$refs.devTitle)
-
     //smooth scroll
     /*ScrollTrigger.addEventListener("refreshInit", this.setHeight);
 
@@ -140,25 +114,6 @@ export default {
 
   },
   methods: {
-    textApparition(tl, splitWord, timing) {
-      tl.fromTo(splitWord.chars, {
-        y: 120,
-      }, {
-        y: 0,
-        stagger: 0.05,
-      }, timing)
-    },
-    textVanish(el) {
-      gsap.to(el, {
-        opacity: 0,
-        duration: .25,
-        scrollTrigger: {
-          trigger: this.$refs.sections[0],
-          start: 'center top',
-          toggleActions: 'play none none reverse',
-        }
-      })
-    },
     goToSection(i) {
       this.$data.scrollTween = true
       this.$data.scrollTween  = gsap.to(window, {
@@ -185,13 +140,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
-  .logo {
-    @include absCenter;
-    position: fixed;
-    z-index: 5;
-  }
-
 
   .projectTitlesUp {
     position: fixed;
@@ -225,45 +173,25 @@ export default {
       }
     }
 
+    &__logo {
+      @include absCenter;
+      position: fixed;
+      z-index: 5;
+      width: 20rem;
+      height: 20rem;
+      @include breakpoint(lt-lg) {
+        width: 15rem;
+        height: 15rem;
+      }
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
     &__interSection {
       height: 25vh;
     }
 
-  }
-
-  .homepageTitle {
-    @include main-title;
-    font-size: 5rem;
-    font-weight: $FW-medium;
-    color: $C-white;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-    /*width: 100%;
-    text-align: center;
-    text-transform: uppercase;*/
-
-    &__top {
-      font-size: 10rem;
-      &__name {
-        overflow: hidden;
-      }
-    }
-
-    &__center {
-      align-self: center;
-    }
-
-    &__bottom {
-      font-size: 10rem;
-      align-self: end;
-    }
-
-    &__dash {
-      margin: 2rem 0;
-      font-size: 8rem;
-    }
   }
 
 </style>

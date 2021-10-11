@@ -7,7 +7,11 @@
         <img src="~/assets/img/malegaze.jpg" alt="" ref="image">
         <!--<div class="project__image--techno">Techno - Oui - Non</div>-->
       </div>
-      <div class="project__title" ref="title">Male gaze</div>
+      <NuxtLink to="/projects" class="project__link">
+        <div  class="project__link--label" ref="title">
+          Home page
+        </div>
+      </NuxtLink>
       <div class="project__circle">
         <CircleLink :label="'Découvrir'" ref="circleComponent"/>
       </div>
@@ -35,10 +39,7 @@ export default {
   },
   mounted() {
     gsap.registerPlugin(SplitText, ScrollTrigger, DrawSVG)
-    this.$data.itemListeners.push(
-      this.$refs.imageContainer,
-      this.$refs.title,
-    )
+
     this.initAnimation()
     this.initEventListener()
     this.$nuxt.$on('homepage::scrollStart',() =>  {
@@ -50,6 +51,12 @@ export default {
   },
   methods: {
     initEventListener() {
+
+      this.$data.itemListeners.push(
+        this.$refs.imageContainer,
+        this.$refs.title,
+      )
+
       this.$data.itemListeners.forEach(item => {
         item.addEventListener('mouseenter', e => {
           this.$nuxt.$emit('hover-item')
@@ -62,7 +69,6 @@ export default {
     initAnimation() {
       this.$data.tl = gsap.timeline({paused: true})
       let circleRefs = this.$refs.circleComponent.$refs
-
 
       let splitNumber = new SplitText(this.$refs.number, {type: "chars"})
       let splitTitle = new SplitText(this.$refs.title, {type: "chars"})
@@ -147,12 +153,14 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
+
   }
 
   .project {
     display: flex;
     flex-direction: column;
     position: relative;
+    justify-content: center;
     &__number {
       font-family: $F-Lato;
       font-weight: $FW-bold;
@@ -161,6 +169,9 @@ export default {
       color: $C-white;
       margin-top: 1rem;
       overflow: hidden;
+      @include breakpoint(lt-lg) {
+        font-size: 5rem;
+      }
     }
 
     &__image {
@@ -168,6 +179,11 @@ export default {
       height: 30rem;
       overflow: hidden;
       margin-left: 10rem;
+      @include breakpoint(lt-lg) {
+        width: 35rem;
+        height: 20rem;
+        margin-left: 5rem;
+      }
       &:after {
         content: "";
         display: block;
@@ -181,14 +197,22 @@ export default {
       }
     }
 
-    &__title {
-      @include main-title;
-      font-size: 7rem;
+    &__link {
       align-self: end;
-      text-transform: uppercase;
-      color: $C-white;
-      margin-bottom: 1rem;
-      overflow: hidden;
+      text-decoration: none;
+      &--label {
+        @include main-title;
+        font-size: 7rem;
+        text-transform: uppercase;
+        color: $C-white;
+        margin-bottom: 1rem;
+        overflow: hidden;
+
+        @include breakpoint(lt-lg) {
+          font-size: 5rem;
+        }
+      }
+
     }
     &__circle {
       position: absolute;

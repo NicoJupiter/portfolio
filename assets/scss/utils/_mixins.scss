@@ -2,10 +2,19 @@
   font-family: $F-Oswald;
   font-weight: $FW-medium;
   letter-spacing: 0.495em;
+  @include breakpoint(lt-lg) {
+    letter-spacing: 0.2em;
+  }
 }
 
 @mixin absCenter {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+@mixin IE(){
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    @content;
+  }
 }
