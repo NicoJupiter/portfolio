@@ -148,7 +148,7 @@ export default {
 <style scoped lang="scss">
   .projectContainer {
     height: 100vh;
-    padding: 0 20rem;
+    padding: 0 25rem;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;

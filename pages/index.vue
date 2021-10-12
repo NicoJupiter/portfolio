@@ -21,7 +21,9 @@
           <ProjectItem/>
         </div>
       </div>
-
+      <div class="homepage__section homepage__section--2" ref="sections">
+        <About/>
+      </div>
       <!--
       <div class="homepage__section" ref="sections">
         <ProjectItem/>
@@ -39,8 +41,9 @@ import ProjectItem from "@/components/Homepage/ProjectItem";
 import DistortionImage from "@/components/Homepage/DistortionImage";
 import TopTitle from "@/components/Homepage/TopTitle";
 import NavSections from "@/components/Homepage/NavSections";
+import About from "@/components/Homepage/About";
 export default {
-  components: {NavSections, TopTitle, DistortionImage, ProjectItem, ProjectTitle},
+  components: {About, NavSections, TopTitle, DistortionImage, ProjectItem, ProjectTitle},
   data() {
     return {
       height: 0,
@@ -65,23 +68,10 @@ export default {
       }
     })
 
-    gsap.to(this.$refs.projectTitlesUp, {
-      opacity: 1,
-      duration: .25,
-      onStart: () => {
-        //this.$nuxt.$emit('homepage::updateDistortion')
-      },
-      scrollTrigger: {
-        trigger: this.$refs.homepage,
-        start: '25% top',
-        toggleActions: 'play none none reverse',
-      }
-    })
-
     this.$refs.sections.forEach((el, i) => {
       ScrollTrigger.create({
         trigger: el,
-        start: "top top",
+        start: "-10px top",
         onEnter: () => {
           this.$nuxt.$emit('homepage::updateDistortion', i)
         },
@@ -152,7 +142,6 @@ export default {
     transform: rotate(90deg) translate(-1%, -50%);
     transform-origin: left;
     z-index: 5;
-    opacity: 0;
   }
 
   .projectTitleDown {
@@ -174,6 +163,10 @@ export default {
       &--1 {
         height: 100vh;
         padding: 5rem;
+      }
+      &--2 {
+        height: 100vh;
+        padding: 0 20rem;
       }
     }
 
