@@ -1,26 +1,38 @@
 <template>
   <div class="about">
-    <div class="about__title">About me</div>
-    <div class="about__text">
+    <div class="about__title" ref="title">About me</div>
+    <div class="about__text" ref="text">
       Lorem ipsum dolor sit amet, consectetur adipisicing elit.
       Beatae distinctio facere ipsa iusto. Adipisci, architecto assumenda at beatae ea eaque eum itaque,
       libero nam non pariatur quisquam quod totam ullam!
     </div>
-    <div class="about__bottom">
+    <div class="about__bottom" ref="bottom" v-for="i in 1">
       <div class="about__social">
-        <div class="about__social--title">Social</div>
-        <div class="about__social--item">linkedin</div>
-        <div class="about__social--item">facebook</div>
-        <div class="about__social--item">twitter</div>
-        <div class="about__social--item">soundcloud</div>
+        <div class="about__social--title" ref="titleSocial">Social</div>
+        <div class="about__social--item">
+          <div ref="socials">linkedin</div>
+        </div>
+        <div class="about__social--item">
+          <div ref="socials">facebook</div>
+        </div>
+        <div class="about__social--item">
+          <div ref="socials">twitter</div>
+        </div>
+        <div class="about__social--item">
+          <div ref="socials">soundcloud</div>
+        </div>
       </div>
       <div class="about__social">
-        <div class="about__social--title">Mail</div>
-        <div class="about__social--item">nicolas24.j@gmail.com</div>
+        <div class="about__social--title" ref="titleSocial">Mail</div>
+        <div class="about__social--item">
+          <div ref="socials">nicolas24.j@gmail.com</div>
+        </div>
       </div>
       <div class="about__social">
-        <div class="about__social--title">Autre</div>
-        <div class="about__social--item">CV</div>
+        <div class="about__social--title" ref="titleSocial">Autre</div>
+        <div class="about__social--item">
+          <div ref="socials">CV</div>
+        </div>
       </div>
     </div>
   </div>
@@ -62,8 +74,12 @@ export default {
         margin-bottom: 1rem;
       }
       &--item {
-        color: $C-white;
         margin-bottom: .5rem;
+        overflow: hidden;
+        div {
+          text-decoration: none;
+          color: $C-white;
+        }
       }
     }
   }

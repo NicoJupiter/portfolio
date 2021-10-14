@@ -22,7 +22,7 @@
         </div>
       </div>
       <div class="homepage__section homepage__section--2" ref="sections">
-        <About/>
+        <About ref="aboutSection"/>
       </div>
       <!--
       <div class="homepage__section" ref="sections">
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import {gsap} from 'gsap'
+import {gsap, Expo} from 'gsap'
 import ScrollTo from '@/assets/js/ScrollToPlugin.min'
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import ProjectTitle from "@/components/Homepage/ProjectTitle";
@@ -42,6 +42,8 @@ import DistortionImage from "@/components/Homepage/DistortionImage";
 import TopTitle from "@/components/Homepage/TopTitle";
 import NavSections from "@/components/Homepage/NavSections";
 import About from "@/components/Homepage/About";
+import SplitText from "assets/js/SplitText";
+
 export default {
   components: {About, NavSections, TopTitle, DistortionImage, ProjectItem, ProjectTitle},
   data() {
@@ -54,8 +56,10 @@ export default {
   },
   mounted() {
     window.scrollTo(0, 0);
-    gsap.registerPlugin(ScrollTrigger, ScrollTo)
+    gsap.registerPlugin(ScrollTrigger, ScrollTo, SplitText)
 
+    let aboutRefs = this.$refs.aboutSection[0].$refs
+    let splitAboutText = new SplitText(aboutRefs.text, {type: "words"})
     gsap.to(this.$refs.logo, {
       opacity: 0,
       y: 100,
@@ -73,6 +77,7 @@ export default {
         trigger: el,
         start: "-10px top",
         onEnter: () => {
+          console.log('test')
           this.$nuxt.$emit('homepage::updateDistortion', i)
         },
         onEnterBack: () => {
@@ -80,6 +85,48 @@ export default {
         }
       });
     });
+
+    let tlAbout = gsap.timeline()
+    tlAbout.fromTo(aboutRefs.title, {
+      opacity: 0,
+    }, {
+      opacity: 1,
+      duration: .25
+    })
+
+    tlAbout.fromTo(splitAboutText.words, {
+      opacity: 0,
+      y: 100,
+      skewX: -10
+    }, {
+      opacity: 1,
+      y: 0,
+      skewX: 0,
+      stagger: 0.05,
+    })
+
+    tlAbout.fromTo(aboutRefs.titleSocial, {
+      opacity: 0,
+    }, {
+      opacity: 1,
+      duration: .25
+    })
+
+    tlAbout.fromTo(aboutRefs.socials, {
+      y: 100,
+    }, {
+      y: 0,
+      duration: 1,
+      ease: Expo.easeOut,
+    })
+
+    ScrollTrigger.create({
+      trigger: this.$refs.aboutSection[0].$el,
+      start: '-10px top',
+      animation: tlAbout,
+      toggleActions: 'play none none none'
+    })
+
 
     //smooth scroll
     /*ScrollTrigger.addEventListener("refreshInit", this.setHeight);

@@ -33,7 +33,6 @@ export default {
     this.cloneProjectTitle()
 
     this.$nuxt.$on('homepage::updateDistortion', (i) => {
-      console.log(i)
       if (i === 1) {
         gsap.to(this.$refs.wrapperProject, {
           opacity: 1,
