@@ -53,12 +53,32 @@ export default {
     this.$nuxt.$on('leave-item', () => {
       this.itemLeave()
     })
+    this.$nuxt.$on('link-hover', () => {
+      this.linkHover()
+    })
+    this.$nuxt.$on('leave-link', () => {
+      this.linkLeave()
+    })
   },
   beforeDestroy(){
     this.$nuxt.$off('hover-item')
     this.$nuxt.$off('leave-item')
+    this.$nuxt.$off('link-hover')
+    this.$nuxt.$off('leave-link')
   },
   methods: {
+    linkHover() {
+      gsap.to(this.$refs.cursor, {
+        scale: 0,
+        duration: .25
+      })
+    },
+    linkLeave() {
+      gsap.to(this.$refs.cursor, {
+        scale: 1,
+        duration: .25
+      })
+    },
     itemHover() {
       gsap.to(this.$refs.cursor, {
         scale: 2,

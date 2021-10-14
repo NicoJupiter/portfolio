@@ -10,28 +10,46 @@
       <div class="about__social">
         <div class="about__social--title" ref="titleSocial">Social</div>
         <div class="about__social--item">
-          <div ref="socials">linkedin</div>
+          <div ref="socials">
+            linkedin
+            <span></span>
+          </div>
         </div>
         <div class="about__social--item">
-          <div ref="socials">facebook</div>
+          <div ref="socials">
+            facebook
+            <span></span>
+          </div>
         </div>
         <div class="about__social--item">
-          <div ref="socials">twitter</div>
+          <div ref="socials">
+            twitter
+            <span></span>
+          </div>
         </div>
         <div class="about__social--item">
-          <div ref="socials">soundcloud</div>
+          <div ref="socials">
+            soundcloud
+            <span></span>
+          </div>
         </div>
       </div>
       <div class="about__social">
         <div class="about__social--title" ref="titleSocial">Mail</div>
         <div class="about__social--item">
-          <div ref="socials">nicolas24.j@gmail.com</div>
+          <div ref="socials">
+            nicolas24.j@gmail.com
+            <span></span>
+          </div>
         </div>
       </div>
       <div class="about__social">
-        <div class="about__social--title" ref="titleSocial">Autre</div>
+        <div class="about__social--title" ref="titleSocial">Autres</div>
         <div class="about__social--item">
-          <div ref="socials">CV</div>
+          <div ref="socials">
+            CV
+            <span></span>
+          </div>
         </div>
       </div>
     </div>
@@ -39,8 +57,26 @@
 </template>
 
 <script>
+import gsap from 'gsap'
+
 export default {
-  name: "About"
+  name: "About",
+  mounted() {
+    this.$refs.socials.forEach(item => {
+      item.addEventListener('mouseenter', () => {
+        this.$nuxt.$emit('link-hover')
+        gsap.to(item.children[0], {
+          width: '100%'
+        })
+      })
+      item.addEventListener('mouseleave', () => {
+        this.$nuxt.$emit('leave-link')
+        gsap.to(item.children[0], {
+          width: 0
+        })
+      })
+    })
+  }
 }
 </script>
 
@@ -51,7 +87,7 @@ export default {
     flex-direction: column;
     justify-content: center;
     &__title {
-      color: $C-primary;
+      color: $C-secondary;
       font-size: 3rem;
       font-family: $F-Lato;
       margin-bottom: 2rem;
@@ -62,6 +98,9 @@ export default {
       letter-spacing: .4rem;
       font-size: 5rem;
       margin-bottom: 3rem;
+      @include breakpoint(lt-lg) {
+        font-size: 3rem;
+      }
     }
     &__bottom {
       display: flex;
@@ -79,6 +118,16 @@ export default {
         div {
           text-decoration: none;
           color: $C-white;
+          position: relative;
+          display: inline-block;
+          span {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            background-color: $C-white;
+            height: 1px;
+            width: 0;
+          }
         }
       }
     }

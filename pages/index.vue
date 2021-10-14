@@ -75,12 +75,13 @@ export default {
     this.$refs.sections.forEach((el, i) => {
       ScrollTrigger.create({
         trigger: el,
-        start: "-10px top",
+        start: "top top",
         onEnter: () => {
           console.log('test')
           this.$nuxt.$emit('homepage::updateDistortion', i)
         },
         onEnterBack: () => {
+          console.log('enter back')
           this.$nuxt.$emit('homepage::updateDistortion', i)
         }
       });
@@ -102,7 +103,7 @@ export default {
       opacity: 1,
       y: 0,
       skewX: 0,
-      stagger: 0.05,
+      stagger: 0.02,
     })
 
     tlAbout.fromTo(aboutRefs.titleSocial, {
@@ -110,15 +111,15 @@ export default {
     }, {
       opacity: 1,
       duration: .25
-    })
+    }, .5)
 
     tlAbout.fromTo(aboutRefs.socials, {
       y: 100,
-    }, {
+    },{
       y: 0,
       duration: 1,
       ease: Expo.easeOut,
-    })
+    },.7)
 
     ScrollTrigger.create({
       trigger: this.$refs.aboutSection[0].$el,
@@ -207,12 +208,8 @@ export default {
     &__section {
       position: relative;
 
-      &--1 {
-        height: 100vh;
-        padding: 5rem;
-      }
       &--2 {
-        height: 100vh;
+        height: 102vh;
         padding: 0 20rem;
       }
     }
@@ -223,6 +220,7 @@ export default {
       z-index: 5;
       width: 20rem;
       height: 20rem;
+      pointer-events: none;
       @include breakpoint(lt-lg) {
         width: 15rem;
         height: 15rem;

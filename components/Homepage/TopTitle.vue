@@ -1,13 +1,13 @@
 <template>
-  <div class="homepageTitle">
-    <div class="homepageTitle__top">
+  <div class="homepageTitle" ref="container">
+    <!--<div class="homepageTitle__top">
       <div class="homepageTitle__top__name" ref="nameTitle">Jupiter</div>
       <div class="homepageTitle__top__name" ref="subNameTitle">Nicolas</div>
     </div>
     <div class="homepageTitle__bottom">
       <div class="homepageTitle__top__name" ref="webTitle">Web</div>
       <div class="homepageTitle__top__name" ref="devTitle">Developer</div>
-    </div>
+    </div>-->
   </div>
 </template>
 
@@ -19,7 +19,7 @@ export default {
   name: "TopTitle",
   mounted() {
     gsap.registerPlugin(SplitText)
-    let splitName = new SplitText(this.$refs.nameTitle, {type: "chars"})
+    /*let splitName = new SplitText(this.$refs.nameTitle, {type: "chars"})
     let splitSubName = new SplitText(this.$refs.subNameTitle, {type: "chars"})
     let splitWebTitle = new SplitText(this.$refs.webTitle, {type: "chars"})
     let splitDevTitle = new SplitText(this.$refs.devTitle, {type: "chars"})
@@ -30,7 +30,7 @@ export default {
     this.textApparition(tl, splitWebTitle, 0)
     this.textApparition(tl, splitDevTitle, 0.2)
 
-    /*this.textVanish(this.$refs.nameTitle)
+    this.textVanish(this.$refs.nameTitle)
     this.textVanish(this.$refs.subNameTitle)
     this.textVanish(this.$refs.webTitle)
     this.textVanish(this.$refs.devTitle)*/
@@ -45,15 +45,15 @@ export default {
       }, timing)
     },
     textVanish(el) {
-      /*gsap.to(el, {
+      gsap.to(el, {
         opacity: 0,
         duration: .25,
         scrollTrigger: {
-          trigger: this.$refs.sections[0],
+          trigger: this.$refs.container,
           start: 'center top',
           toggleActions: 'play none none reverse',
         }
-      })*/
+      })
     },
   }
 }
@@ -68,7 +68,8 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100%;
+    height: 100vh;
+    padding: 5rem;
     /*width: 100%;
     text-align: center;
     text-transform: uppercase;*/
