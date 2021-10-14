@@ -14,6 +14,7 @@ import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 
 import img3 from '@/assets/img/test3.jpg'
+import img2 from '@/assets/img/test.PNG'
 
 export default {
   name: "DistortionImage",
@@ -31,7 +32,7 @@ export default {
       width: 0,
       height: 0,
       textures: [],
-      imgUrls: [img3, img3],
+      imgUrls: [img3, img2],
       progressValues: [2, 6, 5],
       scaleValues: [2, 4, 3],
       indexValues: 0,
