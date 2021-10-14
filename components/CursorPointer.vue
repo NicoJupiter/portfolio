@@ -111,14 +111,14 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  border: 1px solid $C-primary;
+  border: 1px solid $C-secondary;
   border-radius: 50%;
   z-index: 5;
   pointer-events: none;
   &__point {
     width: 1rem;
     height: 1rem;
-    background-color: $C-primary;
+    background-color: $C-secondary;
     border-radius: 50%;
     @include absCenter;
     position: fixed;
@@ -129,7 +129,7 @@ export default {
     left: 50%;
     transform: translate(50%, -50%);
     font-size: 1rem;
-    color: $C-primary;
+    color: $C-secondary;
     text-transform: uppercase;
     opacity: 0;
   }
