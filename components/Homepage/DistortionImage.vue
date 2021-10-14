@@ -32,8 +32,8 @@ export default {
       height: 0,
       textures: [],
       imgUrls: [img3, img3],
-      progressValues: [2, 5],
-      scaleValues: [1.5, 3],
+      progressValues: [2, 6, 5],
+      scaleValues: [2, 4, 3],
       indexValues: 0,
       settings : {
         progress: 2,

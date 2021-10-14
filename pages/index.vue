@@ -1,5 +1,8 @@
 <template>
   <div class="homepage" ref="homepage">
+    <div class="homepage__nav">
+      <NavSections/>
+    </div>
     <DistortionImage/>
     <div class="homepage__logo">
       <img src="~/assets/svg/logo.svg" alt="" ref="logo">
@@ -18,7 +21,9 @@
           <ProjectItem/>
         </div>
       </div>
-
+      <div class="homepage__section homepage__section--2" ref="sections">
+        <About ref="aboutSection"/>
+      </div>
       <!--
       <div class="homepage__section" ref="sections">
         <ProjectItem/>
@@ -28,15 +33,19 @@
 </template>
 
 <script>
-import {gsap} from 'gsap'
+import {gsap, Expo} from 'gsap'
 import ScrollTo from '@/assets/js/ScrollToPlugin.min'
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import ProjectTitle from "@/components/Homepage/ProjectTitle";
 import ProjectItem from "@/components/Homepage/ProjectItem";
 import DistortionImage from "@/components/Homepage/DistortionImage";
 import TopTitle from "@/components/Homepage/TopTitle";
+import NavSections from "@/components/Homepage/NavSections";
+import About from "@/components/Homepage/About";
+import SplitText from "assets/js/SplitText";
+
 export default {
-  components: {TopTitle, DistortionImage, ProjectItem, ProjectTitle},
+  components: {About, NavSections, TopTitle, DistortionImage, ProjectItem, ProjectTitle},
   data() {
     return {
       height: 0,
@@ -47,8 +56,10 @@ export default {
   },
   mounted() {
     window.scrollTo(0, 0);
-    gsap.registerPlugin(ScrollTrigger, ScrollTo)
+    gsap.registerPlugin(ScrollTrigger, ScrollTo, SplitText)
 
+    let aboutRefs = this.$refs.aboutSection[0].$refs
+    let splitAboutText = new SplitText(aboutRefs.text, {type: "words"})
     gsap.to(this.$refs.logo, {
       opacity: 0,
       y: 100,
@@ -61,24 +72,12 @@ export default {
       }
     })
 
-    gsap.to(this.$refs.projectTitlesUp, {
-      opacity: 1,
-      duration: .25,
-      onStart: () => {
-        //this.$nuxt.$emit('homepage::updateDistortion')
-      },
-      scrollTrigger: {
-        trigger: this.$refs.homepage,
-        start: '25% top',
-        toggleActions: 'play none none reverse',
-      }
-    })
-
     this.$refs.sections.forEach((el, i) => {
       ScrollTrigger.create({
         trigger: el,
-        start: "top top",
+        start: "-10px top",
         onEnter: () => {
+          console.log('test')
           this.$nuxt.$emit('homepage::updateDistortion', i)
         },
         onEnterBack: () => {
@@ -86,6 +85,48 @@ export default {
         }
       });
     });
+
+    let tlAbout = gsap.timeline()
+    tlAbout.fromTo(aboutRefs.title, {
+      opacity: 0,
+    }, {
+      opacity: 1,
+      duration: .25
+    })
+
+    tlAbout.fromTo(splitAboutText.words, {
+      opacity: 0,
+      y: 100,
+      skewX: -10
+    }, {
+      opacity: 1,
+      y: 0,
+      skewX: 0,
+      stagger: 0.05,
+    })
+
+    tlAbout.fromTo(aboutRefs.titleSocial, {
+      opacity: 0,
+    }, {
+      opacity: 1,
+      duration: .25
+    })
+
+    tlAbout.fromTo(aboutRefs.socials, {
+      y: 100,
+    }, {
+      y: 0,
+      duration: 1,
+      ease: Expo.easeOut,
+    })
+
+    ScrollTrigger.create({
+      trigger: this.$refs.aboutSection[0].$el,
+      start: '-10px top',
+      animation: tlAbout,
+      toggleActions: 'play none none none'
+    })
+
 
     //smooth scroll
     /*ScrollTrigger.addEventListener("refreshInit", this.setHeight);
@@ -148,7 +189,6 @@ export default {
     transform: rotate(90deg) translate(-1%, -50%);
     transform-origin: left;
     z-index: 5;
-    opacity: 0;
   }
 
   .projectTitleDown {
@@ -171,6 +211,10 @@ export default {
         height: 100vh;
         padding: 5rem;
       }
+      &--2 {
+        height: 100vh;
+        padding: 0 20rem;
+      }
     }
 
     &__logo {
@@ -190,6 +234,14 @@ export default {
     }
     &__interSection {
       height: 25vh;
+    }
+
+    &__nav {
+      position: fixed;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 5;
     }
 
   }
