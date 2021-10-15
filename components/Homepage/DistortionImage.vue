@@ -1,6 +1,6 @@
 <template>
   <div class="distortionImage" ref="container">
-
+    <div class="distortionImage__calc"></div>
   </div>
 </template>
 
@@ -32,7 +32,7 @@ export default {
       width: 0,
       height: 0,
       textures: [],
-      imgUrls: [img3, img2],
+      imgUrls: [img3, img3, img3],
       progressValues: [2, 6, 5],
       scaleValues: [2, 4, 3],
       indexValues: 0,
@@ -178,5 +178,14 @@ export default {
     top: 0;
     left: 0;
     pointer-events: none;
+    &__calc {
+      width: 100vw;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      background-color: rgba($C-black, .4);
+    }
   }
 </style>

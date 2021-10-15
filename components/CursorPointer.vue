@@ -80,6 +80,7 @@ export default {
       })
     },
     itemHover() {
+      this.$refs.cursor.classList.add('cursor--negatif')
       gsap.to(this.$refs.cursor, {
         scale: 2,
         duration: .25
@@ -90,6 +91,8 @@ export default {
       })
     },
     itemLeave() {
+
+      this.$refs.cursor.classList.remove('cursor--negatif')
       gsap.to(this.$refs.cursor, {
         scale: 1,
         duration: .25
@@ -111,14 +114,18 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  border: 1px solid $C-primary;
+  border: 1px solid $C-secondary;
   border-radius: 50%;
   z-index: 5;
   pointer-events: none;
+  &--negatif {
+    background: #fff;
+    mix-blend-mode: difference;
+  }
   &__point {
     width: 1rem;
     height: 1rem;
-    background-color: $C-primary;
+    background-color: $C-secondary;
     border-radius: 50%;
     @include absCenter;
     position: fixed;
@@ -129,7 +136,7 @@ export default {
     left: 50%;
     transform: translate(50%, -50%);
     font-size: 1rem;
-    color: $C-primary;
+    color: $C-secondary;
     text-transform: uppercase;
     opacity: 0;
   }
