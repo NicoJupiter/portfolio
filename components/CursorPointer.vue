@@ -80,6 +80,7 @@ export default {
       })
     },
     itemHover() {
+      this.$refs.cursor.classList.add('cursor--negatif')
       gsap.to(this.$refs.cursor, {
         scale: 2,
         duration: .25
@@ -90,6 +91,8 @@ export default {
       })
     },
     itemLeave() {
+
+      this.$refs.cursor.classList.remove('cursor--negatif')
       gsap.to(this.$refs.cursor, {
         scale: 1,
         duration: .25
@@ -115,6 +118,10 @@ export default {
   border-radius: 50%;
   z-index: 5;
   pointer-events: none;
+  &--negatif {
+    background: #fff;
+    mix-blend-mode: difference;
+  }
   &__point {
     width: 1rem;
     height: 1rem;

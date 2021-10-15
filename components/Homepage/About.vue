@@ -118,6 +118,7 @@ export default {
         div {
           text-decoration: none;
           color: $C-white;
+
           position: relative;
           display: inline-block;
           span {

@@ -38,7 +38,12 @@ export default {
         })
         this.$refs.item[i].classList.add('navSections__item--active')
       }
+    })
 
+    this.$refs.item.forEach(item => {
+      item.addEventListener('click', () => {
+
+      })
     })
 
   }

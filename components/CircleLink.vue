@@ -1,7 +1,7 @@
 <template>
   <div class="circleLink" ref="circleLink">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
-      <circle r="400" fill="none" cx="500" cy="500" stroke="white" stroke-width="10" ref="circle"/>
+      <circle r="400" fill="none" cx="500" cy="500" stroke="white" stroke-width="15" ref="circle"/>
     </svg>
     <div class="circleLink__label" ref="circleLabel">{{label}}</div>
   </div>
@@ -45,6 +45,8 @@ export default {
       font-size: 1.4rem;
       color: $C-primary;
       font-family: $F-Oswald;
+      font-weight: $FW-medium;
+
       text-transform: uppercase;
     }
   }
