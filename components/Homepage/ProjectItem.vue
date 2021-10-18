@@ -134,8 +134,8 @@ export default {
 
       ScrollTrigger.create({
         trigger: this.$refs.container,
-        start: 'center bottom',
-        end: "center top",
+        start: 'top top',
+        end: "bottom center",
         animation: this.$data.tl,
         toggleActions: 'play reverse play reverse'
       })
