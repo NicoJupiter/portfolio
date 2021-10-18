@@ -2,19 +2,19 @@
   <div class="navSections">
     <div class="navSections__wrapper" v-for="i in 1">
       <div class="navSections__item" ref="item">
-        <div class="navSections__item__label">
+        <div class="navSections__item__label" ref="label">
           Homepage
         </div>
         <div class="navSections__item__line"></div>
       </div>
       <div class="navSections__item" ref="item">
-        <div class="navSections__item__label">
+        <div class="navSections__item__label" ref="label">
           Projets
         </div>
         <div class="navSections__item__line"></div>
       </div>
       <div class="navSections__item" ref="item">
-        <div class="navSections__item__label">
+        <div class="navSections__item__label" ref="label">
           à propos
         </div>
         <div class="navSections__item__line"></div>
@@ -25,9 +25,19 @@
 
 <script>
 import gsap from 'gsap'
+import ScrollTo from '@/assets/js/ScrollToPlugin.min'
+
 export default {
   name: "NavSections",
+  data() {
+    return {
+      buttonClicked: false
+    }
+  },
   mounted() {
+
+    console.log()
+    gsap.registerPlugin(ScrollTo)
 
     this.$refs.item[0].classList.add('navSections__item--active')
 
@@ -40,12 +50,37 @@ export default {
       }
     })
 
-    this.$refs.item.forEach(item => {
+    this.$refs.label.forEach((item, index) => {
       item.addEventListener('click', () => {
-
+        if(!this.$data.buttonClicked) {
+          this.goToSection(index)
+        }
+      })
+      item.addEventListener('mouseenter', () => {
+        this.$nuxt.$emit('link-hover')
+      })
+      item.addEventListener('mouseleave', () => {
+        this.$nuxt.$emit('leave-link')
       })
     })
 
+  },
+  methods: {
+    goToSection(i) {
+      let scrollToPx = 0
+      if(i === 2) {
+        scrollToPx = document.body.offsetHeight - window.innerHeight
+      } else {
+        scrollToPx = i * window.innerHeight + 1
+      }
+      gsap.to(window, {
+        scrollTo: {y: scrollToPx, autoKill: false },
+        duration: 1,
+        onComplete: () => {
+          this.$data.buttonClicked = false;
+        }
+      });
+    }
   }
 }
 </script>
@@ -70,6 +105,7 @@ export default {
         font-size: 2rem;
         color: rgba($C-white, .5);
         transition: all .5s;
+        position: relative;
       }
       &__line {
         width: 4rem;
