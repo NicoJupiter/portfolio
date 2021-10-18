@@ -8,7 +8,7 @@
       <img src="~/assets/svg/logo.svg" alt="" ref="logo">
     </div>
     <div class="projectTitlesUp" ref="projectTitlesUp">
-      <ProjectTitle direction="up" label="Project-" />
+      <ProjectTitle direction="up" label="Projets-" />
     </div>
 
     <div v-for="i in 1">
@@ -187,7 +187,7 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    transform: rotate(90deg) translate(-1%, -50%);
+    transform: rotate(90deg) translate(-2%, -50%);
     transform-origin: left;
     z-index: 5;
   }
