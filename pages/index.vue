@@ -3,12 +3,21 @@
     <div class="homepage__nav">
       <NavSections/>
     </div>
+    <div class="homepage__scroll" ref="scroll">
+      <div class="homepage__scroll--label">
+        scroll
+      </div>
+      <div class="homepage__scroll--arrow">
+        <img src="~/assets/svg/arrow-down.svg" alt="" ref="logo">
+        <img src="~/assets/svg/arrow-down.svg" alt="" ref="logo">
+      </div>
+    </div>
     <DistortionImage/>
     <div class="homepage__logo">
       <img src="~/assets/svg/logo.svg" alt="" ref="logo">
     </div>
     <div class="projectTitlesUp" ref="projectTitlesUp">
-      <ProjectTitle direction="up" label="Project-" />
+      <ProjectTitle direction="up" label="Projets-" />
     </div>
 
     <div v-for="i in 1">
@@ -17,7 +26,6 @@
       </div>
       <div class="homepage__section" ref="sections">
         <div v-for="i in 2">
-          <div class="homepage__interSection"></div>
           <ProjectItem/>
         </div>
       </div>
@@ -68,6 +76,17 @@ export default {
       scrollTrigger: {
         trigger: this.$refs.homepage,
         start: '5% top',
+        toggleActions: 'play none none reverse',
+      }
+    })
+
+    gsap.to(this.$refs.scroll, {
+      opacity: 0,
+      duration: .5,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: this.$refs.homepage,
+        start: '10% top',
         toggleActions: 'play none none reverse',
       }
     })
@@ -187,7 +206,7 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    transform: rotate(90deg) translate(-1%, -50%);
+    transform: rotate(90deg) translate(-2%, -50%);
     transform-origin: left;
     z-index: 5;
   }
@@ -205,6 +224,40 @@ export default {
   .homepage {
     overflow: hidden;
     background-color: transparent;
+    &__scroll {
+      position: fixed;
+      bottom: 3.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
+      &--label {
+        font-family: $F-Lato;
+        text-transform: uppercase;
+        color: $C-primary;
+        font-size: 1.5rem;
+        text-align: center;
+        margin-bottom: .5rem;
+        opacity: .5;
+        animation: opacity 3s infinite;
+      }
+      &--arrow {
+        width: 2.5rem;
+        height: 5rem;
+        position: relative;
+        margin: auto;
+        img {
+          position: absolute;
+          left: 50%;
+          width: 100%;
+          transform: translateX(-50%);
+          animation: opacity 3s infinite;
+          &:last-child {
+            bottom: 1rem;
+            animation-delay: .25s;
+          }
+        }
+      }
+    }
     &__section {
       position: relative;
 
@@ -242,6 +295,21 @@ export default {
       z-index: 5;
     }
 
+  }
+
+  @keyframes opacity{
+    0%{
+      opacity: .25;
+    }
+    30%{
+      opacity: 1;
+    }
+    60%{
+      opacity: 1;
+    }
+    100%{
+      opacity: .25;
+    }
   }
 
 </style>
