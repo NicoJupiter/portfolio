@@ -25,17 +25,14 @@
        <TopTitle/>
       </div>
       <div class="homepage__section" ref="sections">
-        <div v-for="i in 2">
-          <ProjectItem/>
+
+        <div v-for="(loadedProject, index) in loadedProjects">
+          <ProjectItem :loaded-project="loadedProject" :index="index"/>
         </div>
       </div>
       <div class="homepage__section homepage__section--2" ref="sections">
         <About ref="aboutSection"/>
       </div>
-      <!--
-      <div class="homepage__section" ref="sections">
-        <ProjectItem/>
-      </div>-->
     </div>
   </div>
 </template>
@@ -59,7 +56,12 @@ export default {
       height: 0,
       scrollTween: false,
       currentSection: null,
-      sectionsScroll: []
+      sectionsScroll: [],
+    }
+  },
+  computed: {
+    loadedProjects() {
+      return this.$store.getters.loadedProjects
     }
   },
   mounted() {
@@ -96,11 +98,9 @@ export default {
         trigger: el,
         start: "top top",
         onEnter: () => {
-          console.log('test')
           this.$nuxt.$emit('homepage::updateDistortion', i)
         },
         onEnterBack: () => {
-          console.log('enter back')
           this.$nuxt.$emit('homepage::updateDistortion', i)
         }
       });

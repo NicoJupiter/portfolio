@@ -106,6 +106,9 @@ export default {
         color: rgba($C-white, .5);
         transition: all .5s;
         position: relative;
+        &:hover {
+          color: $C-primary;
+        }
       }
       &__line {
         width: 4rem;
@@ -117,10 +120,10 @@ export default {
 
       &--active {
         .navSections__item__label {
-          color: $C-secondary;
+          color: $C-primary;
         }
         .navSections__item__line {
-          background-color: $C-secondary;
+          background-color: $C-primary;
         }
       }
     }
