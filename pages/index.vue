@@ -26,7 +26,7 @@
       </div>
       <div class="homepage__section" ref="sections">
 
-        <div v-for="(loadedProject, index) in loadedProjects">
+        <div v-for="(loadedProject, index) in loadedProjects" :key="index">
           <ProjectItem :loaded-project="loadedProject" :index="index"/>
         </div>
       </div>
@@ -88,7 +88,7 @@ export default {
       ease: 'none',
       scrollTrigger: {
         trigger: this.$refs.homepage,
-        start: '10% top',
+        start: '15% top',
         toggleActions: 'play none none reverse',
       }
     })

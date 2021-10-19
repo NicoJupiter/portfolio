@@ -8,8 +8,8 @@
 
         <!--<div class="project__image--techno">Techno - Oui - Non</div>-->
       </div>
-      <NuxtLink to="/projects" class="project__link">
-        <div  class="project__link--label" ref="title">
+      <NuxtLink :to="'/projects/'+loadedProject.id" class="project__link">
+        <div class="project__link--label" ref="title">
           {{loadedProject.title}}
         </div>
       </NuxtLink>
@@ -47,8 +47,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$props.loadedProject)
-    console.log('iuhiuhiuh')
     gsap.registerPlugin(SplitText, ScrollTrigger, DrawSVG)
 
     this.initAnimation()
