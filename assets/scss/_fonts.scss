@@ -33,3 +33,9 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "Oswald";
+  src: url("#{$F-path}/Oswald/static/Oswald-Light.ttf");
+  font-weight: $FW-thin;
+  font-style: normal;
+}

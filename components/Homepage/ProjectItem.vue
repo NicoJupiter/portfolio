@@ -2,14 +2,15 @@
   <div class="projectContainer" ref="container">
     <div class="project">
       <div class="project__line" ref="topLine"></div>
-      <div class="project__number" ref="number">01</div>
+      <div class="project__number" ref="number">0{{index+1}}</div>
       <div class="project__image" ref="imageContainer">
-        <img src="~/assets/img/malegaze.jpg" alt="" ref="image">
+        <img :src="require(`~/assets/img/${loadedProject.thumbnail}`)" alt="" ref="image"/>
+
         <!--<div class="project__image--techno">Techno - Oui - Non</div>-->
       </div>
-      <NuxtLink to="/projects" class="project__link">
-        <div  class="project__link--label" ref="title">
-          Home page
+      <NuxtLink :to="'/projects/'+loadedProject.id" class="project__link">
+        <div class="project__link--label" ref="title">
+          {{loadedProject.title}}
         </div>
       </NuxtLink>
       <div class="project__circle">
@@ -30,6 +31,14 @@ export default {
   name: "ProjectItem",
   components: {CircleLink},
   props: {
+    loadedProject: {
+      type: Object,
+      required: true
+    },
+    index: {
+      type: Number,
+      required: true
+    }
   },
   data() {
     return {
