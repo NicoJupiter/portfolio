@@ -1,12 +1,12 @@
 <template>
-  <div v-if="loading" class="loading-page">
+  <div class="transition">
     <h1>Loading</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: "LoadingAnimation",
+  name: "TransitionLoader",
   data: () => ({
     loading: false
   }),
@@ -21,6 +21,15 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+  .transition {
+    width: 100vw;
+    height: 100vh;
+    background-color: $C-black;
+    z-index: 20;
+    position: fixed;
+    left: -100%;
+    top: 0;
+    pointer-events: none;
+  }
 </style>

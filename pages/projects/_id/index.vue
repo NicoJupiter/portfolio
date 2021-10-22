@@ -63,7 +63,7 @@ export default {
       }).catch(e => console.log('error data'))
   },
   mounted() {
-    console.log(this.$data.loadedProject)
+    //console.log(this.$data.loadedProject)
     gsap.registerPlugin(SplitText)
     this.introAnimation()
   },
@@ -72,6 +72,9 @@ export default {
       let splitTitle = new SplitText(this.$refs.title, {type: "chars"})
       let tlIntro = gsap.timeline()
 
+      gsap.set(splitTitle.chars, {
+        y: 200
+      })
       tlIntro.to(this.$data.blur, {
         value: 15,
         duration: 1,
@@ -79,9 +82,7 @@ export default {
           this.addBlur()
         }
       })
-      tlIntro.fromTo(splitTitle.chars, {
-        y: 200
-      }, {
+      tlIntro.to(splitTitle.chars, {
         y: 0,
         stagger: 0.05,
       }, .5)
@@ -98,7 +99,6 @@ export default {
     console.log(params)
     return /^\d+$/.test(params.id)
   },*/
-  //layout: 'projects'
 }
 </script>
 
@@ -148,7 +148,7 @@ export default {
     &__description {
       width: 50%;
       margin-left: 50%;
-      margin-top: 10rem;
+      margin-top: 5rem;
       span {
         font-family: $F-Oswald;
         color: $C-white;

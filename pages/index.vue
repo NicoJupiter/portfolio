@@ -48,6 +48,8 @@ import TopTitle from "@/components/Homepage/TopTitle";
 import NavSections from "@/components/Homepage/NavSections";
 import About from "@/components/Homepage/About";
 import SplitText from "assets/js/SplitText";
+import { typeA } from '~/mixins/transitions'
+
 
 export default {
   components: {About, NavSections, TopTitle, DistortionImage, ProjectItem, ProjectTitle},
@@ -59,6 +61,9 @@ export default {
       sectionsScroll: [],
     }
   },
+  mixins: [
+    typeA
+  ],
   computed: {
     loadedProjects() {
       return this.$store.getters.loadedProjects

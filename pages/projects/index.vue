@@ -6,6 +6,7 @@
 
 <script>
   import ProjectList from "@/components/ProjectList";
+
   export default {
     components: {ProjectList},
     computed: {
