@@ -79,6 +79,13 @@ export default {
         /*this.$data.settings.progress = 5.0
         this.$data.settings.scale = 3.0*/
       })
+      this.$nuxt.$on('homepage::pageTransition', () => {
+        gsap.to(this.$data.settings, {
+          progress: 6,
+          scale: 6,
+          duration: 1,
+        })
+      })
     },
     initPost() {
 
