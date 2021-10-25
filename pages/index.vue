@@ -1,5 +1,6 @@
 <template>
   <div class="homepage" ref="homepage">
+    <IndexBtn/>
     <div class="homepage__nav">
       <NavSections/>
     </div>
@@ -49,16 +50,18 @@ import NavSections from "@/components/Homepage/NavSections";
 import About from "@/components/Homepage/About";
 import SplitText from "assets/js/SplitText";
 import { typeA } from '~/mixins/transitions'
+import IndexBtn from "@/components/IndexBtn";
 
 
 export default {
-  components: {About, NavSections, TopTitle, DistortionImage, ProjectItem, ProjectTitle},
+  components: {IndexBtn, About, NavSections, TopTitle, DistortionImage, ProjectItem, ProjectTitle},
   data() {
     return {
       height: 0,
       scrollTween: false,
       currentSection: null,
       sectionsScroll: [],
+      scrollsHome: []
     }
   },
   mixins: [
@@ -99,7 +102,7 @@ export default {
     })
 
     this.$refs.sections.forEach((el, i) => {
-      ScrollTrigger.create({
+      let st = ScrollTrigger.create({
         trigger: el,
         start: "top top",
         onEnter: () => {
@@ -109,6 +112,7 @@ export default {
           this.$nuxt.$emit('homepage::updateDistortion', i)
         }
       });
+      this.$data.scrollsHome.push(st)
     });
 
     let tlAbout = gsap.timeline()
@@ -200,7 +204,9 @@ export default {
     },
   },
   beforeDestroy() {
-
+    this.$data.scrollsHome.forEach(item => {
+      item.kill()
+    })
   }
 }
 </script>

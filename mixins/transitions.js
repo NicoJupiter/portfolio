@@ -9,9 +9,9 @@ export const typeA = {
       this.$nuxt.$emit('homepage::pageTransition')
       let transitionDiv = document.querySelector('.transition')
       gsap.fromTo(transitionDiv, {
-        left: -100 + '%'
+        bottom: -100 + '%'
       }, {
-        left: 0,
+        bottom: 0,
         delay: .5,
         duration: .5,
         onComplete: () => {
@@ -20,11 +20,12 @@ export const typeA = {
       })
     },
     enter (el, done) {
+      this.$nuxt.$emit('pageTransition::reset')
       let transitionDiv = document.querySelector('.transition')
       gsap.fromTo(transitionDiv, {
-        left: 0
+        bottom: 0
       }, {
-        left: 100 + '%',
+        bottom: 100 + '%',
         duration: .5,
         onComplete: () => {
           done()
