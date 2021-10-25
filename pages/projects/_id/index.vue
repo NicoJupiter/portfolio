@@ -1,5 +1,6 @@
 <template>
   <div class="project">
+    <IndexBtn/>
     <div class="project__intro" ref="container">
       <img :src="require(`~/assets/img/${loadedProject.thumbnail}`)" alt="" ref="image"/>
       <div class="project__title">
@@ -8,29 +9,27 @@
         </div>
       </div>
     </div>
-    <div class="project__wrapper">
+    <div class="project__wrapper" ref="wrapper">
       <div class="creditsList">
-        <span></span>
+        <span ref="creditLine"></span>
         <div class="creditsList__item">
-          <div class="creditsList__item--title">Fait par :</div>
-          <div class="creditsList__item--content">test</div>
-          <div class="creditsList__item--content">omg</div>
+          <div class="creditsList__item--title">Projet type :</div>
+          <div class="creditsList__item--content">{{loadedProject.projetType}}</div>
         </div>
         <div class="creditsList__item">
-          <div class="creditsList__item--title">Oui Oui :</div>
+          <div class="creditsList__item--title">Techno utilisés :</div>
+          <div class="creditsList__item--content" v-for="item in loadedProject.technoList">
+           {{item}}
+          </div>
         </div>
         <div class="creditsList__item">
-          <div class="creditsList__item--title">tamer :</div>
+          <div class="creditsList__item--title">Url :</div>
+          <div class="creditsList__item--content">{{loadedProject.url}}</div>
         </div>
       </div>
       <div class="project__description">
-        <span>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-        A accusamus architecto corporis cumque dolore ex hic illo molestias nam natus,
-        nostrum perferendis possimus recusandae reiciendis repudiandae velit voluptas voluptates voluptatum?
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-        A accusamus architecto corporis cumque dolore ex hic illo molestias nam natus,
-        nostrum perferendis possimus recusandae reiciendis repudiandae velit voluptas voluptates voluptatum?
+        <span ref="description">
+           {{loadedProject.content}}
         </span>
       </div>
     </div>
@@ -45,14 +44,17 @@ import axios from 'axios'
 import gsap from 'gsap'
 import SplitText from '@/assets/js/SplitText'
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger"
+import IndexBtn from "@/components/IndexBtn";
 
 export default {
+  components: {IndexBtn},
   data() {
     return {
       loadedProject: null,
       blur: {
         value: 0
-      }
+      },
+      wrapperSt: null,
     }
   },
   asyncData(context) {
@@ -66,6 +68,7 @@ export default {
   mounted() {
     gsap.registerPlugin(SplitText, ScrollTrigger)
     this.introAnimation()
+    console.log(this.$refs.description)
 
     //init parallax
     gsap.to(this.$refs.image, {
@@ -75,9 +78,44 @@ export default {
         trigger: this.$refs.container,
         start: "top top",
         end: "bottom top",
-        scrub: true
+        scrub: true,
+        onLeave:() => {
+          this.$nuxt.$emit('project::homeSlide', true)
+        },
+        onEnterBack:() => {
+          this.$nuxt.$emit('project::homeSlide', false)
+        }
       }
     });
+
+    let splitDescriptionText = new SplitText(this.$refs.description, {type: "words"})
+    let descriptionTl = gsap.timeline()
+
+    descriptionTl.fromTo(this.$refs.creditLine, {
+      scaleX: 0
+    }, {
+      scaleX: 1,
+      transformOrigin:'center',
+      duration: 1
+    }, 0)
+
+    descriptionTl.fromTo(splitDescriptionText.words, {
+      opacity: 0,
+      y: 50,
+      skewX: -5
+    }, {
+      opacity: 1,
+      y: 0,
+      skewX: 0,
+      stagger: 0.01,
+    }, .25)
+
+    this.$data.wrapperSt = ScrollTrigger.create({
+      trigger: this.$refs.wrapper,
+      start: 'center bottom',
+      animation: descriptionTl,
+      toggleActions: 'play none none none'
+    })
 
   },
   methods: {
@@ -104,6 +142,9 @@ export default {
     addBlur() {
       gsap.set(this.$refs.image, {webkitFilter:"blur(" + this.$data.blur.value + "px)"});
     }
+  },
+  beforeDestroy() {
+    this.$data.wrapperSt.kill()
   }
   //difference entre async et fetch async va sauvergarder
   //les datas récup dans un object propre au composant
@@ -161,6 +202,8 @@ export default {
       min-height: 100vh;
       background-color: $C-black;
       padding: 5rem 10rem;
+      display: flex;
+      flex-direction: column;
     }
     &__description {
       width: 50%;

@@ -28,27 +28,36 @@ export default {
 
     this.$nuxt.$on('homepage::updateDistortion', (i) => {
       if (i !== 1) {
-        gsap.to(this.$refs.indexBtn, {
-          opacity: 1,
-          duration: .25,
-        })
+       this.labelApparition()
       } else {
-        gsap.to(this.$refs.indexBtn, {
-          opacity: 0,
-          duration: .25,
-        })
+       this.labelDisappear()
       }
     })
     this.$nuxt.$on('pageTransition::reset', () => {
+      this.labelApparition()
+    })
+    this.$nuxt.$on('project::homeSlide', (isSlide) => {
+      isSlide ? this.labelDisappear() : this.labelApparition()
+    })
+  },
+  methods: {
+    labelDisappear() {
+      gsap.to(this.$refs.indexBtn, {
+        opacity: 0,
+        duration: .25,
+      })
+    },
+    labelApparition() {
       gsap.to(this.$refs.indexBtn, {
         opacity: 1,
         duration: .25,
       })
-    })
+    }
   },
   beforeDestroy() {
     this.$nuxt.$off('homepage::updateDistortion')
     this.$nuxt.$off('pageTransition::reset')
+    this.$nuxt.$off('project::homeSlide')
   }
 }
 </script>
@@ -64,6 +73,7 @@ export default {
     left: 5rem;
     z-index: 200;
     text-transform: uppercase;
+    overflow: hidden;
     a {
       text-decoration: none;
       color: $C-primary;
