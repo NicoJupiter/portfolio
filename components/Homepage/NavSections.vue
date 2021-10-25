@@ -81,6 +81,9 @@ export default {
         }
       });
     }
+  },
+  beforeDestroy() {
+    this.$nuxt.$off('homepage::updateDistortion')
   }
 }
 </script>

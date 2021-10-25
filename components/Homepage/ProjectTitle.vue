@@ -52,6 +52,9 @@ export default {
     this.textAnimation()
     //this.titleAppear()
   },
+  beforeDestroy() {
+    this.$nuxt.$off('homepage::updateDistortion')
+  },
   methods: {
     cloneProjectTitle() {
       if(this.$props.direction === 'up' || this.$props.direction === 'down') {

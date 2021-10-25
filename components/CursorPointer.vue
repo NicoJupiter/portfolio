@@ -45,6 +45,17 @@ export default {
       xSet(pos.x);
       ySet(pos.y);
     });
+
+    this.$nuxt.$on('pageTransition::reset', () => {
+      gsap.set(this.$refs.cursor, {
+        scale: 1,
+        opacity: 1
+      })
+      gsap.to(this.$refs.point, {
+        opacity: 1,
+        duration: .25
+      })
+    })
   },
   created() {
     this.$nuxt.$on('hover-item', () => {
@@ -65,6 +76,7 @@ export default {
     this.$nuxt.$off('leave-item')
     this.$nuxt.$off('link-hover')
     this.$nuxt.$off('leave-link')
+    this.$nuxt.$off('pageTransition::reset')
   },
   methods: {
     linkHover() {

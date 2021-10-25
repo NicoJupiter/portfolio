@@ -1,6 +1,6 @@
 <template>
   <div class="project">
-    <div class="project__intro">
+    <div class="project__intro" ref="container">
       <img :src="require(`~/assets/img/${loadedProject.thumbnail}`)" alt="" ref="image"/>
       <div class="project__title">
         <div class="project__title--text" ref="title">
@@ -44,6 +44,7 @@
 import axios from 'axios'
 import gsap from 'gsap'
 import SplitText from '@/assets/js/SplitText'
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger"
 
 export default {
   data() {
@@ -63,9 +64,21 @@ export default {
       }).catch(e => console.log('error data'))
   },
   mounted() {
-    //console.log(this.$data.loadedProject)
-    gsap.registerPlugin(SplitText)
+    gsap.registerPlugin(SplitText, ScrollTrigger)
     this.introAnimation()
+
+    //init parallax
+    gsap.to(this.$refs.image, {
+      y: `${window.innerHeight / 2}px`,
+      ease: "none",
+      scrollTrigger: {
+        trigger: this.$refs.container,
+        start: "top top",
+        end: "bottom top",
+        scrub: true
+      }
+    });
+
   },
   methods: {
     introAnimation() {
@@ -125,17 +138,21 @@ export default {
         background-size: cover;
         background-position: center;
         transform: scale(1.1);
+        position: absolute;
+        left: 0;
+        top: 0;
       }
     }
     &__title {
-      @include absCenter;
       position: absolute;
+      left: 5rem;
+      bottom: 5rem;
       overflow: hidden;
       z-index: 10;
       &--text {
         @include main-title;
         color: $C-white;
-        font-size: 5rem;
+        font-size: 10rem;
         text-transform: uppercase;
       }
     }

@@ -1,6 +1,5 @@
 <template>
   <div class="transition">
-    <h1>Loading</h1>
   </div>
 </template>
 
@@ -28,8 +27,8 @@ export default {
     background-color: $C-black;
     z-index: 20;
     position: fixed;
-    left: -100%;
-    top: 0;
+    left: 0;
+    bottom: -100%;
     pointer-events: none;
   }
 </style>

@@ -76,8 +76,6 @@ export default {
           scale: this.$data.scaleValues[i],
           duration: 2,
         })
-        /*this.$data.settings.progress = 5.0
-        this.$data.settings.scale = 3.0*/
       })
       this.$nuxt.$on('homepage::pageTransition', () => {
         gsap.to(this.$data.settings, {
@@ -173,6 +171,10 @@ export default {
     setupResize() {
       window.addEventListener('resize', this.resize.bind(this))
     }
+  },
+  beforeDestroy() {
+    this.$nuxt.$off('homepage::updateDistortion')
+    this.$nuxt.$off('homepage::pageTransition')
   }
 }
 </script>
