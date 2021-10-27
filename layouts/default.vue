@@ -1,7 +1,6 @@
 <template>
   <div class="app">
     <TransitionLoader/>
-    <CursorPointer/>
     <nuxt/>
   </div>
 </template>

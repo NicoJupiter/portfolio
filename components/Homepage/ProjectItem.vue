@@ -43,7 +43,8 @@ export default {
   data() {
     return {
       itemListeners: [],
-      tl: null
+      tl: null,
+      itemSt: null
     }
   },
   mounted() {
@@ -141,7 +142,7 @@ export default {
       })
 
 
-      ScrollTrigger.create({
+      this.$data.itemSt = ScrollTrigger.create({
         trigger: this.$refs.container,
         start: 'top top',
         animation: this.$data.tl,
@@ -149,6 +150,9 @@ export default {
       })
 
     },
+  },
+  beforeDestroy() {
+    this.$data.itemSt.kill()
   }
 }
 </script>

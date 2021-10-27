@@ -26,7 +26,7 @@ export default {
   data() {
     return {
       xTranslateMax : 0,
-      yTranslateMax: 0
+      yTranslateMax: 0,
     }
   },
   mounted() {
@@ -107,7 +107,7 @@ export default {
     },
     titleAppear() {
       if(this.$props.direction === "left") {
-        gsap.fromTo(this.$refs.rowProject, {
+        this.$data.titleSt =  gsap.fromTo(this.$refs.rowProject, {
           x: 2500,
           scrollTrigger: {
             trigger: this.$refs.wrapperProject.parentNode,
@@ -123,7 +123,7 @@ export default {
           }
         })
       } else {
-        gsap.fromTo(this.$refs.rowProject, {
+        this.$data.titleSt = gsap.fromTo(this.$refs.rowProject, {
           x: -2500,
           scrollTrigger: {
             trigger: this.$refs.wrapperProject.parentNode,
@@ -139,9 +139,9 @@ export default {
           },
         })
       }
-
     }
-  }
+  },
+
 }
 </script>
 

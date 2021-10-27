@@ -47,6 +47,7 @@ export default {
     });
 
     this.$nuxt.$on('pageTransition::reset', () => {
+      console.log('ressseett pointer')
       gsap.set(this.$refs.cursor, {
         scale: 1,
         opacity: 1
