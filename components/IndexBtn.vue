@@ -9,22 +9,15 @@ import gsap from 'gsap'
 
 export default {
   name: "IndexBtn",
+  data() {
+    return {
+      mouseEventEnterHandler: this.mouseEventEnter.bind(this),
+      mouseEventLeaveHandler: this.mouseEventLeave.bind(this)
+    }
+  },
   mounted() {
-    this.$refs.indexBtn.addEventListener('mouseenter', () => {
-      gsap.to(this.$refs.indexBtn, {
-        y: -5,
-        duration: .5
-      })
-      this.$nuxt.$emit('link-hover')
-    })
-    this.$refs.indexBtn.addEventListener('mouseleave', () => {
-      gsap.to(this.$refs.indexBtn, {
-        y: 0,
-        duration: .5
-      })
-
-      this.$nuxt.$emit('leave-link')
-    })
+    this.$refs.indexBtn.addEventListener('mouseenter', this.$data.mouseEventEnterHandler)
+    this.$refs.indexBtn.addEventListener('mouseleave', this.$data.mouseEventLeaveHandler)
 
     this.$nuxt.$on('homepage::updateDistortion', (i) => {
       if (i !== 1) {
@@ -52,12 +45,29 @@ export default {
         opacity: 1,
         duration: .25,
       })
+    },
+    mouseEventEnter() {
+      gsap.to(this.$refs.indexBtn, {
+        y: -5,
+        duration: .5
+      })
+      this.$nuxt.$emit('link-hover')
+    },
+    mouseEventLeave() {
+      gsap.to(this.$refs.indexBtn, {
+        y: 0,
+        duration: .5
+      })
+
+      this.$nuxt.$emit('leave-link')
     }
   },
   beforeDestroy() {
     this.$nuxt.$off('homepage::updateDistortion')
     this.$nuxt.$off('pageTransition::reset')
     this.$nuxt.$off('project::homeSlide')
+    this.$refs.indexBtn.removeEventListener('mouseenter', this.$data.mouseEventEnterHandler)
+    this.$refs.indexBtn.removeEventListener('mouseleave', this.$data.mouseEventLeaveHandler)
   }
 }
 </script>

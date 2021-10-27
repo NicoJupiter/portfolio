@@ -1,5 +1,6 @@
 <template>
   <div class="homepage" ref="homepage">
+    <CursorPointer/>
     <IndexBtn/>
     <div class="homepage__nav">
       <NavSections/>
@@ -23,7 +24,7 @@
 
     <div v-for="i in 1">
       <div class="homepage__section homepage__section--1" ref="sections">
-       <TopTitle/>
+
       </div>
       <div class="homepage__section" ref="sections">
 
@@ -51,17 +52,14 @@ import About from "@/components/Homepage/About";
 import SplitText from "assets/js/SplitText";
 import { typeA } from '~/mixins/transitions'
 import IndexBtn from "@/components/IndexBtn";
+import CursorPointer from "@/components/CursorPointer";
 
 
 export default {
-  components: {IndexBtn, About, NavSections, TopTitle, DistortionImage, ProjectItem, ProjectTitle},
+  components: {CursorPointer, IndexBtn, About, NavSections, TopTitle, DistortionImage, ProjectItem, ProjectTitle},
   data() {
     return {
-      height: 0,
-      scrollTween: false,
-      currentSection: null,
-      sectionsScroll: [],
-      scrollsHome: []
+      stScrolls: []
     }
   },
   mixins: [
@@ -78,7 +76,7 @@ export default {
 
     let aboutRefs = this.$refs.aboutSection[0].$refs
     let splitAboutText = new SplitText(aboutRefs.text, {type: "words"})
-    gsap.to(this.$refs.logo, {
+     let logoSt = gsap.to(this.$refs.logo, {
       opacity: 0,
       y: 100,
       duration: .5,
@@ -90,7 +88,7 @@ export default {
       }
     })
 
-    gsap.to(this.$refs.scroll, {
+    let logoScrollSt = gsap.to(this.$refs.scroll, {
       opacity: 0,
       duration: .5,
       ease: 'none',
@@ -100,6 +98,9 @@ export default {
         toggleActions: 'play none none reverse',
       }
     })
+
+    this.$data.stScrolls.push(logoSt.scrollTrigger)
+    this.$data.stScrolls.push(logoScrollSt.scrollTrigger)
 
     this.$refs.sections.forEach((el, i) => {
       let st = ScrollTrigger.create({
@@ -112,7 +113,7 @@ export default {
           this.$nuxt.$emit('homepage::updateDistortion', i)
         }
       });
-      this.$data.scrollsHome.push(st)
+      this.$data.stScrolls.push(st)
     });
 
     let tlAbout = gsap.timeline()
@@ -149,38 +150,14 @@ export default {
       ease: Expo.easeOut,
     },.7)
 
-    ScrollTrigger.create({
+    let aboutSt = ScrollTrigger.create({
       trigger: this.$refs.aboutSection[0].$el,
       start: '-10px top',
       animation: tlAbout,
       toggleActions: 'play none none none'
     })
 
-
-    //smooth scroll
-    /*ScrollTrigger.addEventListener("refreshInit", this.setHeight);
-
-    gsap.to(this.$refs.homepage, {
-      y: () => -(this.$refs.homepage.clientHeight - document.documentElement.clientHeight),
-      ease: "none",
-      scrollTrigger: {
-        trigger: document.body,
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 1,
-        invalidateOnRefresh: true,
-      }
-    });*/
-
-    //section scroll
-    /*this.$refs.sections.forEach((el, i) => {
-    let st = ScrollTrigger.create({
-      trigger: el,
-      start: "top bottom",
-      onToggle: self => self.isActive && !this.$data.scrollTween && this.goToSection(i)
-    });
-    this.$data.sectionsScroll.push(st)
-  });*/
+    this.$data.stScrolls.push(aboutSt)
 
   },
   methods: {
@@ -204,7 +181,7 @@ export default {
     },
   },
   beforeDestroy() {
-    this.$data.scrollsHome.forEach(item => {
+    this.$data.stScrolls.forEach(item => {
       item.kill()
     })
   }
@@ -271,9 +248,11 @@ export default {
     }
     &__section {
       position: relative;
-
+      &--1 {
+        height: 100vh;
+      }
       &--2 {
-        height: 102vh;
+        height: 100.1vh;
         padding: 0 20rem;
       }
     }

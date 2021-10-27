@@ -5,7 +5,6 @@ export const typeA = {
     mode: 'out-in',
     css: false,
     leave (el, done) {
-      console.log('about leave', el)
       this.$nuxt.$emit('homepage::pageTransition')
       let transitionDiv = document.querySelector('.transition')
       gsap.fromTo(transitionDiv, {
@@ -19,8 +18,8 @@ export const typeA = {
         }
       })
     },
+
     enter (el, done) {
-      this.$nuxt.$emit('pageTransition::reset')
       let transitionDiv = document.querySelector('.transition')
       gsap.fromTo(transitionDiv, {
         bottom: 0
@@ -28,6 +27,7 @@ export const typeA = {
         bottom: 100 + '%',
         duration: .5,
         onComplete: () => {
+          this.$nuxt.$emit('pageTransition::reset')
           done()
         }
       })
@@ -39,18 +39,20 @@ export const typeB = {
   transition: {
     mode: 'out-in',
     css: false,
-    enter (el, done) {
+    leave (el, done) {
+
       let transitionDiv = document.querySelector('.transition')
       gsap.fromTo(transitionDiv, {
-        opacity: 1
+        bottom: -100 + '%'
       }, {
-        opacity: 0,
-        delay: 1,
+        bottom: 0,
+        delay: .5,
         duration: .5,
         onComplete: () => {
+          this.$nuxt.$emit('pageTransition::reset')
           done()
         }
       })
-    }
+    },
   }
 }

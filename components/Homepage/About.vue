@@ -61,20 +61,39 @@ import gsap from 'gsap'
 
 export default {
   name: "About",
+  data() {
+    return {
+
+    }
+  },
   mounted() {
     this.$refs.socials.forEach(item => {
-      item.addEventListener('mouseenter', () => {
-        this.$nuxt.$emit('link-hover')
-        gsap.to(item.children[0], {
-          width: '100%'
-        })
+      let socialEnterHandler = this.socialEnter.bind(this, item)
+      let socialLeaveHandler = this.socialLeave.bind(this, item)
+      item.addEventListener('mouseenter', socialEnterHandler)
+      item.addEventListener('mouseleave', socialLeaveHandler)
+    })
+  },
+  methods: {
+    socialEnter(item) {
+      this.$nuxt.$emit('link-hover')
+      gsap.to(item.children[0], {
+        width: '100%'
       })
-      item.addEventListener('mouseleave', () => {
-        this.$nuxt.$emit('leave-link')
-        gsap.to(item.children[0], {
-          width: 0
-        })
+    },
+    socialLeave(item) {
+      this.$nuxt.$emit('leave-link')
+      gsap.to(item.children[0], {
+        width: 0
       })
+    }
+  },
+  beforeDestroy() {
+    this.$refs.socials.forEach(item => {
+      let socialEnterHandler = this.socialEnter.bind(this, item)
+      let socialLeaveHandler = this.socialLeave.bind(this, item)
+      item.removeEventListener('mouseenter', socialEnterHandler)
+      item.removeEventListener('mouseleave', socialLeaveHandler)
     })
   }
 }

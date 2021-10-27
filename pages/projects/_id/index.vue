@@ -1,5 +1,6 @@
 <template>
   <div class="project">
+    <CursorPointer/>
     <IndexBtn/>
     <div class="project__intro" ref="container">
       <img :src="require(`~/assets/img/${loadedProject.thumbnail}`)" alt="" ref="image"/>
@@ -9,7 +10,7 @@
         </div>
       </div>
     </div>
-    <div class="project__wrapper" ref="wrapper">
+    <div class="project__wrapper" ref="tamerTest">
       <div class="creditsList">
         <span ref="creditLine"></span>
         <div class="creditsList__item">
@@ -24,7 +25,9 @@
         </div>
         <div class="creditsList__item">
           <div class="creditsList__item--title">Url :</div>
-          <div class="creditsList__item--content">{{loadedProject.url}}</div>
+          <a :href="loadedProject.url"
+             class="creditsList__item--content creditsList__item--link"
+             target="_blank" ref="itemLink">{{loadedProject.url}}</a>
         </div>
       </div>
       <div class="project__description">
@@ -45,18 +48,25 @@ import gsap from 'gsap'
 import SplitText from '@/assets/js/SplitText'
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger"
 import IndexBtn from "@/components/IndexBtn";
-
+import {typeB} from "@/mixins/transitions";
+import ScrollTo from '@/assets/js/ScrollToPlugin.min'
+import CursorPointer from "@/components/CursorPointer";
 export default {
-  components: {IndexBtn},
+  components: {CursorPointer, IndexBtn},
   data() {
     return {
       loadedProject: null,
       blur: {
         value: 0
       },
-      wrapperSt: null,
+      scrollSt: [],
+      mouseEnterHandler: this.mouseEnterEvent.bind(this),
+      mouseLeaveHandler: this.mouseLeaveEvent.bind(this)
     }
   },
+  mixins: [
+    typeB
+  ],
   asyncData(context) {
     return axios.get('https://portfolio-55714-default-rtdb.firebaseio.com/'+context.params.id+'.json')
       .then(res => {
@@ -66,30 +76,18 @@ export default {
       }).catch(e => console.log('error data'))
   },
   mounted() {
-    gsap.registerPlugin(SplitText, ScrollTrigger)
-    this.introAnimation()
-    console.log(this.$refs.description)
 
-    //init parallax
-    gsap.to(this.$refs.image, {
-      y: `${window.innerHeight / 2}px`,
-      ease: "none",
-      scrollTrigger: {
-        trigger: this.$refs.container,
-        start: "top top",
-        end: "bottom top",
-        scrub: true,
-        onLeave:() => {
-          this.$nuxt.$emit('project::homeSlide', true)
-        },
-        onEnterBack:() => {
-          this.$nuxt.$emit('project::homeSlide', false)
-        }
-      }
-    });
+    window.scrollTo(0, 0);
+    gsap.registerPlugin(SplitText, ScrollTrigger, ScrollTo)
+    this.introAnimation()
 
     let splitDescriptionText = new SplitText(this.$refs.description, {type: "words"})
-    let descriptionTl = gsap.timeline()
+    let descriptionTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: this.$refs.container,
+        start: 'bottom center',
+      }
+    })
 
     descriptionTl.fromTo(this.$refs.creditLine, {
       scaleX: 0
@@ -110,13 +108,29 @@ export default {
       stagger: 0.01,
     }, .25)
 
-    this.$data.wrapperSt = ScrollTrigger.create({
-      trigger: this.$refs.wrapper,
-      start: 'center bottom',
-      animation: descriptionTl,
-      toggleActions: 'play none none none'
-    })
+    //init parallax
+    let parrallaxSt = gsap.to(this.$refs.image, {
+      y: `${window.innerHeight / 2}px`,
+      ease: "none",
+      scrollTrigger: {
+        trigger: this.$refs.container,
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+        onLeave:() => {
+          this.$nuxt.$emit('project::homeSlide', true)
+        },
+        onEnterBack:() => {
+          this.$nuxt.$emit('project::homeSlide', false)
+        }
+      }
+    });
 
+    this.$data.scrollSt.push(descriptionTl.scrollTrigger)
+    this.$data.scrollSt.push(parrallaxSt.scrollTrigger)
+
+    this.$refs.itemLink.addEventListener('mouseenter', this.$data.mouseEnterHandler)
+    this.$refs.itemLink.addEventListener('mouseleave', this.$data.mouseLeaveHandler)
   },
   methods: {
     introAnimation() {
@@ -141,11 +155,22 @@ export default {
     },
     addBlur() {
       gsap.set(this.$refs.image, {webkitFilter:"blur(" + this.$data.blur.value + "px)"});
+    },
+    mouseEnterEvent() {
+      this.$nuxt.$emit('link-hover')
+    },
+    mouseLeaveEvent() {
+      this.$nuxt.$emit('leave-link')
     }
   },
   beforeDestroy() {
-    this.$data.wrapperSt.kill()
+    this.$data.scrollSt.forEach(item => {
+      item.kill()
+    })
+    this.$refs.itemLink.removeEventListener('mouseenter', this.$data.mouseEnterHandler)
+    this.$refs.itemLink.removeEventListener('mouseleave', this.$data.mouseLeaveHandler)
   }
+
   //difference entre async et fetch async va sauvergarder
   //les datas récup dans un object propre au composant
   //et fectch lui va permettre de tout sauvegarder dans un store
@@ -199,7 +224,7 @@ export default {
     }
     &__wrapper {
       width: 100vw;
-      min-height: 100vh;
+      //min-height: 100vh;
       background-color: $C-black;
       padding: 5rem 10rem;
       display: flex;
@@ -249,6 +274,10 @@ export default {
       font-size: 1.5rem;
       &--content {
         font-size: 1.2rem;
+      }
+      &--link {
+        text-decoration: none;
+        color: $C-primary;
       }
     }
   }
