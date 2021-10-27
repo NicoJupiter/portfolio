@@ -39,7 +39,8 @@ export default {
       settings : {
         progress: 2,
         scale: 1
-      }
+      },
+      resizeHandler: this.resize.bind(this)
     }
   },
   mounted() {
@@ -169,12 +170,13 @@ export default {
       this.$data.composer.render()
     },
     setupResize() {
-      window.addEventListener('resize', this.resize.bind(this))
+      window.addEventListener('resize', this.resizeHandler)
     }
   },
   beforeDestroy() {
     this.$nuxt.$off('homepage::updateDistortion')
     this.$nuxt.$off('homepage::pageTransition')
+    window.removeEventListener('resize', this.resizeHandler)
   }
 }
 </script>

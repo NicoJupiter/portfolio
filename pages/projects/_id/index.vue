@@ -59,7 +59,9 @@ export default {
       blur: {
         value: 0
       },
-      scrollSt: []
+      scrollSt: [],
+      mouseEnterHandler: this.mouseEnterEvent.bind(this),
+      mouseLeaveHandler: this.mouseLeaveEvent.bind(this)
     }
   },
   mixins: [
@@ -127,12 +129,8 @@ export default {
     this.$data.scrollSt.push(descriptionTl.scrollTrigger)
     this.$data.scrollSt.push(parrallaxSt.scrollTrigger)
 
-    this.$refs.itemLink.addEventListener('mouseenter', () => {
-      this.$nuxt.$emit('link-hover')
-    })
-    this.$refs.itemLink.addEventListener('mouseleave', () => {
-      this.$nuxt.$emit('leave-link')
-    })
+    this.$refs.itemLink.addEventListener('mouseenter', this.$data.mouseEnterHandler)
+    this.$refs.itemLink.addEventListener('mouseleave', this.$data.mouseLeaveHandler)
   },
   methods: {
     introAnimation() {
@@ -157,13 +155,22 @@ export default {
     },
     addBlur() {
       gsap.set(this.$refs.image, {webkitFilter:"blur(" + this.$data.blur.value + "px)"});
+    },
+    mouseEnterEvent() {
+      this.$nuxt.$emit('link-hover')
+    },
+    mouseLeaveEvent() {
+      this.$nuxt.$emit('leave-link')
     }
   },
   beforeDestroy() {
     this.$data.scrollSt.forEach(item => {
       item.kill()
     })
+    this.$refs.itemLink.removeEventListener('mouseenter', this.$data.mouseEnterHandler)
+    this.$refs.itemLink.removeEventListener('mouseleave', this.$data.mouseLeaveHandler)
   }
+
   //difference entre async et fetch async va sauvergarder
   //les datas récup dans un object propre au composant
   //et fectch lui va permettre de tout sauvegarder dans un store

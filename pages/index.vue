@@ -252,7 +252,7 @@ export default {
         height: 100vh;
       }
       &--2 {
-        height: 101vh;
+        height: 100.1vh;
         padding: 0 20rem;
       }
     }

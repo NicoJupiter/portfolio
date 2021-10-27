@@ -17,13 +17,27 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      emitHandlerEnter: this.emitEventEnter.bind(this),
+      emitHandlerExit: this.emitEventExit.bind(this)
+    }
+  },
   mounted() {
-    this.$refs.circleLink.addEventListener('mouseenter', e => {
+    this.$refs.circleLink.addEventListener('mouseenter', this.$data.emitHandlerEnter)
+    this.$refs.circleLink.addEventListener('mouseleave', this.$data.emitHandlerExit)
+  },
+  methods: {
+    emitEventEnter() {
       this.$nuxt.$emit('hover-item')
-    })
-    this.$refs.circleLink.addEventListener('mouseleave', e => {
+    },
+    emitEventExit() {
       this.$nuxt.$emit('leave-item')
-    })
+    }
+  },
+  beforeDestroy() {
+    this.$refs.circleLink.removeEventListener('mouseenter', this.$data.emitHandlerEnter)
+    this.$refs.circleLink.removeEventListener('mouseleave', this.$data.emitHandlerExit)
   }
 }
 </script>
