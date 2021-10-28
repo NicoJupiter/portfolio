@@ -1,5 +1,6 @@
 <template>
   <div class="app">
+    <MainLoader/>
     <TransitionLoader/>
     <nuxt/>
   </div>

@@ -25,6 +25,7 @@ export const typeA = {
         bottom: 0
       }, {
         bottom: 100 + '%',
+        delay: .5,
         duration: .5,
         onComplete: () => {
           this.$nuxt.$emit('pageTransition::reset')

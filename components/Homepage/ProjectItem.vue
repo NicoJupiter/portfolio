@@ -3,19 +3,23 @@
     <div class="project">
       <div class="project__line" ref="topLine"></div>
       <div class="project__number" ref="number">0{{index+1}}</div>
-      <div class="project__image" ref="imageContainer">
-        <img :src="require(`~/assets/img/${loadedProject.thumbnail}`)" alt="" ref="image"/>
+      <NuxtLink :to="'/projects/'+loadedProject.id">
+        <div class="project__image" ref="imageContainer">
+          <img :src="require(`~/assets/img/${loadedProject.thumbnail}`)" alt="" ref="image"/>
+        </div>
+      </NuxtLink>
 
-        <!--<div class="project__image--techno">Techno - Oui - Non</div>-->
-      </div>
       <NuxtLink :to="'/projects/'+loadedProject.id" class="project__link">
         <div class="project__link--label" ref="title">
           {{loadedProject.title}}
         </div>
       </NuxtLink>
-      <div class="project__circle">
-        <CircleLink :label="'Découvrir'" ref="circleComponent"/>
-      </div>
+      <NuxtLink :to="'/projects/'+loadedProject.id">
+        <div class="project__circle">
+          <CircleLink :label="'Découvrir'" ref="circleComponent"/>
+        </div>
+      </NuxtLink>
+    
       <div class="project__line" ref="bottomLine"></div>
     </div>
   </div>
