@@ -89,9 +89,15 @@ export default {
   &__title {
     @include main-title;
     color: $C-primary;
-    font-size: 10rem;
+    font-size: 8rem;
     overflow: hidden;
-
+    text-transform: uppercase;
+    &--name,
+    &--subName {
+      div {
+        transform: translateY(-100%);
+      }
+    }
   }
 }
 </style>

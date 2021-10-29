@@ -1,46 +1,48 @@
 <template>
   <div class="about">
-    <div class="about__title" ref="title">About me</div>
+    <div class="about__title" ref="title">À propos</div>
     <div class="about__text" ref="text">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-      Beatae distinctio facere ipsa iusto. Adipisci, architecto assumenda at beatae ea eaque eum itaque,
-      libero nam non pariatur quisquam quod totam ullam!
+      Je suis un jeune développeur avec 3 ans d'expériences. Mes missions varient entre du front-end et back-end.
+      Je suis aussi passionné de musique et j'aime apprendre en autodidacte.
+      Je suis actuellement disponible pour toutes offres :)
     </div>
     <div class="about__bottom" ref="bottom" v-for="i in 1">
       <div class="about__social">
         <div class="about__social--title" ref="titleSocial">Social</div>
         <div class="about__social--item">
-          <div ref="socials">
-            linkedin
-            <span></span>
-          </div>
+          <a href="https://www.linkedin.com/in/nicolas-jupiter-1072b81ba/" target="_blank">
+            <div ref="socials">
+              linkedin
+              <span></span>
+            </div>
+          </a>
         </div>
         <div class="about__social--item">
-          <div ref="socials">
-            facebook
-            <span></span>
-          </div>
+          <a href="https://soundcloud.com/nico-jupiter" target="_blank">
+            <div ref="socials">
+              soundcloud
+              <span></span>
+            </div>
+          </a>
         </div>
         <div class="about__social--item">
-          <div ref="socials">
-            twitter
-            <span></span>
-          </div>
-        </div>
-        <div class="about__social--item">
-          <div ref="socials">
-            soundcloud
-            <span></span>
-          </div>
+          <a href="https://www.instagram.com/kwaii.prod/" target="_blank">
+            <div ref="socials">
+              instagram
+              <span></span>
+            </div>
+          </a>
         </div>
       </div>
       <div class="about__social">
         <div class="about__social--title" ref="titleSocial">Mail</div>
         <div class="about__social--item">
-          <div ref="socials">
-            nicolas24.j@gmail.com
-            <span></span>
-          </div>
+          <a href="mailto:nicolas24.j@gmail.com" target="_blank">
+            <div ref="socials">
+              nicolas24.j@gmail.com
+              <span></span>
+            </div>
+          </a>
         </div>
       </div>
       <div class="about__social">

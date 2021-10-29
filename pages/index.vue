@@ -126,8 +126,8 @@ export default {
 
     tlAbout.fromTo(splitAboutText.words, {
       opacity: 0,
-      y: 100,
-      skewX: -10
+      y: 50,
+      skewX: -5
     }, {
       opacity: 1,
       y: 0,
