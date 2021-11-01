@@ -168,10 +168,10 @@ export default {
   //difference entre async et fetch async va sauvergarder
   //les datas récup dans un object propre au composant
   //et fectch lui va permettre de tout sauvegarder dans un store
-  validate({ params }) {
+  /*validate({ params }) {
     console.log(params)
     return /^\d+$/.test(params.id)
-  },
+  },*/
 }
 </script>
 
@@ -218,20 +218,20 @@ export default {
   }
   &__wrapper {
     width: 100vw;
-    min-height: 100vh;
+    //min-height: 100vh;
     background-color: $C-black;
-    padding: 0 15rem;
+    padding: 5rem 15rem 10rem;
     display: flex;
     flex-direction: column;
     position: relative;
     @include breakpoint(xxl) {
-      padding: 0 25rem;
+      padding: 5rem 25rem 10rem;
     }
   }
   &__description {
     width: 50%;
-    margin-left: 50%;
-    margin-top: 15rem;
+    margin-top: 5rem;
+    text-align: justify;
     span {
       font-family: $F-Oswald;
       color: $C-white;
@@ -242,12 +242,13 @@ export default {
   &__demo {
     width: 100vw;
     height: 100vh;
-    padding: 0 5rem;
+    padding: 0 15rem;
     background-color: $C_black;
+
     &--video {
       width: 100%;
       height: 100%;
-      background-color: pink;
+      background-color: rgba($C-primary, .5);
     }
   }
 }
@@ -255,7 +256,6 @@ export default {
   display: flex;
   justify-content: space-between;
   position: relative;
-  margin-top: 5rem;
   span {
     position: absolute;
     top: -1rem;
