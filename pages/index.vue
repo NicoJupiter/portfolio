@@ -53,7 +53,7 @@ import SplitText from "assets/js/SplitText";
 import { typeA } from '~/mixins/transitions'
 import IndexBtn from "@/components/IndexBtn";
 import CursorPointer from "@/components/CursorPointer";
-
+import _ from "lodash"
 
 export default {
   components: {CursorPointer, IndexBtn, About, NavSections, TopTitle, DistortionImage, ProjectItem, ProjectTitle},
@@ -67,7 +67,7 @@ export default {
   ],
   computed: {
     loadedProjects() {
-      return this.$store.getters.loadedProjects
+      return _.orderBy(this.$store.getters.loadedProjects, 'order');
     }
   },
   mounted() {
@@ -126,8 +126,8 @@ export default {
 
     tlAbout.fromTo(splitAboutText.words, {
       opacity: 0,
-      y: 100,
-      skewX: -10
+      y: 50,
+      skewX: -5
     }, {
       opacity: 1,
       y: 0,

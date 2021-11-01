@@ -20,7 +20,7 @@
         <div class="creditsList__item">
           <div class="creditsList__item--title">Techno utilisés :</div>
           <div class="creditsList__item--content" v-for="item in loadedProject.technoList">
-           {{item}}
+            {{item}}
           </div>
         </div>
         <div class="creditsList__item">
@@ -39,7 +39,7 @@
     <div class="project__demo">
       <div class="project__demo--video">oui la video</div>
     </div>
-   </div>
+  </div>
 </template>
 
 <script>
@@ -68,19 +68,21 @@ export default {
     typeB
   ],
   asyncData(context) {
-    return axios.get('https://portfolio-55714-default-rtdb.firebaseio.com/'+context.params.id+'.json')
+    return axios
+      .get('https://portfolio-55714-default-rtdb.firebaseio.com/'+context.params.id+'.json')
       .then(res => {
+        console.log(res)
         return {
           loadedProject : res.data
         }
-      }).catch(e => console.log('error data'))
+      }).catch(e => context.error())
   },
   mounted() {
+    console.log(this.$data.loadedProject)
 
     window.scrollTo(0, 0);
     gsap.registerPlugin(SplitText, ScrollTrigger, ScrollTo)
     this.introAnimation()
-
     let splitDescriptionText = new SplitText(this.$refs.description, {type: "words"})
     let descriptionTl = gsap.timeline({
       scrollTrigger: {
@@ -88,7 +90,6 @@ export default {
         start: 'bottom center',
       }
     })
-
     descriptionTl.fromTo(this.$refs.creditLine, {
       scaleX: 0
     }, {
@@ -96,7 +97,6 @@ export default {
       transformOrigin:'center',
       duration: 1
     }, 0)
-
     descriptionTl.fromTo(splitDescriptionText.words, {
       opacity: 0,
       y: 50,
@@ -107,7 +107,6 @@ export default {
       skewX: 0,
       stagger: 0.01,
     }, .25)
-
     //init parallax
     let parrallaxSt = gsap.to(this.$refs.image, {
       y: `${window.innerHeight / 2}px`,
@@ -125,10 +124,8 @@ export default {
         }
       }
     });
-
     this.$data.scrollSt.push(descriptionTl.scrollTrigger)
     this.$data.scrollSt.push(parrallaxSt.scrollTrigger)
-
     this.$refs.itemLink.addEventListener('mouseenter', this.$data.mouseEnterHandler)
     this.$refs.itemLink.addEventListener('mouseleave', this.$data.mouseLeaveHandler)
   },
@@ -136,22 +133,20 @@ export default {
     introAnimation() {
       let splitTitle = new SplitText(this.$refs.title, {type: "chars"})
       let tlIntro = gsap.timeline()
-
       gsap.set(splitTitle.chars, {
         y: 200
       })
-      tlIntro.to(this.$data.blur, {
+      /*tlIntro.to(this.$data.blur, {
         value: 15,
         duration: 1,
         onUpdate: () => {
           this.addBlur()
         }
-      })
-      tlIntro.to(splitTitle.chars, {
+      })*/
+      gsap.to(splitTitle.chars, {
         y: 0,
         stagger: 0.05,
-      }, .5)
-
+      })
     },
     addBlur() {
       gsap.set(this.$refs.image, {webkitFilter:"blur(" + this.$data.blur.value + "px)"});
@@ -169,8 +164,7 @@ export default {
     })
     this.$refs.itemLink.removeEventListener('mouseenter', this.$data.mouseEnterHandler)
     this.$refs.itemLink.removeEventListener('mouseleave', this.$data.mouseLeaveHandler)
-  }
-
+  },
   //difference entre async et fetch async va sauvergarder
   //les datas récup dans un object propre au composant
   //et fectch lui va permettre de tout sauvegarder dans un store
@@ -182,103 +176,107 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .project {
+.project {
+  position: relative;
+  &__intro {
+    width: 100vw;
+    height: 100vh;
     position: relative;
-    &__intro {
-      width: 100vw;
-      height: 100vh;
-      position: relative;
-      overflow: hidden;
-      &:after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba($C-black, .4);
-      }
-      img {
-        width: 100%;
-        height: 100%;
-        background-size: cover;
-        background-position: center;
-        transform: scale(1.1);
-        position: absolute;
-        left: 0;
-        top: 0;
-      }
-    }
-    &__title {
+    overflow: hidden;
+    &:after {
+      content: '';
       position: absolute;
-      left: 5rem;
-      bottom: 5rem;
-      overflow: hidden;
-      z-index: 10;
-      &--text {
-        @include main-title;
-        color: $C-white;
-        font-size: 10rem;
-        text-transform: uppercase;
-      }
-    }
-    &__wrapper {
-      width: 100vw;
-      //min-height: 100vh;
-      background-color: $C-black;
-      padding: 5rem 10rem;
-      display: flex;
-      flex-direction: column;
-    }
-    &__description {
-      width: 50%;
-      margin-left: 50%;
-      margin-top: 5rem;
-      span {
-        font-family: $F-Oswald;
-        color: $C-white;
-        font-size: 3.5rem;
-        font-weight: $FW-light;
-      }
-    }
-    &__demo {
-      width: 100vw;
-      height: 100vh;
-      padding: 0 5rem;
-      background-color: $C_black;
-      &--video {
-        width: 100%;
-        height: 100%;
-        background-color: pink;
-      }
-    }
-  }
-
-  .creditsList {
-    display: flex;
-    justify-content: space-between;
-    position: relative;
-    span {
-      position: absolute;
-      top: -1rem;
+      top: 0;
       left: 0;
       width: 100%;
-      height: 1px;
-      background-color: $C-primary;
+      height: 100%;
+      background-color: rgba($C-black, .8);
     }
-    &__item {
-      @include main-title;
-      text-transform: uppercase;
-      color: $C-primary;
-      font-weight: $FW-thin;
-      font-size: 1.5rem;
-      &--content {
-        font-size: 1.2rem;
-      }
-      &--link {
-        text-decoration: none;
-        color: $C-primary;
-      }
+    img {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.1);
+      position: absolute;
+      left: 0;
+      top: 0;
     }
   }
+  &__title {
+    position: absolute;
+    left: 5rem;
+    bottom: 5rem;
+    overflow: hidden;
+    z-index: 10;
+    &--text {
+      @include main-title;
+      color: $C-white;
+      font-size: 10rem;
+      text-transform: uppercase;
+    }
+  }
+  &__wrapper {
+    width: 100vw;
+    //min-height: 100vh;
+    background-color: $C-black;
+    padding: 5rem 15rem 10rem;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    @include breakpoint(xxl) {
+      padding: 5rem 25rem 10rem;
+    }
+  }
+  &__description {
+    width: 50%;
+    margin-top: 5rem;
+    text-align: justify;
+    span {
+      font-family: $F-Oswald;
+      color: $C-white;
+      font-size: 3.5rem;
+      font-weight: $FW-light;
+    }
+  }
+  &__demo {
+    width: 100vw;
+    height: 100vh;
+    padding: 0 15rem;
+    background-color: $C_black;
+
+    &--video {
+      width: 100%;
+      height: 100%;
+      background-color: rgba($C-primary, .5);
+    }
+  }
+}
+.creditsList {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  span {
+    position: absolute;
+    top: -1rem;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: $C-primary;
+  }
+  &__item {
+    @include main-title;
+    text-transform: uppercase;
+    color: $C-primary;
+    font-weight: $FW-thin;
+    font-size: 1.5rem;
+    &--content {
+      font-size: 1.2rem;
+    }
+    &--link {
+      text-decoration: none;
+      color: $C-primary;
+    }
+  }
+}
 </style>

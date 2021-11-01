@@ -19,7 +19,7 @@
           <CircleLink :label="'Découvrir'" ref="circleComponent"/>
         </div>
       </NuxtLink>
-    
+
       <div class="project__line" ref="bottomLine"></div>
     </div>
   </div>
@@ -169,7 +169,9 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
-
+    @include breakpoint(xxl) {
+      padding: 0 35rem;
+    }
   }
 
   .project {
@@ -195,6 +197,8 @@ export default {
       height: 30rem;
       overflow: hidden;
       margin-left: 10rem;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
       @include breakpoint(lt-lg) {
         width: 35rem;
         height: 20rem;
