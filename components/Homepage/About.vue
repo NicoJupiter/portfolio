@@ -2,8 +2,9 @@
   <div class="about">
     <div class="about__title" ref="title">À propos</div>
     <div class="about__text" ref="text">
-      Je suis un jeune développeur avec 3 ans d'expériences. Mes missions varient entre du front-end et back-end.
-      Je suis aussi passionné de musique et j'aime apprendre en autodidacte.
+      Je suis un jeune développeur avec 3 ans d'expériences.
+      Mes missions varient entre du front-end et back-end.
+      J'aime apprendre en autodidacte et découvrir de nouvelles technologies.
       Je suis actuellement disponible pour toutes offres :)
     </div>
     <div class="about__bottom" ref="bottom" v-for="i in 1">
