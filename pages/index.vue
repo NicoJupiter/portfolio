@@ -67,7 +67,7 @@ export default {
   ],
   computed: {
     loadedProjects() {
-      return _.orderBy(this.$store.getters.loadedProjects, 'order');
+      return this.$store.getters.loadedProjects
     }
   },
   mounted() {
