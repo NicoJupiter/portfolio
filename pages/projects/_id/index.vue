@@ -36,8 +36,12 @@
         </span>
       </div>
     </div>
-    <div class="project__demo">
-      <div class="project__demo--video">oui la video</div>
+    <div class="project__demo" ref="videoSection">
+      <div class="project__demo--video" ref="videoContainer">
+        <video muted autoplay loop ref="video">
+          <source :src="require(`~/assets/video/${loadedProject.video}`)" type="video/webm">
+        </video>
+      </div>
     </div>
   </div>
 </template>
@@ -124,6 +128,30 @@ export default {
         }
       }
     });
+
+
+    let tlVideo = gsap.timeline({
+      scrollTrigger: {
+        trigger: this.$refs.videoSection,
+        start: "top center",
+      }
+    })
+    tlVideo.fromTo(this.$refs.videoContainer, {
+      scaleY: 0,
+    }, {
+      scaleY: 1,
+      transformOrigin:'top',
+      duration: 1
+    })
+
+    tlVideo.fromTo(this.$refs.video, {
+      scale: 1.1
+    }, {
+      scale: 1,
+      duration: 1.2
+    }, 0)
+
+    this.$data.scrollSt.push(tlVideo.scrollTrigger)
     this.$data.scrollSt.push(descriptionTl.scrollTrigger)
     this.$data.scrollSt.push(parrallaxSt.scrollTrigger)
     this.$refs.itemLink.addEventListener('mouseenter', this.$data.mouseEnterHandler)
@@ -230,7 +258,7 @@ export default {
   }
   &__description {
     width: 50%;
-    margin-top: 5rem;
+    margin-top: 10rem;
     text-align: justify;
     span {
       font-family: $F-Oswald;
@@ -241,14 +269,15 @@ export default {
   }
   &__demo {
     width: 100vw;
-    height: 100vh;
-    padding: 0 15rem;
+    padding: 0 15rem 15rem;
+    box-sizing: border-box;
     background-color: $C_black;
-
-    &--video {
+    @include breakpoint(xxl) {
+      padding: 0 25rem 15rem;
+    }
+    video {
       width: 100%;
       height: 100%;
-      background-color: rgba($C-primary, .5);
     }
   }
 }

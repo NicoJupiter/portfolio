@@ -34,6 +34,7 @@ const createStore = () => {
            for (const key in res.data) {
              postProjects.push({ ...res.data[key], id: key})
            }
+           postProjects.sort((a,b) => (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0))
            vuexContext.commit('setProjects', postProjects)
            //vuexContext.commit('setInitialLoaded', true)
 

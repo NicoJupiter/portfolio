@@ -227,7 +227,6 @@ export default {
         color: $C-white;
         margin-bottom: 1rem;
         overflow: hidden;
-
         @include breakpoint(lt-lg) {
           font-size: 5rem;
         }
