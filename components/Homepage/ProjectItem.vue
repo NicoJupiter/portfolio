@@ -151,7 +151,7 @@ export default {
         trigger: this.$refs.container,
         start: 'top top',
         animation: this.$data.tl,
-        toggleActions: 'play reverse play reverse'
+        toggleActions: 'play none none none'
       })
 
     },
