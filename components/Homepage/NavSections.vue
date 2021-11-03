@@ -90,6 +90,9 @@ export default {
 
 <style scoped lang="scss">
   .navSections {
+    @include breakpoint(xs) {
+      display: none;
+    }
     &__wrapper {
       display: flex;
       flex-direction: column;

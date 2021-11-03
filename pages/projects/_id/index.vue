@@ -82,8 +82,6 @@ export default {
       }).catch(e => context.error())
   },
   mounted() {
-    console.log(this.$data.loadedProject)
-
     window.scrollTo(0, 0);
     gsap.registerPlugin(SplitText, ScrollTrigger, ScrollTo)
     this.introAnimation()
@@ -211,6 +209,9 @@ export default {
     height: 100vh;
     position: relative;
     overflow: hidden;
+    @include breakpoint(xs) {
+      height: 50vh;
+    }
     &:after {
       content: '';
       position: absolute;
@@ -237,11 +238,18 @@ export default {
     bottom: 5rem;
     overflow: hidden;
     z-index: 10;
+    @include breakpoint(xs) {
+      left: 2.5rem;
+      bottom: 2.5rem;
+    }
     &--text {
       @include main-title;
       color: $C-white;
       font-size: 10rem;
       text-transform: uppercase;
+      @include breakpoint(xs) {
+        font-size: 3rem;
+      }
     }
   }
   &__wrapper {
@@ -255,11 +263,19 @@ export default {
     @include breakpoint(xxl) {
       padding: 5rem 25rem 10rem;
     }
+    @include breakpoint(xs) {
+      padding: 2.5rem 2.5rem 0;
+    }
   }
   &__description {
     width: 50%;
     margin-top: 10rem;
     text-align: justify;
+    @include breakpoint(xs) {
+      width: 100%;
+      margin-top: 2.5rem;
+      text-align: initial;
+    }
     span {
       font-family: $F-Oswald;
       color: $C-white;
@@ -275,6 +291,11 @@ export default {
     @include breakpoint(xxl) {
       padding: 0 25rem 15rem;
     }
+    @include breakpoint(xs) {
+      padding: 0;
+      height: 100vh;
+      display: flex;
+    }
     video {
       width: 100%;
       height: 100%;
@@ -285,6 +306,9 @@ export default {
   display: flex;
   justify-content: space-between;
   position: relative;
+  @include breakpoint(xs) {
+    flex-wrap: wrap;
+  }
   span {
     position: absolute;
     top: -1rem;
@@ -299,6 +323,11 @@ export default {
     color: $C-primary;
     font-weight: $FW-thin;
     font-size: 1.5rem;
+    &:not(:last-child) {
+      @include breakpoint(xs) {
+        margin-bottom: 1.5rem;
+      }
+    }
     &--content {
       font-size: 1.2rem;
     }

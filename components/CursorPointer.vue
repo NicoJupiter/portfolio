@@ -19,41 +19,43 @@ export default {
   },
   mounted() {
 
-    gsap.set(this.$refs.cursor, {xPercent: -50, yPercent: -50});
+    if(!this.isMobile()) {
+      gsap.set(this.$refs.cursor, {xPercent: -50, yPercent: -50});
 
-    const cursor = this.$refs.cursor;
-    const pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-    this.$data.mouse = { x: pos.x, y: pos.y };
-    const speed = 0.35;
+      const cursor = this.$refs.cursor;
+      const pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+      this.$data.mouse = { x: pos.x, y: pos.y };
+      const speed = 0.35;
 
-    const xSet = gsap.quickSetter(cursor, "x", "px");
-    const ySet = gsap.quickSetter(cursor, "y", "px");
+      const xSet = gsap.quickSetter(cursor, "x", "px");
+      const ySet = gsap.quickSetter(cursor, "y", "px");
 
 
-    window.addEventListener("mousemove", this.$data.mouseMoveHandler, false)
+      window.addEventListener("mousemove", this.$data.mouseMoveHandler, false)
 
-    gsap.ticker.add(() => {
+      gsap.ticker.add(() => {
 
-      // adjust speed for higher refresh monitors
-      const dt = 1.0 - Math.pow(1.0 - speed, gsap.ticker.deltaRatio());
+        // adjust speed for higher refresh monitors
+        const dt = 1.0 - Math.pow(1.0 - speed, gsap.ticker.deltaRatio());
 
-      pos.x += (this.$data.mouse.x - pos.x) * dt;
-      pos.y += (this.$data.mouse.y - pos.y) * dt;
-      xSet(pos.x);
-      ySet(pos.y);
-    });
+        pos.x += (this.$data.mouse.x - pos.x) * dt;
+        pos.y += (this.$data.mouse.y - pos.y) * dt;
+        xSet(pos.x);
+        ySet(pos.y);
+      });
 
-    this.$nuxt.$on('pageTransition::reset', () => {
-      console.log('ressseett pointer')
-      gsap.set(this.$refs.cursor, {
-        scale: 1,
-        opacity: 1
+      this.$nuxt.$on('pageTransition::reset', () => {
+        console.log('ressseett pointer')
+        gsap.set(this.$refs.cursor, {
+          scale: 1,
+          opacity: 1
+        })
+        gsap.to(this.$refs.point, {
+          opacity: 1,
+          duration: .25
+        })
       })
-      gsap.to(this.$refs.point, {
-        opacity: 1,
-        duration: .25
-      })
-    })
+    }
   },
   created() {
     this.$nuxt.$on('hover-item', () => {
@@ -70,12 +72,14 @@ export default {
     })
   },
   beforeDestroy(){
-    this.$nuxt.$off('hover-item')
-    this.$nuxt.$off('leave-item')
-    this.$nuxt.$off('link-hover')
-    this.$nuxt.$off('leave-link')
-    this.$nuxt.$off('pageTransition::reset')
-    window.removeEventListener("mousemove",  this.$data.mouseMoveHandler)
+    if(!this.isMobile()) {
+      this.$nuxt.$off('hover-item')
+      this.$nuxt.$off('leave-item')
+      this.$nuxt.$off('link-hover')
+      this.$nuxt.$off('leave-link')
+      this.$nuxt.$off('pageTransition::reset')
+      window.removeEventListener("mousemove",  this.$data.mouseMoveHandler)
+    }
   },
   methods: {
     mouseMove(e) {
@@ -123,6 +127,9 @@ export default {
 
 <style scoped lang="scss">
 .cursor {
+  @include breakpoint(xs) {
+    display: none;
+  }
   width: 5rem;
   height: 5rem;
   position: fixed;

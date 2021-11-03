@@ -14,6 +14,7 @@
         <img src="~/assets/svg/arrow-down.svg" alt="" ref="logo">
       </div>
     </div>
+
     <DistortionImage/>
     <div class="homepage__logo">
       <img src="~/assets/svg/logo.svg" alt="" ref="logo">
@@ -21,14 +22,12 @@
     <div class="projectTitlesUp" ref="projectTitlesUp">
       <ProjectTitle direction="up" label="Projets-" />
     </div>
-
     <div v-for="i in 1">
       <div class="homepage__section homepage__section--1" ref="sections">
 
       </div>
       <div class="homepage__section" ref="sections">
-
-        <div v-for="(loadedProject, index) in loadedProjects" :key="index">
+        <div class="homepage__projectContainer" v-for="(loadedProject, index) in loadedProjects" :key="index">
           <ProjectItem :loaded-project="loadedProject" :index="index"/>
         </div>
       </div>
@@ -65,6 +64,7 @@ export default {
   mixins: [
     typeA
   ],
+
   computed: {
     loadedProjects() {
       return this.$store.getters.loadedProjects
@@ -212,12 +212,18 @@ export default {
   .homepage {
     overflow: hidden;
     background-color: transparent;
+    @include breakpoint(xs) {
+      background-color: $C-black;
+    }
     &__scroll {
       position: fixed;
       bottom: 3.5rem;
       left: 50%;
       transform: translateX(-50%);
       z-index: 5;
+      @include breakpoint(xs) {
+        bottom: 2.5rem;
+      }
       &--label {
         font-family: $F-Lato;
         text-transform: uppercase;
@@ -254,6 +260,9 @@ export default {
       &--2 {
         height: 100.1vh;
         padding: 0 20rem;
+        @include breakpoint(xs) {
+          padding: 0 2rem;
+        }
       }
     }
 
@@ -285,6 +294,24 @@ export default {
       z-index: 5;
     }
 
+    &__projectContainer {
+      height: 100vh;
+      padding: 0 25rem;
+      box-sizing: border-box;
+
+      @include breakpoint(xxl) {
+        padding: 0 35rem;
+      }
+      @include breakpoint(xs) {
+        padding: 0;
+        height: auto;
+      }
+      &:not(:last-child) {
+        @include breakpoint(xs) {
+          margin-bottom: 5rem;
+        }
+      }
+    }
   }
 
   @keyframes opacity{

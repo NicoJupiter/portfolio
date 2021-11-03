@@ -92,6 +92,9 @@ export default {
     font-size: 8rem;
     overflow: hidden;
     text-transform: uppercase;
+    @include breakpoint(xs){
+      font-size: 4rem;
+    }
     &--name,
     &--subName {
       div {

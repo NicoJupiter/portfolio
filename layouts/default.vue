@@ -13,6 +13,6 @@ import CursorPointer from "@/components/CursorPointer";
 import TransitionLoader from "@/components/Loaders/TransitionLoader";
 export default {
   components: {TransitionLoader, CursorPointer, MainLoader},
-
 }
 </script>
+

@@ -30,30 +30,34 @@ export default {
     }
   },
   mounted() {
-    this.cloneProjectTitle()
+    if(!this.isMobile()) {
+      this.cloneProjectTitle()
 
-    this.$nuxt.$on('homepage::updateDistortion', (i) => {
-      if (i === 1) {
-        gsap.to(this.$refs.wrapperProject, {
-          opacity: 1,
-          duration: .25,
-        })
-      } else {
-        gsap.to(this.$refs.wrapperProject, {
-          opacity: 0,
-          duration: .25,
-        })
+      this.$nuxt.$on('homepage::updateDistortion', (i) => {
+        if (i === 1) {
+          gsap.to(this.$refs.wrapperProject, {
+            opacity: 1,
+            duration: .25,
+          })
+        } else {
+          gsap.to(this.$refs.wrapperProject, {
+            opacity: 0,
+            duration: .25,
+          })
+        }
+      })
+
+      if (this.$props.direction === 'right') {
+        this.$refs.rowProject.style.left = '-' + this.$data.xTranslateMax + 'px'
       }
-    })
-
-    if (this.$props.direction === 'right') {
-      this.$refs.rowProject.style.left = '-' + this.$data.xTranslateMax + 'px'
+      this.textAnimation()
+      //this.titleAppear()
     }
-    this.textAnimation()
-    //this.titleAppear()
   },
   beforeDestroy() {
-    this.$nuxt.$off('homepage::updateDistortion')
+    if(!this.isMobile()) {
+      this.$nuxt.$off('homepage::updateDistortion')
+    }
   },
   methods: {
     cloneProjectTitle() {
