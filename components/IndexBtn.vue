@@ -84,6 +84,10 @@ export default {
     z-index: 200;
     text-transform: uppercase;
     overflow: hidden;
+    @include breakpoint(xs) {
+      top: 2.5rem;
+      left: 2.5rem;
+    }
     a {
       text-decoration: none;
       color: $C-primary;

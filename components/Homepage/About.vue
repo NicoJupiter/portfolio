@@ -123,13 +123,24 @@ export default {
       @include breakpoint(lt-lg) {
         font-size: 3rem;
       }
+      @include breakpoint(xs) {
+        font-size: 2rem;
+      }
     }
     &__bottom {
       display: flex;
+      @include breakpoint(xs) {
+        flex-wrap: wrap;
+      }
     }
     &__social {
       margin-right: 7rem;
       font-size: 1.8rem;
+      &:not(:last-child) {
+        @include breakpoint(xs) {
+          margin-bottom: 2.5rem;
+        }
+      }
       &--title {
         color: $C-secondary;
         margin-bottom: 1rem;

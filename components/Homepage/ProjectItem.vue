@@ -1,27 +1,25 @@
 <template>
-  <div class="projectContainer" ref="container">
-    <div class="project">
-      <div class="project__line" ref="topLine"></div>
-      <div class="project__number" ref="number">0{{index+1}}</div>
-      <NuxtLink :to="'/projects/'+loadedProject.id">
-        <div class="project__image" ref="imageContainer">
-          <img :src="require(`~/assets/img/${loadedProject.thumbnail}`)" alt="" ref="image"/>
-        </div>
-      </NuxtLink>
+  <div class="project" ref="container">
+    <div class="project__line" ref="topLine"></div>
+    <div class="project__number" ref="number">0{{index+1}}</div>
+    <NuxtLink :to="'/projects/'+loadedProject.id">
+      <div class="project__image" ref="imageContainer">
+        <img :src="require(`~/assets/img/${loadedProject.thumbnail}`)" alt="" ref="image"/>
+      </div>
+    </NuxtLink>
 
-      <NuxtLink :to="'/projects/'+loadedProject.id" class="project__link">
-        <div class="project__link--label" ref="title">
-          {{loadedProject.title}}
-        </div>
-      </NuxtLink>
-      <NuxtLink :to="'/projects/'+loadedProject.id">
-        <div class="project__circle">
-          <CircleLink :label="'Découvrir'" ref="circleComponent"/>
-        </div>
-      </NuxtLink>
+    <NuxtLink :to="'/projects/'+loadedProject.id" class="project__link">
+      <div class="project__link--label" ref="title">
+        {{loadedProject.title}}
+      </div>
+    </NuxtLink>
+    <NuxtLink :to="'/projects/'+loadedProject.id">
+      <div class="project__circle">
+        <CircleLink :label="'Découvrir'" ref="circleComponent"/>
+      </div>
+    </NuxtLink>
 
-      <div class="project__line" ref="bottomLine"></div>
-    </div>
+    <div class="project__line" ref="bottomLine"></div>
   </div>
 </template>
 
@@ -52,16 +50,19 @@ export default {
     }
   },
   mounted() {
-    gsap.registerPlugin(SplitText, ScrollTrigger, DrawSVG)
+    if(!this.isMobile()) {
+      gsap.registerPlugin(SplitText, ScrollTrigger, DrawSVG)
 
-    this.initAnimation()
-    this.initEventListener()
-    this.$nuxt.$on('homepage::scrollStart',() =>  {
-      this.$data.tl.play()
-    })
-    this.$nuxt.$on('homepage::scrollEnd',() =>  {
-      this.$data.tl.restart()
-    })
+      this.initAnimation()
+      this.initEventListener()
+      this.$nuxt.$on('homepage::scrollStart',() =>  {
+        this.$data.tl.play()
+      })
+      this.$nuxt.$on('homepage::scrollEnd',() =>  {
+        this.$data.tl.restart()
+      })
+    }
+
   },
   methods: {
     initEventListener() {
@@ -156,29 +157,23 @@ export default {
     },
   },
   beforeDestroy() {
-    this.$data.itemSt.kill()
+    if(!this.isMobile()) {
+      this.$data.itemSt.kill()
+    }
   }
 }
 </script>
 
 <style scoped lang="scss">
-  .projectContainer {
-    height: 100vh;
-    padding: 0 25rem;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    @include breakpoint(xxl) {
-      padding: 0 35rem;
-    }
-  }
-
   .project {
+    height: 100%;
     display: flex;
     flex-direction: column;
     position: relative;
     justify-content: center;
+    @include breakpoint(xs) {
+      justify-content: space-between;
+    }
     &__number {
       font-family: $F-Lato;
       font-weight: $FW-bold;
@@ -190,6 +185,11 @@ export default {
       @include breakpoint(lt-lg) {
         font-size: 5rem;
       }
+      @include breakpoint(xs) {
+        font-size: 4rem;
+        margin-right: 2.5rem;
+        margin-bottom: 5rem;
+      }
     }
 
     &__image {
@@ -199,10 +199,19 @@ export default {
       margin-left: 10rem;
       margin-top: 2rem;
       margin-bottom: 2rem;
+
       @include breakpoint(lt-lg) {
         width: 35rem;
         height: 20rem;
         margin-left: 5rem;
+      }
+
+      @include breakpoint(xs) {
+        width: 100%;
+        height: 25rem;
+        margin-left: 0;
+        margin-top: 0;
+        margin-bottom: 0;
       }
       &:after {
         content: "";
@@ -220,6 +229,10 @@ export default {
     &__link {
       align-self: end;
       text-decoration: none;
+      @include breakpoint(xs) {
+        width: 100%;
+        text-align: center;
+      }
       &--label {
         @include main-title;
         font-size: 7rem;
@@ -230,6 +243,10 @@ export default {
         @include breakpoint(lt-lg) {
           font-size: 5rem;
         }
+        @include breakpoint(xs) {
+          font-size: 4rem;
+          margin-top: 5rem;
+        }
       }
 
     }
@@ -238,12 +255,17 @@ export default {
       top: 50%;
       left: 75%;
       transform: translateY(-50%);
+      @include breakpoint(xs) {
+        display: none;
+      }
     }
     &__line {
       width: 100%;
       height: 1px;
       background-color: $C-white;
-
+      @include breakpoint(xs) {
+        display: none;
+      }
     }
 
   }
