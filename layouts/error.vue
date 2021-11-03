@@ -55,6 +55,9 @@ export default {
       font-size: 35rem;
       color: rgba($C-secondary, .2);
       font-family: $F-Lato;
+      @include breakpoint(xs) {
+        font-size: 20rem;
+      }
     }
     &__link {
       @include absCenter;
@@ -63,6 +66,9 @@ export default {
       font-family: $F-Lato;
       font-size: 5rem;
       color: $C-white;
+      @include breakpoint(xs) {
+        font-size: 2rem;
+      }
     }
   }
 </style>
