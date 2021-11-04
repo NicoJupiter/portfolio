@@ -307,7 +307,7 @@ export default {
   justify-content: space-between;
   position: relative;
   @include breakpoint(xs) {
-    flex-wrap: wrap;
+    flex-direction: column;
   }
   span {
     position: absolute;
