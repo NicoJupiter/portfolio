@@ -4,6 +4,9 @@
     <div class="project__number" ref="number">0{{index+1}}</div>
     <NuxtLink :to="'/projects/'+loadedProject.id">
       <div class="project__image" ref="imageContainer">
+        <div class="project__image--badge" v-if="loadedProject.badge">
+          <img :src="require(`~/assets/img/${loadedProject.badge}`)" alt="" ref="badge"/>
+        </div>
         <img :src="require(`~/assets/img/${loadedProject.thumbnail}`)" alt="" ref="image"/>
       </div>
     </NuxtLink>
@@ -199,6 +202,7 @@ export default {
       margin-left: 10rem;
       margin-top: 2rem;
       margin-bottom: 2rem;
+      position: relative;
 
       @include breakpoint(lt-lg) {
         width: 35rem;
@@ -223,6 +227,25 @@ export default {
         height: 100%;
         background-size: cover;
         background-position: center;
+      }
+      &--badge {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 16rem;
+        height: 16rem;
+        z-index: 10;
+        background-color: rgba($C-white, .5);
+        border-radius: 100%;
+        opacity: .7;
+        @include breakpoint(xs) {
+          width: 12rem;
+          height: 12rem;
+        }
+        img {
+          width: 100%;
+          height: 100%;
+        }
       }
     }
 

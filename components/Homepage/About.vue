@@ -49,10 +49,12 @@
       <div class="about__social">
         <div class="about__social--title" ref="titleSocial">Autres</div>
         <div class="about__social--item">
-          <div ref="socials">
-            CV
-            <span></span>
-          </div>
+          <a href="/pdf/cv.pdf" target="_blank">
+            <div ref="socials">
+              CV
+              <span></span>
+            </div>
+          </a>
         </div>
       </div>
     </div>

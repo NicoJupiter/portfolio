@@ -1,6 +1,6 @@
 <template>
   <div class="mainLoader" v-if="!isInitialLoaded" ref="mainLoader">
-    <div class="mainLoader__wrapper">
+    <div class="mainLoader__wrapper" ref="wrapper">
       <div class="mainLoader__title">
         <div class="mainLoader__title--name" ref="name">Jupiter</div>
       </div>
@@ -25,6 +25,10 @@ export default {
     gsap.registerPlugin(SplitText)
     let splitName = new SplitText(this.$refs.name, {type: "chars"})
     let splitSubName = new SplitText(this.$refs.subname, {type: "chars"})
+
+    gsap.set(this.$refs.wrapper, {
+      opacity: 1
+    })
 
     let tl = gsap.timeline({
       delay: 1,
@@ -85,6 +89,7 @@ export default {
     position: fixed;
     left: 5rem;
     bottom: 5rem;
+    opacity: 0;
   }
   &__title {
     @include main-title;
@@ -99,6 +104,7 @@ export default {
     &--subName {
       div {
         transform: translateY(-100%);
+
       }
     }
   }
