@@ -58,13 +58,29 @@ export default {
 
       this.initAnimation()
       this.initEventListener()
-      this.$nuxt.$on('homepage::scrollStart',() =>  {
+      /*this.$nuxt.$on('homepage::scrollStart',() =>  {
+
         this.$data.tl.play()
       })
       this.$nuxt.$on('homepage::scrollEnd',() =>  {
         this.$data.tl.restart()
-      })
+      })*/
+
     }
+
+    this.$nuxt.$on('homepage::updateDistortion', (i) => {
+      if (i === 1) {
+        gsap.to(this.$refs.container, {
+          opacity: 1,
+          duration: .25,
+        })
+      } else {
+        gsap.to(this.$refs.container, {
+          opacity: 0,
+          duration: .25,
+        })
+      }
+    })
 
   },
   methods: {
@@ -163,6 +179,7 @@ export default {
     if(!this.isMobile()) {
       this.$data.itemSt.kill()
     }
+    this.$nuxt.$off('homepage::updateDistortion')
   }
 }
 </script>
@@ -238,6 +255,11 @@ export default {
         background-color: rgba($C-white, .5);
         border-radius: 100%;
         opacity: .7;
+        @include breakpoint(lt-lg) {
+          width: 12rem;
+          height: 12rem;
+        }
+
         @include breakpoint(xs) {
           width: 12rem;
           height: 12rem;
