@@ -35,11 +35,11 @@
            {{loadedProject.content}}
         </span>
       </div>
-      <div class="project__blockList">
-        <ProjectBlock type-block="horizontal" />
-        <ProjectBlock type-block="simple" align-block="right" />
-        <ProjectBlock type-block="double" />
-        <ProjectBlock type-block="label" />
+      <div class="project__blockList" ref="blockList" v-for="i in 1">
+        <ProjectBlock type-block="horizontal" ref="projectBlock" />
+        <ProjectBlock type-block="simple" align-block="right" ref="projectBlock" />
+        <ProjectBlock type-block="double" ref="projectBlock" />
+        <ProjectBlock type-block="label" ref="projectBlock" />
       </div>
     </div>
 
@@ -133,6 +133,21 @@ export default {
 
     this.$refs.itemLink.addEventListener('mouseenter', this.$data.mouseEnterHandler)
     this.$refs.itemLink.addEventListener('mouseleave', this.$data.mouseLeaveHandler)
+
+    let testSpeed = [50, 100, 20, 0]
+
+    this.$refs.projectBlock.forEach((item, index) => {
+      let scrollGsap = gsap.to(item.$el, {
+        yPercent: testSpeed[index],
+        ease: "none",
+        scrollTrigger: {
+          trigger: this.$refs.blockList[0],
+          scrub: true
+        },
+      });
+      this.$data.scrollSt.push(scrollGsap.scrollTrigger)
+    })
+
   },
   methods: {
     introAnimation() {
