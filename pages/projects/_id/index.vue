@@ -35,14 +35,14 @@
            {{loadedProject.content}}
         </span>
       </div>
-    </div>
-    <div class="project__demo" ref="videoSection">
-      <div class="project__demo--video" ref="videoContainer">
-        <video muted autoplay loop ref="video">
-          <source :src="require(`~/assets/video/${loadedProject.video}`)" type="video/webm">
-        </video>
+      <div class="project__blockList">
+        <ProjectBlock type-block="horizontal" />
+        <ProjectBlock type-block="simple" align-block="right" />
+        <ProjectBlock type-block="double" />
+        <ProjectBlock type-block="label" />
       </div>
     </div>
+
   </div>
 </template>
 
@@ -55,8 +55,9 @@ import IndexBtn from "@/components/IndexBtn";
 import {typeB} from "@/mixins/transitions";
 import ScrollTo from '@/assets/js/ScrollToPlugin.min'
 import CursorPointer from "@/components/CursorPointer";
+import ProjectBlock from "@/components/Projets/ProjectBlock";
 export default {
-  components: {CursorPointer, IndexBtn},
+  components: {ProjectBlock, CursorPointer, IndexBtn},
   data() {
     return {
       loadedProject: null,
@@ -127,31 +128,9 @@ export default {
       }
     });
 
-
-    let tlVideo = gsap.timeline({
-      scrollTrigger: {
-        trigger: this.$refs.videoSection,
-        start: "top center",
-      }
-    })
-    tlVideo.fromTo(this.$refs.videoContainer, {
-      scaleY: 0,
-    }, {
-      scaleY: 1,
-      transformOrigin:'top',
-      duration: 1
-    })
-
-    tlVideo.fromTo(this.$refs.video, {
-      scale: 1.1
-    }, {
-      scale: 1,
-      duration: 1.2
-    }, 0)
-
-    this.$data.scrollSt.push(tlVideo.scrollTrigger)
     this.$data.scrollSt.push(descriptionTl.scrollTrigger)
     this.$data.scrollSt.push(parrallaxSt.scrollTrigger)
+
     this.$refs.itemLink.addEventListener('mouseenter', this.$data.mouseEnterHandler)
     this.$refs.itemLink.addEventListener('mouseleave', this.$data.mouseLeaveHandler)
   },
@@ -269,7 +248,7 @@ export default {
   }
   &__description {
     width: 50%;
-    margin-top: 10rem;
+    margin: 10rem 0;
     text-align: justify;
     @include breakpoint(xs) {
       width: 100%;
@@ -281,24 +260,6 @@ export default {
       color: $C-white;
       font-size: 3.5rem;
       font-weight: $FW-light;
-    }
-  }
-  &__demo {
-    width: 100vw;
-    padding: 0 15rem 15rem;
-    box-sizing: border-box;
-    background-color: $C_black;
-    @include breakpoint(xxl) {
-      padding: 0 25rem 15rem;
-    }
-    @include breakpoint(xs) {
-      padding: 0;
-      height: 100vh;
-      display: flex;
-    }
-    video {
-      width: 100%;
-      height: 100%;
     }
   }
 }
