@@ -36,10 +36,43 @@
         </span>
       </div>
       <div class="project__blockList" ref="blockList" v-for="i in 1">
-        <ProjectBlock type-block="horizontal" ref="projectBlock" />
-        <ProjectBlock type-block="simple" align-block="right" ref="projectBlock" />
-        <ProjectBlock type-block="double" ref="projectBlock" />
-        <ProjectBlock type-block="label" ref="projectBlock" />
+        <ProjectBlock
+          :block-params="{
+          type: 'horizontal',
+          horizontalAlign: 'center',
+          isLabel: false}"
+          ref="projectBlock"
+        />
+        <ProjectBlock
+          :block-params="{
+          type: 'square',
+          horizontalAlign: 'center',
+          isLabel: false}"
+          ref="projectBlock"
+        />
+
+        <ProjectBlock
+          :block-params="{
+          type: 'rectangle',
+          horizontalAlign: 'left',
+          isLabel: false}"
+          ref="projectBlock"
+        />
+
+        <ProjectBlock
+          :block-params="{
+          type: 'square',
+          horizontalAlign: 'right',
+          isLabel: false}"
+          ref="projectBlock"
+        />
+        <ProjectBlock
+          :block-params="{
+          type: 'label',
+          horizontalAlign: 'center',
+          isLabel: false}"
+          ref="projectBlock"
+        />
       </div>
     </div>
 
@@ -134,9 +167,10 @@ export default {
     this.$refs.itemLink.addEventListener('mouseenter', this.$data.mouseEnterHandler)
     this.$refs.itemLink.addEventListener('mouseleave', this.$data.mouseLeaveHandler)
 
-    let testSpeed = [50, 100, 20, 0]
+    let testSpeed = [50, 100, 20, -50, 0]
 
     this.$refs.projectBlock.forEach((item, index) => {
+      console.log(item.$el)
       let scrollGsap = gsap.to(item.$el, {
         yPercent: testSpeed[index],
         ease: "none",

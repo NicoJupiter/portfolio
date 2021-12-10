@@ -1,22 +1,16 @@
 <template>
-  <div class="projectBlock">
-    <div class="projectBlock__horizontal" v-if="typeBlock === 'horizontal'">
-      Horizontal Block
+  <div class="projectBlock"
+       :class="['projectBlock--'+blockParams.horizontalAlign]">
+    <div class="projectBlock__square" v-if="blockParams.type === 'square'">
+      <img src="~/assets/img/malegaze.jpg" alt="" />
     </div>
-    <div class="projectBlock__double" v-if="typeBlock === 'double'">
-      <div class="projectBlock__rectangle">
-        Block 1
-      </div>
-      <div class="projectBlock__square">
-        Block 1
-      </div>
+    <div class="projectBlock__rectangle" v-if="blockParams.type === 'rectangle'">
+      simple block
     </div>
-    <div class="projectBlock__simple" :class="alignBlock != null ? 'projectBlock--'+alignBlock : ''" v-if="typeBlock === 'simple'">
-      <div class="projectBlock__rectangle">
-        simple block
-      </div>
+    <div class="projectBlock__horizontal" v-if="blockParams.type === 'horizontal'">
+      <img src="~/assets/img/malegaze.jpg" alt="" />
     </div>
-    <div class="projectBlock__label" v-if="typeBlock === 'label'">
+    <div class="projectBlock__label" v-if="blockParams.type === 'label'">
       <div class="projectBlock__label--text">
         Lorem ipsum dolor sit amet,
         consectetur adipisicing elit.
@@ -32,14 +26,14 @@
 export default {
   name: "ProjectBlock",
   props: {
-    typeBlock: {
+    /*typeBlock: {
       type: String,
       required: true
+    },*/
+    blockParams: {
+      type: Object,
+      required: true
     },
-    alignBlock: {
-      type: String,
-      required: false
-    }
   },
 }
 </script>
@@ -47,30 +41,50 @@ export default {
 <style scoped lang="scss">
   .projectBlock {
     margin-bottom: 10rem;
+    display: flex;
+
+    //----------Horizontal align-----------------
+    &--center {
+      justify-content: center;
+    }
+    &--right {
+      justify-content: right;
+    }
+
     &__horizontal {
+      width: 100%;
       height: 35rem;
       background-color: #C4C4C4;
+      overflow: hidden;
+      position: relative;
+      img {
+        @include absCenter;
+        position: absolute;
+      }
     }
     &__rectangle {
       width: 40rem;
       height: 55rem;
       background-color: #C4C4C4;
+      position: relative;
+      overflow: hidden;
+      img {
+        @include absCenter;
+        position: absolute;
+      }
     }
     &__square {
       width: 37.5rem;
       height: 40rem;
       background-color: #C4C4C4;
-    }
-    &__double {
-      display: flex;
-      justify-content: space-between;
-      & .projectBlock__square {
-        align-self: end;
+      position: relative;
+      overflow: hidden;
+      img {
+        @include absCenter;
+        position: absolute;
       }
     }
-    &__simple {
-      display: flex;
-    }
+
     &__label {
       &--text {
         text-align: center;
@@ -83,15 +97,6 @@ export default {
       & .projectBlock__rectangle {
         margin: auto;
       }
-    }
-    &--left {
-      justify-content: left;
-    }
-    &--center {
-      justify-content: center;
-    }
-    &--right {
-      justify-content: end;
     }
   }
 </style>
