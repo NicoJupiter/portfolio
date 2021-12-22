@@ -75,7 +75,7 @@
         />
       </div>
     </div>
-
+    <project-list :loaded-project="this.$route.params.id" />
   </div>
 </template>
 
@@ -89,8 +89,9 @@ import {typeB} from "@/mixins/transitions";
 import ScrollTo from '@/assets/js/ScrollToPlugin.min'
 import CursorPointer from "@/components/CursorPointer";
 import ProjectBlock from "@/components/Projets/ProjectBlock";
+import ProjectList from "@/components/Projets/ProjectList";
 export default {
-  components: {ProjectBlock, CursorPointer, IndexBtn},
+  components: {ProjectList, ProjectBlock, CursorPointer, IndexBtn},
   data() {
     return {
       loadedProject: null,
@@ -170,7 +171,6 @@ export default {
     let testSpeed = [50, 100, 20, -50, 0]
 
     this.$refs.projectBlock.forEach((item, index) => {
-      console.log(item.$el)
       let scrollGsap = gsap.to(item.$el, {
         yPercent: testSpeed[index],
         ease: "none",
