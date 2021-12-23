@@ -75,7 +75,7 @@
         />
       </div>
     </div>
-    <project-list :loaded-project="this.$route.params.id" />
+    <project-list :loaded-projects="this.$data.arrayProjects" />
   </div>
 </template>
 
@@ -100,7 +100,8 @@ export default {
       },
       scrollSt: [],
       mouseEnterHandler: this.mouseEnterEvent.bind(this),
-      mouseLeaveHandler: this.mouseLeaveEvent.bind(this)
+      mouseLeaveHandler: this.mouseLeaveEvent.bind(this),
+      arrayProjects: []
     }
   },
   mixins: [
@@ -182,6 +183,12 @@ export default {
       this.$data.scrollSt.push(scrollGsap.scrollTrigger)
     })
 
+    this.$store.getters.loadedProjects.forEach(item => {
+      if(item.id !== this.$route.params.id) {
+        this.$data.arrayProjects.push(item)
+      }
+    })
+    console.log(this.$data.arrayProjects)
   },
   methods: {
     introAnimation() {

@@ -1,21 +1,11 @@
 <template>
   <div class="projectList">
-    <div class="projectList__item">
-      <div class="projectList__item__title">Malegaze</div>
-      <div class="projectList__item__image">
-        <img src="~/assets/img/la-nouvelle.PNG" alt="" />
-      </div>
-    </div>
-    <div class="projectList__item">
-      <div class="projectList__item__title">Malegaze</div>
-      <div class="projectList__item__image">
-        <img src="~/assets/img/malegaze.jpg" alt="" />
-      </div>
-    </div>
-    <div class="projectList__item">
-      <div class="projectList__item__title">Malegaze</div>
-      <div class="projectList__item__image">
-        <img src="~/assets/img/secudiag.jpg" alt="" />
+    <div v-for="item in loadedProjects">
+      <div class="projectList__item">
+        <div class="projectList__item__title">{{item.id}}</div>
+        <div class="projectList__item__image">
+          <img :src="require(`~/assets/img/${item.thumbnail}`)" alt="" />
+        </div>
       </div>
     </div>
   </div>
@@ -26,15 +16,11 @@ import gsap from 'gsap'
 export default {
   name: "ProjectList",
   props: {
-    loadedProject: {
-      type: String,
+    loadedProjects: {
+      type: Array,
       required: true
-    }
+    },
   },
-  mounted() {
-    console.log(this.$store.getters.loadedProjects)
-    console.log(this.loadedProject)
-  }
 }
 </script>
 
