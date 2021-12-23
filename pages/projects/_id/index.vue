@@ -35,44 +35,13 @@
            {{loadedProject.content}}
         </span>
       </div>
-      <div class="project__blockList" ref="blockList" v-for="i in 1">
-        <ProjectBlock
-          :block-params="{
-          type: 'horizontal',
-          horizontalAlign: 'center',
-          isLabel: false}"
-          ref="projectBlock"
-        />
-        <ProjectBlock
-          :block-params="{
-          type: 'square',
-          horizontalAlign: 'center',
-          isLabel: false}"
-          ref="projectBlock"
-        />
-
-        <ProjectBlock
-          :block-params="{
-          type: 'rectangle',
-          horizontalAlign: 'left',
-          isLabel: false}"
-          ref="projectBlock"
-        />
-
-        <ProjectBlock
-          :block-params="{
-          type: 'square',
-          horizontalAlign: 'right',
-          isLabel: false}"
-          ref="projectBlock"
-        />
-        <ProjectBlock
-          :block-params="{
-          type: 'label',
-          horizontalAlign: 'center',
-          isLabel: false}"
-          ref="projectBlock"
-        />
+      <div class="project__blockList" ref="blockList">
+        <div v-for="item in loadedProject.projectBlock">
+          <ProjectBlock
+            :block-params=item
+            ref="blockRefs"
+          />
+        </div>
       </div>
     </div>
     <project-list :loaded-projects="this.$data.arrayProjects" />
@@ -169,11 +138,9 @@ export default {
     this.$refs.itemLink.addEventListener('mouseenter', this.$data.mouseEnterHandler)
     this.$refs.itemLink.addEventListener('mouseleave', this.$data.mouseLeaveHandler)
 
-    let testSpeed = [50, 100, 20, -50, 0]
-
-    this.$refs.projectBlock.forEach((item, index) => {
-      let scrollGsap = gsap.to(item.$el, {
-        yPercent: testSpeed[index],
+    this.$data.loadedProject.projectBlock.forEach((item,index) => {
+      let scrollGsap = gsap.to(this.$refs.blockRefs[index].$el, {
+        yPercent: item.speed,
         ease: "none",
         scrollTrigger: {
           trigger: this.$refs.blockList[0],
@@ -188,7 +155,7 @@ export default {
         this.$data.arrayProjects.push(item)
       }
     })
-    console.log(this.$data.arrayProjects)
+    console.log(this.loadedProject)
   },
   methods: {
     introAnimation() {
@@ -296,7 +263,7 @@ export default {
     flex-direction: column;
     position: relative;
     @include breakpoint(xxl) {
-      padding: 5rem 25rem 10rem;
+      padding: 5rem 30rem 10rem;
     }
     @include breakpoint(xs) {
       padding: 2.5rem 2.5rem 0;

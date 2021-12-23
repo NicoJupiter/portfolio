@@ -2,21 +2,20 @@
   <div class="projectBlock"
        :class="['projectBlock--'+blockParams.horizontalAlign]">
     <div class="projectBlock__square" v-if="blockParams.type === 'square'">
-      <img src="~/assets/img/malegaze.jpg" alt="" />
+      <img :src="require(`~/assets/img/${blockParams.image}`)" alt="" />
     </div>
     <div class="projectBlock__rectangle" v-if="blockParams.type === 'rectangle'">
-      simple block
+      <img :src="require(`~/assets/img/${blockParams.image}`)" alt="" />
     </div>
     <div class="projectBlock__horizontal" v-if="blockParams.type === 'horizontal'">
-      <img src="~/assets/img/malegaze.jpg" alt="" />
+      <img :src="require(`~/assets/img/${blockParams.image}`)" alt="" />
     </div>
     <div class="projectBlock__label" v-if="blockParams.type === 'label'">
       <div class="projectBlock__label--text">
-        Lorem ipsum dolor sit amet,
-        consectetur adipisicing elit.
+        {{blockParams.text}}
       </div>
       <div class="projectBlock__rectangle">
-        block rectangle
+        <img :src="require(`~/assets/img/${blockParams.image}`)" alt="" />
       </div>
     </div>
   </div>
