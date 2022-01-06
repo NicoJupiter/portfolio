@@ -35,13 +35,15 @@
            {{loadedProject.content}}
         </span>
       </div>
-      <div class="project__blockList" ref="blockList">
-        <div v-for="item in loadedProject.projectBlock">
-          <ProjectBlock
-            :block-params=item
-            ref="blockRefs"
-          />
+      <div class="project__blockList">
+          <div v-for="item in loadedProject.laptopScreen">
+            <ProjectBlock
+              :block-params=item
+            />
         </div>
+      </div>
+      <div class="project__mobileList">
+        <ProjectMobile :mobile-params=loadedProject.mobileScreen />
       </div>
     </div>
     <project-list :loaded-projects="this.$data.arrayProjects" />
@@ -59,8 +61,9 @@ import ScrollTo from '@/assets/js/ScrollToPlugin.min'
 import CursorPointer from "@/components/CursorPointer";
 import ProjectBlock from "@/components/Projets/ProjectBlock";
 import ProjectList from "@/components/Projets/ProjectList";
+import ProjectMobile from "@/components/Projets/ProjectMobile";
 export default {
-  components: {ProjectList, ProjectBlock, CursorPointer, IndexBtn},
+  components: {ProjectMobile, ProjectList, ProjectBlock, CursorPointer, IndexBtn},
   data() {
     return {
       loadedProject: null,
@@ -138,7 +141,7 @@ export default {
     this.$refs.itemLink.addEventListener('mouseenter', this.$data.mouseEnterHandler)
     this.$refs.itemLink.addEventListener('mouseleave', this.$data.mouseLeaveHandler)
 
-    this.$data.loadedProject.projectBlock.forEach((item,index) => {
+    /*this.$data.loadedProject.projectBlock.forEach((item,index) => {
       let scrollGsap = gsap.to(this.$refs.blockRefs[index].$el, {
         yPercent: item.speed,
         ease: "none",
@@ -148,14 +151,13 @@ export default {
         },
       });
       this.$data.scrollSt.push(scrollGsap.scrollTrigger)
-    })
+    })*/
 
     this.$store.getters.loadedProjects.forEach(item => {
       if(item.id !== this.$route.params.id) {
         this.$data.arrayProjects.push(item)
       }
     })
-    console.log(this.loadedProject)
   },
   methods: {
     introAnimation() {

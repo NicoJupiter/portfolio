@@ -1,101 +1,92 @@
 <template>
-  <div class="projectBlock"
-       :class="['projectBlock--'+blockParams.horizontalAlign]">
-    <div class="projectBlock__square" v-if="blockParams.type === 'square'">
-      <img :src="require(`~/assets/img/${blockParams.image}`)" alt="" />
-    </div>
-    <div class="projectBlock__rectangle" v-if="blockParams.type === 'rectangle'">
-      <img :src="require(`~/assets/img/${blockParams.image}`)" alt="" />
-    </div>
-    <div class="projectBlock__horizontal" v-if="blockParams.type === 'horizontal'">
-      <img :src="require(`~/assets/img/${blockParams.image}`)" alt="" />
-    </div>
-    <div class="projectBlock__label" v-if="blockParams.type === 'label'">
-      <div class="projectBlock__label--text">
-        {{blockParams.text}}
-      </div>
-      <div class="projectBlock__rectangle">
-        <img :src="require(`~/assets/img/${blockParams.image}`)" alt="" />
+  <div class="projectBlock" ref="projectBlock">
+    <div class="projectBlock__fullScreen">
+      <div class="projectBlock__fullScreen--wrapper">
+        <img :src="require(`~/assets/img/${blockParams.src}`)" alt="" ref="projectBlockImg"
+             v-if="blockParams.type === 'image'" />
+        <video loop autoplay muted v-if="blockParams.type === 'video'">
+          <source :src="require(`~/assets/img/${blockParams.src}`)"
+                  type="video/webm">
+          Sorry, your browser doesn't support embedded videos.
+        </video>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import gsap from 'gsap'
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 export default {
   name: "ProjectBlock",
   props: {
-    /*typeBlock: {
-      type: String,
-      required: true
-    },*/
     blockParams: {
       type: Object,
       required: true
     },
+    data() {
+      return {
+        tl: null
+      }
+    }
   },
+  mounted() {
+    gsap.registerPlugin(ScrollTrigger)
+
+    this.$data.tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: this.$refs.projectBlock,
+        start: "top center"
+      }
+    })
+
+    this.$data.tl.fromTo(this.$refs.projectBlock, {
+      scaleY: 0,
+    }, {
+      scaleY: 1,
+      transformOrigin: 'center',
+      duration: .8
+    }, 0)
+
+    this.$data.tl.fromTo(this.$refs.projectBlockImg, {
+      scale: 1.7
+    }, {
+      scale: 1,
+      transformOrigin: 'center',
+      duration: .8
+    }, 0)
+  },
+  beforeDestroy() {
+    this.$data.tl.scrollTrigger.kill()
+  }
 }
 </script>
 
 <style scoped lang="scss">
   .projectBlock {
     margin-bottom: 10rem;
-    display: flex;
-
-    //----------Horizontal align-----------------
-    &--center {
-      justify-content: center;
-    }
-    &--right {
-      justify-content: right;
-    }
-
-    &__horizontal {
+    overflow: hidden;
+    &__fullScreen {
       width: 100%;
-      height: 35rem;
-      background-color: #C4C4C4;
-      overflow: hidden;
-      position: relative;
-      img {
-        @include absCenter;
-        position: absolute;
-      }
-    }
-    &__rectangle {
-      width: 40rem;
-      height: 55rem;
-      background-color: #C4C4C4;
-      position: relative;
-      overflow: hidden;
-      img {
-        @include absCenter;
-        position: absolute;
-      }
-    }
-    &__square {
-      width: 37.5rem;
-      height: 40rem;
-      background-color: #C4C4C4;
-      position: relative;
-      overflow: hidden;
-      img {
-        @include absCenter;
-        position: absolute;
+      &--wrapper {
+        position: relative;
+        //padding-bottom: 56.25%;
+        aspect-ratio: 16/9;
+        img {
+          position: absolute;
+          object-fit: contain;
+          width: 100%;
+          height: 100%;
+        }
+        video {
+          position: absolute;
+          object-fit: contain;
+          width: 100%;
+          height: 100%;
+        }
       }
     }
 
-    &__label {
-      &--text {
-        text-align: center;
-        font-family: $F-Lato;
-        font-weight: $FW-thin;
-        color: $C-lightGrey;
-        font-size: 3.6rem;
-        margin-bottom: 5rem;
-      }
-      & .projectBlock__rectangle {
-        margin: auto;
-      }
-    }
+
   }
 </style>
