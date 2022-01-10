@@ -141,18 +141,6 @@ export default {
     this.$refs.itemLink.addEventListener('mouseenter', this.$data.mouseEnterHandler)
     this.$refs.itemLink.addEventListener('mouseleave', this.$data.mouseLeaveHandler)
 
-    /*this.$data.loadedProject.projectBlock.forEach((item,index) => {
-      let scrollGsap = gsap.to(this.$refs.blockRefs[index].$el, {
-        yPercent: item.speed,
-        ease: "none",
-        scrollTrigger: {
-          trigger: this.$refs.blockList[0],
-          scrub: true
-        },
-      });
-      this.$data.scrollSt.push(scrollGsap.scrollTrigger)
-    })*/
-
     this.$store.getters.loadedProjects.forEach(item => {
       if(item.id !== this.$route.params.id) {
         this.$data.arrayProjects.push(item)

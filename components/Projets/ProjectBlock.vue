@@ -2,11 +2,13 @@
   <div class="projectBlock" ref="projectBlock">
     <div class="projectBlock__fullScreen">
       <div class="projectBlock__fullScreen--wrapper">
-        <img :src="require(`~/assets/img/${blockParams.src}`)" alt="" ref="projectBlockImg"
+        <img :src="require(`~/assets/img/${blockParams.src}`)" alt="" ref="projectBlockItem"
              v-if="blockParams.type === 'image'" />
-        <video loop autoplay muted v-if="blockParams.type === 'video'">
+        <video  autoplay preload="metadata" loop muted v-if="blockParams.type === 'video'" ref="projectBlockItem">
           <source :src="require(`~/assets/img/${blockParams.src}`)"
                   type="video/webm">
+          <source :src="require(`~/assets/img/${blockParams.src}`)"
+                  type="video/mp4">
           Sorry, your browser doesn't support embedded videos.
         </video>
       </div>
@@ -36,8 +38,14 @@ export default {
     this.$data.tl = gsap.timeline({
       scrollTrigger: {
         trigger: this.$refs.projectBlock,
-        start: "top center"
-      }
+        start: "top center",
+      },
+      /*onComplete: () => {
+        if(this.$props.blockParams.type === 'video') {
+          this.$refs.projectBlockItem.play()
+         }
+
+      }*/
     })
 
     this.$data.tl.fromTo(this.$refs.projectBlock, {
@@ -48,7 +56,7 @@ export default {
       duration: .8
     }, 0)
 
-    this.$data.tl.fromTo(this.$refs.projectBlockImg, {
+    this.$data.tl.fromTo(this.$refs.projectBlockItem, {
       scale: 1.7
     }, {
       scale: 1,

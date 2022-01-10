@@ -6,27 +6,32 @@ export const typeA = {
     css: false,
     leave (el, done) {
       this.$nuxt.$emit('homepage::pageTransition')
-      let transitionDiv = document.querySelector('.transition')
-      gsap.fromTo(transitionDiv, {
-        bottom: -100 + '%'
-      }, {
-        bottom: 0,
-        delay: .5,
-        duration: .5,
+
+      let transition1 = document.querySelector('.transition--1')
+      let transition2 = document.querySelector('.transition--2')
+      let transition3 = document.querySelector('.transition--3')
+      let array1 = [transition1, transition2, transition3]
+      gsap.to(array1, {
+        y: 0,
+        duration: .8,
+        stagger: 0.2,
         onComplete: () => {
           done()
         }
       })
+
     },
 
     enter (el, done) {
-      let transitionDiv = document.querySelector('.transition')
-      gsap.fromTo(transitionDiv, {
-        bottom: 0
-      }, {
-        bottom: 100 + '%',
-        delay: .5,
-        duration: .5,
+      let transition1 = document.querySelector('.transition--1')
+      let transition2 = document.querySelector('.transition--2')
+      let transition3 = document.querySelector('.transition--3')
+      let array2 = [transition3, transition2, transition1]
+      let windowHeight = window.innerHeight
+      gsap.to(array2, {
+        y: -windowHeight,
+        duration: .8,
+        stagger: 0.2,
         onComplete: () => {
           this.$nuxt.$emit('pageTransition::reset')
           done()
@@ -40,20 +45,36 @@ export const typeB = {
   transition: {
     mode: 'out-in',
     css: false,
-    leave (el, done) {
-
-      let transitionDiv = document.querySelector('.transition')
-      gsap.fromTo(transitionDiv, {
-        bottom: -100 + '%'
-      }, {
-        bottom: 0,
-        delay: .5,
-        duration: .5,
+    enter (el, done) {
+      let transition1 = document.querySelector('.transition--1')
+      let transition2 = document.querySelector('.transition--2')
+      let transition3 = document.querySelector('.transition--3')
+      let windowHeight = window.innerHeight
+      let array2 = [transition3, transition2, transition1]
+      gsap.to(array2, {
+        y: -windowHeight,
+        duration: .8,
+        stagger: 0.2,
         onComplete: () => {
           this.$nuxt.$emit('pageTransition::reset')
           done()
         }
       })
     },
+    leave (el, done) {
+      let transition1 = document.querySelector('.transition--1')
+      let transition2 = document.querySelector('.transition--2')
+      let transition3 = document.querySelector('.transition--3')
+      let array1 = [transition1, transition2, transition3]
+      gsap.to(array1, {
+        y: 0,
+        duration: .8,
+        stagger: 0.2,
+        onComplete: () => {
+          this.$nuxt.$emit('pageTransition::reset')
+          done()
+        }
+      })
+    }
   }
 }

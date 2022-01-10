@@ -2,10 +2,12 @@
   <div class="projectList">
     <div v-for="item in loadedProjects">
       <div class="projectList__item">
-        <div class="projectList__item__title">{{item.id}}</div>
-        <div class="projectList__item__image">
-          <img :src="require(`~/assets/img/${item.thumbnail}`)" alt="" />
-        </div>
+        <NuxtLink :to="'/projects/'+item.id">
+          <div class="projectList__item__title">{{item.id}}</div>
+          <div class="projectList__item__image">
+            <img :src="require(`~/assets/img/${item.thumbnail}`)" alt="" />
+          </div>
+        </NuxtLink>
       </div>
     </div>
   </div>
@@ -30,6 +32,10 @@ export default {
       border-top: 2px solid $C-primary;
       position: relative;
       overflow: hidden;
+      a {
+        text-decoration: none;
+        display: block;
+      }
       &__title {
         @include main-title;
         font-size: 9.6rem;
