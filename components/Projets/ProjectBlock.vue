@@ -74,6 +74,9 @@ export default {
   .projectBlock {
     margin-bottom: 10rem;
     overflow: hidden;
+    @include breakpoint(xs) {
+      margin-bottom: 2.5rem;
+    }
     &__fullScreen {
       width: 100%;
       &--wrapper {

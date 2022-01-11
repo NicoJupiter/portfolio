@@ -77,10 +77,17 @@ export default {
 .projectMobile {
   display: flex;
   justify-content: space-around;
+  @include breakpoint(xs) {
+    flex-wrap: wrap;
+  }
   &__item {
     width: 25rem;
     position: relative;
     aspect-ratio: 9/19.5;
+    @include breakpoint(xs) {
+      margin-bottom: 2.5rem;
+      width: 15rem;
+    }
     img {
       position: absolute;
       object-fit: cover;

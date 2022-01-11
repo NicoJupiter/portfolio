@@ -45,6 +45,9 @@ export default {
         z-index: 1;
         position: relative;
         text-transform: uppercase;
+        @include breakpoint(xs) {
+          font-size: 4.6rem;
+        }
       }
       &__image {
         position: absolute;
