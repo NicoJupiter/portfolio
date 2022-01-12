@@ -15,6 +15,7 @@ export const typeA = {
         y: 0,
         duration: .8,
         stagger: 0.2,
+        delay: .5,
         onComplete: () => {
           done()
         }
