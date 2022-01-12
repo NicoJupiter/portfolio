@@ -38,7 +38,7 @@ export default {
     this.$data.tl = gsap.timeline({
       scrollTrigger: {
         trigger: this.$refs.projectBlock,
-        start: "top center",
+        start: "center bottom",
       },
       /*onComplete: () => {
         if(this.$props.blockParams.type === 'video') {
